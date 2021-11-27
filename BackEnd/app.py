@@ -1,21 +1,18 @@
-from flask import Flask, redirect, url_for, request
-from flask import request, jsonify
+from flask import Flask, redirect, url_for, request, render_template, request, jsonify
 
 app = Flask(__name__)
 
 
 # Mock Data for questions
 
-questions = [
-    {
+questions = {
         "question": "What is your name?",
         "no": 1,
         "type": "MC",
         "options": ["Utku", "Mathushan", "Orhun", "David"],
         "answer": "Utku",
-        "no opt": 4
+        "no_opt": 4
     }
-]
 
 # Routes
 # Home page
@@ -25,21 +22,23 @@ def home():
 <p>A prototype API for question generation.</p>'''
 
 # A route to enter the text input
-@app.route('/input', methods=['GET'])
+@app.route('/input', methods=['POST', 'GET'])
 def text():
-    return '''<h1>Text Input page</h1>'''
-
-# A route to get the text input and matches it with a similar question from the database. Then redirects it to the display page
-@app.route('/input/<question>', methods=['POST'])
-def question(question):
-    # Use the question matching algorithm and pass the question to it returns question id with information
-    id = 1
-    return redirect(url_for("input/question", question = id))
+    if request.method == 'GET':
+        return render_template('input.html')
+    else:
+        text = request.form['txt']
+        # Use the question matching algorithm and pass the question to it returns question id with information
+        id = questions['no']
+        return redirect(url_for("display", id = id))
 
 # A route to display the question returned from the database
-@app.route('/input/question/<id>', methods=['GET'])
+@app.route('/input/<id>', methods=['GET'])
 def display(id):
-    return "The displayed question id is %s" % id
+    q = questions['question']
+    no_opt = questions['no_opt']
+    options = questions['options']
+    return render_template('display.html', question = q, no_opt = no_opt, options = options)
 
 # A route to return all of the available entries in our database.
 @app.route('/resources/questions', methods=['GET'])
