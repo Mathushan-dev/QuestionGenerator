@@ -1,9 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/qgen'
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 
 class Question(db.Model):
@@ -13,7 +11,7 @@ class Question(db.Model):
     type = db.Column(db.String(120))  # Multiple choice? fill in the blank? etc.
     options = db.Column(db.String(120))  # optionA,optionB,optionC
     answer = db.Column(db.String(120))
-    keywords = db.Columnn(db.String(120))  # keyword1,keyword2,keyword3
+    keywords = db.Column(db.String(120))  # keyword1,keyword2,keyword3
 
     def __init__(self, id, question, type, options, answer, keywords):
         self.id = id

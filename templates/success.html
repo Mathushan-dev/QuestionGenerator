@@ -5,6 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-    Your data has been send successfully. We look forward to seeing you in September, {{data}}!
+    Your data has been send successfully. We look forward to seeing you in September
+    <ul>
+        {% for word in data %}
+            <li>{{ word }}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
