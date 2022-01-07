@@ -8,7 +8,7 @@ Use the following link to help you - https://akrabat.com/creating-virtual-enviro
 
 Required Packages (Please install in following order to prevent overwriting versions incorrectly):
 
-Use following command to force Python version in virtual environment is used to download these pip packages - pyenv exec pip install package_name==version
+Use following command to force Python version in virtual environment is used to download these pip packages - pyenv exec pip install --quiet package_name==version
 
 1. nltk==3.5.0 - pip
 2. allennlp==0.9.0 - pip
