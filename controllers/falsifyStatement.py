@@ -1,20 +1,27 @@
-import spacy
+import re
 import string
+import nltk
+import scipy
+import spacy
 from allennlp.predictors.predictor import Predictor
 from nltk import tokenize
 from nltk.tree import Tree
+from sentence_transformers import SentenceTransformer
+from transformers import TFGPT2LMHeadModel, GPT2Tokenizer
 
+nltk.download('punkt')
 nlp = spacy.load("en_core_web_sm")
-predictor = Predictor.from_path(
-    "https://s3-us-west-2.amazonaws.com/allennlp/models/elmo-constituency-parser-2018.03.14.tar.gz")
+predictor = Predictor.from_path("https://s3-us-west-2.amazonaws.com/allennlp/models/elmo-constituency-parser-2018.03.14.tar.gz")
+# The model below an All-round model tuned for many use-cases. Trained on a large and diverse dataset of over 1 billion training pairs.
+BERTModel = SentenceTransformer('sentence-transformers/all-distilroberta-v1')
 
 
 def generateTree(cleanedOriginalStatement):
     parserOutput = predictor.predict(sentence=cleanedOriginalStatement)
-    return Tree.fromString(parserOutput["trees"])
+    return Tree.fromstring(parserOutput["trees"])
 
 
-def getRightMostNPVP(tree, rightMostNP = None, rightMostVP = None):
+def getRightMostNPVP(tree, rightMostNP=None, rightMostVP=None):
     if len(tree.leaves()) == 1:
         return rightMostNP, rightMostVP
     rightMostBranch = tree[-1]
@@ -29,13 +36,74 @@ def getRightMostNPVP(tree, rightMostNP = None, rightMostVP = None):
 def removeTreeAttributes(treePhrase):
     if treePhrase is None:
         return None
-    cleanedTreePhrase = [" ".join(branch.leaves()) for branch in list(treePhrase)]
-    print(cleanedTreePhrase)
-    cleanedTreePhrase = [" ".join(cleanedTreePhrase)]
-    print(cleanedTreePhrase)
-    cleanedTreePhrase = cleanedTreePhrase[0]
-    print(cleanedTreePhrase)
-    return cleanedTreePhrase
+    return [" ".join([" ".join(branch.leaves()) for branch in list(treePhrase)])][0]
+
+
+def replaceLast(string, find, replace):
+    reversed = string[::-1]
+    replaced = reversed.replace(find[::-1], replace[::-1], 1)
+    return replaced[::-1]
+
+
+def correctSpaces(stringToCorrect):
+    return re.sub(' +', ' ', stringToCorrect)
+
+
+def removeRightMostP(cleanedOriginalStatement, longestRightMostP):
+    spaceCorrectedJoinedRightMostP = correctSpaces(longestRightMostP)
+    spaceCorrectedJoinedOriginalStatement = correctSpaces(cleanedOriginalStatement)
+    return replaceLast(spaceCorrectedJoinedOriginalStatement, spaceCorrectedJoinedRightMostP, "")
+
+
+def actiavteTopKPSampling(model, inputIds, maximumLengthStatement):
+    return model.generate(
+        inputIds,
+        do_sample=True,
+        max_length=maximumLengthStatement,
+        top_p=0.85,
+        top_k=30,
+        repetition_penalty=10.0,
+        num_return_sequences=10
+    )
+
+
+def generateSentences(sampleOuputs, tokeniser):
+    generatedSentences = []
+    for i, sampleOutput in enumerate(sampleOuputs):
+        decodedSentence = tokeniser.decode(sampleOutput, skip_special_tokens=True)
+        finalSentence = tokenize.sent_tokenize(decodedSentence)[0]
+        generatedSentences.append(finalSentence)
+    return generatedSentences
+
+
+def element1(x):
+    return x[1]
+
+
+def findFinalFalseStatement(docs, query):
+    docEmbeddings = BERTModel.encode(docs)
+    queryEmbeddings = BERTModel.encode([query])
+    scores = \
+        scipy.spatial.distance.cdist(queryEmbeddings, docEmbeddings, "cosine")[0]
+    docScorePairs = zip(range(len(scores)), scores)
+    docScorePairs = sorted(docScorePairs, key=element1)
+    dissimilarStatements = []
+    for index, distance in docScorePairs:
+        dissimilarStatements.append(docs[index])
+    try:
+        return next(reversed(dissimilarStatements))
+    except StopIteration:
+        return None
+
+
+def completeRightMostPStatement(incompleteRightMostPStatement, originalStatement):
+    tokeniser = GPT2Tokenizer.from_pretrained("gpt2")
+    model = TFGPT2LMHeadModel.from_pretrained("gpt2", pad_token_id=tokeniser.eos_token_id)
+    inputIds = tokeniser.encode(incompleteRightMostPStatement, return_tensors='tf')
+    maximumLengthStatement = len(incompleteRightMostPStatement.split()) + 40
+    sampleOuputs = actiavteTopKPSampling(model, inputIds, maximumLengthStatement)
+    generatedStatements = generateSentences(sampleOuputs, tokeniser)
+    return findFinalFalseStatement(generatedStatements, originalStatement)
 
 
 def falsifyStatement(originalStatement):
@@ -44,11 +112,13 @@ def falsifyStatement(originalStatement):
     rightMostNP, rightMostVP = getRightMostNPVP(tree)
     cleanedRightMostNP = removeTreeAttributes(rightMostNP)
     cleanedRightMostVP = removeTreeAttributes(rightMostVP)
+    longestRightMostP = max(cleanedRightMostNP, cleanedRightMostVP)
+    incompleteRightMostPStatement = removeRightMostP(cleanedOriginalStatement, longestRightMostP)
+    return correctSpaces(completeRightMostPStatement(incompleteRightMostPStatement, originalStatement))
 
 
 def cleanUpStatement(originalStatement):
     return originalStatement.translate(str.maketrans('', '', string.punctuation))
 
 
-# def test_cleanUpStatement():
-print(falsifyStatement("Hey, how    are you? I am fine!"))  # == "Hey how    are you I am fine")
+print(falsifyStatement("The old woman was sitting under a tree and sipping coffee."))
