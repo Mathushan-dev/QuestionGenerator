@@ -1,0 +1,26 @@
+/* Header */ 
+.main-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px 50px;
+    border-bottom: 2px dotted black;
+}
+
+.login-link, .try-link{
+    align-self: center;
+    text-decoration: none;
+    color: white;
+    background-color: #04ac54;
+    padding: 10px 30px;
+    border: 1px solid #04ac54;
+    border-radius: 24px;
+    text-transform: uppercase;
+}
+
+.login-link:hover, .try-link:hover{
+    background-color: white;
+    color: #04ac54;
+    text-decoration: underline;
+}
