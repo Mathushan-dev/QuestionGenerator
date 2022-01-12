@@ -22,6 +22,10 @@ Use following command to force Python version in virtual environment is used to 
 8. flask - pip
 9. flak_migrate - pip
 10. decouple - pip
+11. bcrypt - pip
+12. psycopg2 - pip
+13. flask_sqlalchemy - pip
+14. 
 
 Final Execution:
 

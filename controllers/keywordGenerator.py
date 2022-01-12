@@ -10,8 +10,8 @@ def analyseText(text):
     try:
         response = client.analyze(text)
         for entity in response.entities():
-            print(entity.id, entity.relevance_score, entity.confidence_score, entity.freebase_types)
-            output.append(entity.id)
+            print(entity.userId, entity.relevance_score, entity.confidence_score, entity.freebase_types)
+            output.append(entity.userId)
     except textrazor.TextRazorAnalysisException as ex:
         print(ex)
 

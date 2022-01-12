@@ -1,7 +1,8 @@
 from flask import Flask, render_template
 from flask_migrate import Migrate
-from models.User import db
+from models.UserModel import db
 from routes.user_bp import user_bp
+from config import DEBUG
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -16,5 +17,5 @@ def index():
 
 
 if __name__ == '__main__':
-    app.debug = True
+    app.debug = DEBUG
     app.run()
