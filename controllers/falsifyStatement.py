@@ -100,7 +100,7 @@ def completeRightMostPStatement(incompleteRightMostPStatement, originalStatement
     tokeniser = GPT2Tokenizer.from_pretrained("gpt2")
     model = TFGPT2LMHeadModel.from_pretrained("gpt2", pad_token_id=tokeniser.eos_token_id)
     inputIds = tokeniser.encode(incompleteRightMostPStatement, return_tensors='tf')
-    maximumLengthStatement = len(incompleteRightMostPStatement.split()) + 40
+    maximumLengthStatement = len(incompleteRightMostPStatement.split()) + 40 #
     sampleOuputs = actiavteTopKPSampling(model, inputIds, maximumLengthStatement)
     generatedStatements = generateSentences(sampleOuputs, tokeniser)
     return findFinalFalseStatement(generatedStatements, originalStatement)
@@ -121,4 +121,4 @@ def cleanUpStatement(originalStatement):
     return originalStatement.translate(str.maketrans('', '', string.punctuation))
 
 
-print(falsifyStatement("The old woman was sitting under a tree and sipping coffee."))
+print(falsifyStatement("The young boy played tag with his friends."))
