@@ -5,13 +5,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>X5Learn</title>
-        <link href="../css/launchpage.css" rel="stylesheet">
-        <link href="../css/header.css" rel="stylesheet">
+        <link href="../static/css/launchpage.css" rel="stylesheet">
+        <link href="../static/css/header.css" rel="stylesheet">
     </head>
     <body>
         <header class="main-header">
             <a href="#" class="brand-logo">
-                <img src="../images/x5learn_logo.png" alt="Logo">
+                <img src="../static/images/x5learn_logo.png" alt="Logo">
             </a>
             <a href="#" class="login-link">Log in</a>
         </header>
@@ -31,13 +31,13 @@
                 <a href="#" class="try-link">Try For Free</a>
             </div>
             <div class="signup-div">
-                <form class="signup-form">
+                <form class="signup-form" action="/create" method="POST">
                     <h1>Sign Up</h1>
                     <h2>Create an account to access all features</h2>
                     <input type="email" name="email" placeholder="Email">
                     <input type="password" name="password" placeholder="Password">
-                    <input type="submit" name="button" value="Sign Up">
-                    <p>Already have an account? <a href="#">Log in.</a></p>
+                    <input type="submit" value="Sign up">
+                    <p>Already have an account? <a href="#enterText">Log in.</a></p>
                 </form>
             </div>
         </section>
@@ -45,7 +45,7 @@
             <h1>Why choose X5Learn?</h1>
             <div class="features">
                 <div class="feature1">
-                    <img src="../images/question-icon.png" alt="Generate Question Icon">
+                    <img src="../static/images/question-icon.png" alt="Generate Question Icon">
                     <h2>Generate Questions</h2>
                     <p>You can automatically create well-written questions by entering your desired text. The website
                         will create multiple questions with different difficulties. You can use this to prepare for a test
@@ -53,14 +53,14 @@
                     </p>
                 </div>
                 <div class="feature2">
-                    <img src="../images/result-icon.png" alt="Track Result Icon">
+                    <img src="../static/images/result-icon.png" alt="Track Result Icon">
                     <h2>Track Your Results</h2>
                     <p>You can easily track your results in order to check how knowledgeable you are in the selected
                         topic. It is also very helpful to understand the parts that needs improvement. 
                     </p>
                 </div>
                 <div class="feature3">
-                    <img src="../images/share-icon.png" alt="Share Icon">
+                    <img src="../static/images/share-icon.png" alt="Share Icon">
                     <h2>Share Questions</h2>
                     <p>You can share the questions that you generated with your friends! If you are a student, you can compete
                         with your peers for fun while stuyding for your courses. If you are a teacher, you can test your
@@ -74,7 +74,7 @@
             <a href="#" class="try-link">Try For Free</a>
         </section>
         <footer class="main-footer">
-            <img src="../images/eu-flag.png" alt="European Union Flag">
+            <img src="../static/images/eu-flag.png" alt="European Union Flag">
             <p>This project has received funding from the European Union’s Horizon new policy 2020 
                 research and innovation programme under grant agreement No 761758.</p>
         </footer>
