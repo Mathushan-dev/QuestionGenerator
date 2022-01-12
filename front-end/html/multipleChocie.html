@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mutliple Choice</title>
+        <link href="../css/multipleChoice.css" rel="stylesheet">
+        <link href="../css/header.css" rel="stylesheet">
+    </head>
+    <body>
+
+        <header class="main-header">
+            <a href="#" class="brand-logo">
+                <img src="../images/x5learn_logo.png" alt="Logo">
+            </a>
+            <a href="#" class="login-link">Log in</a>
+        </header>
+         <div class = "progressBar">
+            <span> Your Progress：</span>
+            <meter min="0" max="500" value="350">350 degrees</meter>
+         </div>
+        <div class = "question">
+            <div class = "question-num">
+                <label>
+                    <textarea placeholder="question 1" id="passage" name="passage" rows="1" cols="10"></textarea>
+                </label>
+            </div>
+            <div class = "question-content">
+                <p>
+                    "Let S be the structure (ℕ,𝐼) ( N , I ) where 𝐼 ( I ( is the set of pairs (x, y) where x is strictly less than y and = = is equality.  Which of these formulas are valid in S?
+                    Select one or more:"
+                </p>
+            </div>
+
+                <div class = "choices">
+                    <ol type="A" start="" class="olCss" name="multi" >
+                        <input class="inputClass" type="checkbox" name="place4" value="A" /><li class="liRight">
+                        \exists x\forall y (<^2(x, y)\vee=^2(x, y))</li>
+                        <input class="inputClass" type="checkbox" name="place4" value="B"  /><li class="liRight">\exists x \forall y <^2(y, x)</li>
+                        <input class="inputClass" type="checkbox" name="place4" value="C"  /><li class="liRight">\forall y\exists x (<^2(x, y)\vee=^2(x, y))</li>
+                        <input class="inputClass" type="checkbox" name="place4" value="D"  /><li class="liRight">\forall y \exists x <^2(y, x)</li>
+                    </ol>
+                </div>
+                <br>
+        </div>
+
+        <div class = "question">
+            <div class = "question-num">
+                <label>
+                    <textarea placeholder="question 2" id="passage2" name="passage2" rows="1" cols="10"></textarea>
+                </label>
+            </div>
+            <div class = "question-content">
+                <p>
+                    A type of instruction that produce several lines of machine language code is a
+                </p>
+            </div>
+
+                <div class = "choices">
+                    <ol type="A" start="" class="olCss" name="multi" >
+                        <input class="inputClass" type="checkbox" name="place4" value="A" /><li class="liRight">
+                        Assemble</li>
+                        <input class="inputClass" type="checkbox" name="place4" value="B"  /><li class="liRight"> Address</li>
+                        <input class="inputClass" type="checkbox" name="place4" value="C"  /><li class="liRight">Mnemonic</li>
+                        <input class="inputClass" type="checkbox" name="place4" value="D"  /><li class="liRight">Macro</li>
+                    </ol>
+                </div>
+                <br>
+        </div>
+
+
+
+        <form>
+
+	    <input type="button" class = "sub-link" value="submit"  />
+
+        </form>
+
+
+
+    </body>
+</html>

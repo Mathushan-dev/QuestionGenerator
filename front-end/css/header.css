@@ -8,7 +8,7 @@
     border-bottom: 2px dotted black;
 }
 
-.login-link, .try-link{
+.login-link, .try-link {
     align-self: center;
     text-decoration: none;
     color: white;
@@ -19,7 +19,7 @@
     text-transform: uppercase;
 }
 
-.login-link:hover, .try-link:hover{
+.login-link:hover, .try-link:hover ,.sub-link:hover{
     background-color: white;
     color: #04ac54;
     text-decoration: underline;
