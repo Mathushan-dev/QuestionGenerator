@@ -1,77 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>True False Questions</title>
-        <link href="../static/css/multipleChoice.css" rel="stylesheet">
-        <link href="../static/css/header.css" rel="stylesheet">
-    </head>
-    <body>
 
-        <header class="main-header">
-            <a href="#" class="brand-logo">
-                <img src="../static/images/x5learn_logo.png" alt="Logo">
-            </a>
-            <a href="#" class="login-link">Log in</a>
-        </header>
-         <div class = "progressBar">
-            <span> Your Progress：</span>
-            <meter min="0" max="500" value="350">350 degrees</meter>
-         </div>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>True False Questions</title>
+	<link href="../static/css/multipleChoice.css" rel="stylesheet">
+	<link href="../static/css/header.css" rel="stylesheet"> </head>
 
-        <div class = "question">
-            <div class = "question-num">
-                <label>
-                    <textarea placeholder="T/F" id="passage" name="passage" rows="1" cols="5"></textarea>
-                </label>
-            </div>
-            <div class = "question-content">
-                <p>
-                   Main memory is a place where the programs and data are store temporarily during processing
-                </p>
-            </div>
+<body>
+	<header class="main-header">
+		<a href="#" class="brand-logo"> <img src="../static/images/x5learn_logo.png" alt="Logo"> </a> <a href="#" class="login-link">Log in</a> </header>
+	<div class="progressBar"> <span> Your Progress：</span>
+		<meter min="0" max="500" value="350">350 degrees</meter>
+	</div>
+	<div class="question">
+		<div class="question-num">
+			<label>
+				<textarea placeholder="T/F" id="passage" name="passage" rows="1" cols="5"></textarea>
+			</label>
+		</div>
+		<div class="question-content">
+			<p> Main memory is a place where the programs and data are store temporarily during processing </p>
+		</div>
+		<div class="choices">
+			<label>
+				<input class="radio" type="radio" name="radio"> True</label>
+			<label>
+				<input class="radio" type="radio" name="radio"> False</label>
+		</div>
+		<br> </div>
+	<div class="question">
+		<div class="question-num">
+			<label>
+				<textarea placeholder="T/F" id="passage2" name="passage2" rows="1" cols="5"></textarea>
+			</label>
+		</div>
+		<div class="question-content">
+			<p> T/F: Secondary storage, similar to main memory, also stores programs and data </p>
+		</div>
+		<div class="choices">
+			<label>
+				<input class="radio" type="radio" name="radio"> True</label>
+			<label>
+				<input class="radio" type="radio" name="radio"> False</label>
+		</div>
+		<br> </div>
+	<style>
+	.question {
+		margin-top: 50px;
+	}
+	</style>
+	<form>
+		<input type="button" class="sub-link" value="submit" /> </form>
+</body>
 
-            <div class = "choices">
-                <label><input class="radio" type="radio" name="radio" > True</label>
-                <label><input class="radio" type="radio" name="radio"> False</label>
-            </div>
-            <br>
-        </div>
-
-        <div class = "question">
-            <div class = "question-num">
-                <label>
-                    <textarea placeholder="T/F" id="passage2" name="passage2" rows="1" cols="5"></textarea>
-                </label>
-            </div>
-            <div class = "question-content">
-                <p>
-                   T/F: Secondary storage, similar to main memory, also stores programs and data
-                </p>
-            </div>
-
-            <div class = "choices">
-                <label><input class="radio" type="radio" name="radio" > True</label>
-                <label><input class="radio" type="radio" name="radio"> False</label>
-            </div>
-            <br>
-        </div>
-        <style>
-            .question{
-                margin-top: 50px;
-            }
-        </style>
-
-
-        <form>
-
-	    <input type="button" class = "sub-link" value="submit"  />
-
-        </form>
-
-
-
-    </body>
 </html>
