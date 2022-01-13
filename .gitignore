@@ -1,3 +1,7 @@
 
 *.pyc
 static/.DS_Store
+*.xml
+*.iml
+controllers/.python-version
+.python-version

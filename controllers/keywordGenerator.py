@@ -21,3 +21,5 @@ def analyseText(text):
 # todo return a list of all the keywords from the user inputted text
 def findQuestionKeywords(text):
     return analyseText(text)
+
+# maybe use text rank, also consider wikifier

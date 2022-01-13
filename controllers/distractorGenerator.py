@@ -53,4 +53,6 @@ def getRandomChoices(choices, totalChoicesRequired):
     return random.sample(choices, totalChoicesRequired - 1)
 
 
-print(generateChoices("cheetah", 4))
+print(generateChoices("machine learning", 4))
+# todo some words may not appear in wordnet: catch errors and provide alternative way of generating distractors - (wikileaks)
+# todo talk about weaknesses of using wordnet and why alternative was chosen

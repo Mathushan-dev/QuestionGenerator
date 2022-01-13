@@ -122,3 +122,4 @@ def cleanUpStatement(originalStatement):
 
 
 print(falsifyStatement("The young boy played tag with his friends."))
+# todo maybe measure level of readability for assessing difficulty of generated false statements - text stat, bleu score
