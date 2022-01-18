@@ -109,11 +109,19 @@ body {
 /* Cool shape design*/
 
 .screen {
-	background: linear-gradient(90deg, #bad5d1, #c9e3e2);
+	background: linear-gradient(90deg, #bad5d1, #ffffff);
 	position: relative;
 	height: 100%;
 	width: 100%;
 	box-shadow: 0px 0px 24px #b3cad0;
+}
+
+.screenb {
+	background: linear-gradient(90deg, #bbdad5, #ffffff);
+	position: relative;
+	height: 100%;
+	width: 100%;
+	box-shadow: 0px 0px 24px #378371;
 }
 
 .screen__content {
@@ -147,10 +155,28 @@ body {
 	border-radius: 0 72px 0 0;
 }
 
+.screen__background__shape1b {
+	height: 520px;
+	width: 520px;
+	background: #FFF;
+	top: -50px;
+	right: 120px;
+	border-radius: 0 72px 0 0;
+}
+
 .screen__background__shape2 {
 	height: 220px;
 	width: 220px;
-	background: #a5c0b1;
+	background: #9fd9b8;
+	top: -172px;
+	right: 0;
+	border-radius: 32px;
+}
+
+.screen__background__shape2b {
+	height: 220px;
+	width: 220px;
+	background: #7ad0f5;
 	top: -172px;
 	right: 0;
 	border-radius: 32px;
@@ -159,7 +185,16 @@ body {
 .screen__background__shape3 {
 	height: 540px;
 	width: 190px;
-	background: linear-gradient(270deg, #92a4a9, #bbc9c1);
+	background: linear-gradient(270deg, #92a4a9, #69aac4);
+	top: -24px;
+	right: 0;
+	border-radius: 32px;
+}
+
+.screen__background__shape3b {
+	height: 540px;
+	width: 190px;
+	background: linear-gradient(270deg, #5babc2, #97c3ee);
 	top: -24px;
 	right: 0;
 	border-radius: 32px;
@@ -169,6 +204,15 @@ body {
 	height: 400px;
 	width: 200px;
 	background: #ccffc1;
+	top: 420px;
+	right: 50px;
+	border-radius: 60px;
+}
+
+.screen__background__shape4b {
+	height: 400px;
+	width: 200px;
+	background: #51e0a9;
 	top: 420px;
 	right: 50px;
 	border-radius: 60px;

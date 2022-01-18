@@ -5,9 +5,15 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<title>Multiple Choice</title>
+
 	<link href="../static/css/multipleChoice.css" rel="stylesheet">
 	<link href="../static/css/header.css" rel="stylesheet"> </head>
+      <link rel="stylesheet" href="../static/css/base.css">
+	  <link rel="stylesheet" href="../static/css/header.css">
+	  <link rel="stylesheet" href="../static/css/footer.css">
+      <link rel="stylesheet" href="../static/css/index.css">
 
 <body>
 	<header class="main-header">
@@ -15,56 +21,45 @@
 	<div class="progressBar"> <span> Your Progress：</span>
 		<meter min="0" max="500" value="350">350 degrees</meter>
 	</div>
-	<div class="question">
-		<div class="question-num">
-			<label>
-				<textarea placeholder="question 1" id="passage" name="passage" rows="1" cols="10"></textarea>
-			</label>
+
+	<div class="choiceFit">
+		  <div class="screen">
+			  <div class="screen__content">
+					<div class="question-num">
+						<label>
+							<textarea placeholder="Question 1" id="passage" name="passage" rows="1" cols="10" contenteditable="false"></textarea>
+						</label>
+					</div>
+
+					<div class="question-content">
+						<p> The cheetah is the fastest land animal. </p>
+					</div>
+
+				  <form>
+					  <br>
+					  <input class="choice-linka" type="button" value="saber-toothed tiger"/>
+					  <br><br>
+					  <input class="choice-linkb" type="button" value="jaguar"/>
+					  <br><br>
+					  <input class="choice-linka" type="button" value="snow leopard"/>
+					  <br><br>
+					  <input class="choice-linkb" type="button" value="cheetah"/>
+					  <br><br>
+					  <input class="sub-link" type="button" value="submit" />
+					  <br><br>
+				  </form>
+
+			  </div>
+
+			  <div class="screen__background">
+				  <span class="screen__background__shape screen__background__shape4"></span>
+				  <span class="screen__background__shape screen__background__shape3"></span>
+				  <span class="screen__background__shape screen__background__shape2"></span>
+				  <span class="screen__background__shape screen__background__shape1"></span>
+			  </div>
+		  </div>
 		</div>
-		<div class="question-content">
-			<p> "Let S be the structure (ℕ,𝐼) ( N , I ) where 𝐼 ( I ( is the set of pairs (x, y) where x is strictly less than y and = = is equality. Which of these formulas are valid in S? Select one or more:" </p>
-		</div>
-		<div class="choices">
-			<ol type="A" start="" class="olCss" name="multi">
-				<input class="inputClass" type="checkbox" name="place4" value="A" />
-				<li class="liRight"> \exists x\forall y (
-					<^2(x, y)\vee=^2(x, y)) </li>
-						<input class="inputClass" type="checkbox" name="place4" value="B" />
-						<li class="liRight">\exists x \forall y
-							<^2(y, x)</li>
-								<input class="inputClass" type="checkbox" name="place4" value="C" />
-								<li class="liRight">\forall y\exists x (
-									<^2(x, y)\vee=^2(x, y))</li>
-										<input class="inputClass" type="checkbox" name="place4" value="D" />
-										<li class="liRight">\forall y \exists x
-											<^2(y, x)</li>
-			</ol>
-		</div>
-		<br> </div>
-	<div class="question">
-		<div class="question-num">
-			<label>
-				<textarea placeholder="question 2" id="passage2" name="passage2" rows="1" cols="10"></textarea>
-			</label>
-		</div>
-		<div class="question-content">
-			<p> A type of instruction that produce several lines of machine language code is a </p>
-		</div>
-		<div class="choices">
-			<ol type="A" start="" class="olCss" name="multi">
-				<input class="inputClass" type="checkbox" name="place4" value="A" />
-				<li class="liRight"> Assemble </li>
-				<input class="inputClass" type="checkbox" name="place4" value="B" />
-				<li class="liRight"> Address</li>
-				<input class="inputClass" type="checkbox" name="place4" value="C" />
-				<li class="liRight">Mnemonic</li>
-				<input class="inputClass" type="checkbox" name="place4" value="D" />
-				<li class="liRight">Macro</li>
-			</ol>
-		</div>
-		<br> </div>
-	<form>
-		<input type="button" class="sub-link" value="submit" /> </form>
+
 </body>
 
 </html>
