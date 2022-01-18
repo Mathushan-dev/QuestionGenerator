@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2&family=Inter:wght@300&family=Poppins:wght@200&display=swap');
+
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+
+/* Whole body */
+
+body {
+	background-color: white;
+	font-family: 'Poppins', sans-serif;
+	padding: 0;
+	margin: 0;
+	font-size: 1.2rem;
+	min-height: 100vh;
+}
+
+
+/* First section - brief information and sign up form */
+
+.section1 {
+	background-color: #EEEEEE;
+	margin: 30px;
+	padding: 0px 0px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.section1 h1 {
+	color: #04a4d0;
+	font-size: 35px;
+}
+
+/* Second section - Features of website */
+
+.section2 {
+	background-color: #EEEEEE;
+	margin: 30px;
+	padding: 0px 0px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.section2 h1 {
+	color: #04a4d0;
+	font-size: 35px;
+}
+
+.features {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: stretch;
+	gap: 10px;
+}
+
+.feature1,
+.feature2,
+.feature3 {
+	width: 33.3%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 auto;
+	padding: 10px 50px;
+}
+
+.feature1,
+.feature2 {
+	border-right: 1px solid grey;
+}
+
+.feature1 h2,
+.feature2 h2,
+.feature3 h2 {
+	margin: 0 0;
+}
+
+
+/* Third section - Encouraging user to test with limited features */
+
+.section3 {
+	margin: 10px auto;
+	padding: 10px 50px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.section3 h1 {
+	color: black;
+	font-size: 30px;
+	text-transform: uppercase;
+}
+
+/* Cool shape design*/
+
+.screen {
+	background: linear-gradient(90deg, #bad5d1, #c9e3e2);
+	position: relative;
+	height: 100%;
+	width: 100%;
+	box-shadow: 0px 0px 24px #b3cad0;
+}
+
+.screen__content {
+	z-index: 1;
+	position: relative;
+	height: 100%;
+}
+
+.screen__background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 0;
+	-webkit-clip-path: inset(0 0 0 0);
+	clip-path: inset(0 0 0 0);
+}
+
+.screen__background__shape {
+	transform: rotate(45deg);
+	position: absolute;
+}
+
+.screen__background__shape1 {
+	height: 520px;
+	width: 520px;
+	background: #FFF;
+	top: -50px;
+	right: 120px;
+	border-radius: 0 72px 0 0;
+}
+
+.screen__background__shape2 {
+	height: 220px;
+	width: 220px;
+	background: #a5c0b1;
+	top: -172px;
+	right: 0;
+	border-radius: 32px;
+}
+
+.screen__background__shape3 {
+	height: 540px;
+	width: 190px;
+	background: linear-gradient(270deg, #92a4a9, #bbc9c1);
+	top: -24px;
+	right: 0;
+	border-radius: 32px;
+}
+
+.screen__background__shape4 {
+	height: 400px;
+	width: 200px;
+	background: #ccffc1;
+	top: 420px;
+	right: 50px;
+	border-radius: 60px;
+}

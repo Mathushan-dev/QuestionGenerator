@@ -1,0 +1,13 @@
+.main-footer {
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	padding: 0px 10px;
+}
+
+.main-footer p {
+	padding-left: 10px;
+	color: white;
+}
