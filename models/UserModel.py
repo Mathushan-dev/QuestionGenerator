@@ -1,3 +1,4 @@
+import bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 
@@ -19,3 +20,11 @@ class User(db.Model):
             'userId': self.userId,
             'hashedPassword': self.hashedPassword
         }
+
+    @staticmethod
+    def makePasswordHash(password):
+        hash = bcrypt.hashpw(password=password.encode('utf-8'), salt=bcrypt.gensalt())
+        return hash.decode('utf-8')
+
+    def isPasswordValid(self, password):
+        return bcrypt.checkpw(password.encode('utf-8'), self.hashedPassword.encode('utf-8'))

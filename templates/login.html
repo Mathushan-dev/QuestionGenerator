@@ -18,26 +18,29 @@
 
   <body>
     <header class="main-header">
-            <a href="#" class="brand-logo"> <img src="../static/images/x5learn_logo.png" alt="Logo"> </a> <a href="#login.html" class="login-link">Log in</a>
+            <a href="{{ url_for('user_bp.index') }}" class="brand-logo"> <img src="../static/images/x5learn_logo.png" alt="Logo"> </a>
     </header>
 
       <div class="container">
           <div class="screen">
               <div class="screen__content">
-                  <form class="login">
+                  <form class="login" method="POST">
+                      <div>
+                          <p>{{loginErrorMessage}}</p>
+                      </div>
                       <div class="login__field">
                           <i class="login__icon fas fa-user"></i>
-                          <input type="text" class="login__input" placeholder="User name / Email">
+                          <input type="text" class="login__input" placeholder="Email" name="email">
                       </div>
                       <div class="login__field">
                           <i class="login__icon fas fa-lock"></i>
-                          <input type="password" class="login__input" placeholder="Password">
+                          <input type="password" class="login__input" placeholder="Password" name="password">
                       </div>
-                      <button class="button login__submit" value="login">
+                      <button class="button login__submit" formaction="/logIn" formmethod="POST">
                           <span class="button__text">Log In Now</span>
                           <i class="button__icon fas fa-chevron-right"></i>
                       </button>
-                      <button class="button login__submit" value="signup">
+                      <button class="button login__submit" formaction="/signUp" formmethod="POST">
                           <span class="button__text">Sign Up Now</span>
                           <i class="button__icon fas fa-chevron-right"></i>
                       </button>
