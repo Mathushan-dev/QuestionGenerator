@@ -34,4 +34,5 @@ def generateQuestionsFromBeamOutputs(beamOutputs):
     return questions
 
 
-print(applyT5Model("The cheetah is the fastest land animal.", "cheetah"))
+if __name__ == "__main__":
+    print(applyT5Model("The cheetah is the fastest land animal.", "cheetah"))

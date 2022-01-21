@@ -18,7 +18,7 @@
 
   <body>
     <header class="main-header">
-            <a href="{{ url_for('user_bp.index') }}" class="brand-logo"> <img src="../static/images/x5learn_logo.png" alt="Logo"> </a>
+            <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo"> <img src="../static/images/x5learn_logo.png" alt="Logo"> </a>
     </header>
 
       <div class="container">
@@ -36,11 +36,11 @@
                           <i class="login__icon fas fa-lock"></i>
                           <input type="password" class="login__input" placeholder="Password" name="password">
                       </div>
-                      <button class="button login__submit" formaction="/logIn" formmethod="POST">
+                      <button class="button login__submit" formaction="/logIn">
                           <span class="button__text">Log In Now</span>
                           <i class="button__icon fas fa-chevron-right"></i>
                       </button>
-                      <button class="button login__submit" formaction="/signUp" formmethod="POST">
+                      <button class="button login__submit" formaction="/signUp">
                           <span class="button__text">Sign Up Now</span>
                           <i class="button__icon fas fa-chevron-right"></i>
                       </button>

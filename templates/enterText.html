@@ -11,21 +11,21 @@
 
 <body>
 	<header class="main-header">
-		<a href="#" class="brand-logo"> <img src="../static/images/x5learn_logo.png" alt="Logo"> </a> <a href="#" class="login-link">Log in</a> </header>
+		<a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo"> <img src="../static/images/x5learn_logo.png" alt="Logo"> </a> <a href="#" class="login-link">Log in</a> </header>
 	<div class="main-section">
-		<h1 class="instructions-text">Enter a passage to try for free!</h1>
-		<textarea placeholder="Enter your passage!" id="passage" name="passage" rows="10" cols="10"></textarea>
-		<div class="last-section">
+		<form method="POST">
+		<h1 class="instructions-text">Enter a passage: </h1>
+		<textarea placeholder="Enter your passage!" name="context" rows="10" cols="10"></textarea>
 			<div class="option-amount">
 				<label for="optionNumber">Number of options: </label>
-				<select id="optionNumber">
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-				</select>
+					<select id="optionNumber" name="numberOptions">
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+					</select>
+					<button formaction="/generateMCQuestions"> Generate mcq questions </button>
 			</div>
-			<div class="button-div"> <a href="#" class="generate-button">Generate example question</a> </div>
-		</div>
+		</form>
 	</div>
 </body>
 

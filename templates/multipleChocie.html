@@ -17,7 +17,7 @@
 
 <body>
 	<header class="main-header">
-		<a href="#" class="brand-logo"> <img src="../static/images/x5learn_logo.png" alt="Logo"> </a> <a href="#" class="login-link">Log in</a> </header>
+		<a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo"> <img src="../static/images/x5learn_logo.png" alt="Logo"> </a> <a href="#" class="login-link">Log in</a> </header>
 	<div class="progressBar"> <span> Your Progress：</span>
 		<meter min="0" max="500" value="350">350 degrees</meter>
 	</div>
@@ -25,29 +25,26 @@
 	<div class="choiceFit">
 		  <div class="screen">
 			  <div class="screen__content">
+				  {% for i in range(0, len(questions)) %>
 					<div class="question-num">
 						<label>
-							<textarea placeholder="Question 1" id="passage" name="passage" rows="1" cols="10" contenteditable="false"></textarea>
+							<textarea placeholder={{i}} id="passage" name="passage" rows="1" cols="10" contenteditable="false"></textarea>
 						</label>
 					</div>
 
 					<div class="question-content">
-						<p> The cheetah is the fastest land animal. </p>
+						<p>{{questions[i]}}</p>
 					</div>
 
-				  <form>
+				  <form method="GET">
 					  <br>
-					  <input class="choice-linka" type="button" value="saber-toothed tiger"/>
+					  {% for option in options[i] %}}
+					  <input class="choice-linka" type="button" value={{option}}/>
 					  <br><br>
-					  <input class="choice-linka" type="button" value="jaguar"/>
-					  <br><br>
-					  <input class="choice-linka" type="button" value="snow leopard"/>
-					  <br><br>
-					  <input class="choice-linka" type="button" value="cheetah"/>
-					  <br><br>
-					  <input class="sub-link" type="button" value="submit" />
-					  <br><br>
+					  {% endfor %}
 				  </form>
+
+				  {% endfor %}
 
 			  </div>
 

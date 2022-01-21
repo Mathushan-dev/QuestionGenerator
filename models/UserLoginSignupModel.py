@@ -5,7 +5,7 @@ from flask import Flask
 db = SQLAlchemy()
 
 
-class User(db.Model):
+class UserLoginSignup(db.Model):
     __tablename__ = 'users'
     userId = db.Column(db.String, primary_key=True)
     hashedPassword = db.Column(db.String)
