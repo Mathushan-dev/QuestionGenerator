@@ -147,7 +147,7 @@ body {
 }
 
 .screen__background__shape1 {
-	height: 520px;
+	height: 50%;
 	width: 520px;
 	background: #FFF;
 	top: -50px;
@@ -156,7 +156,7 @@ body {
 }
 
 .screen__background__shape1b {
-	height: 520px;
+	height: 50%;
 	width: 520px;
 	background: #FFF;
 	top: -50px;
@@ -165,7 +165,7 @@ body {
 }
 
 .screen__background__shape2 {
-	height: 220px;
+	height: 25%;
 	width: 220px;
 	background: #9fd9b8;
 	top: -172px;
@@ -174,7 +174,7 @@ body {
 }
 
 .screen__background__shape2b {
-	height: 220px;
+	height: 50%;
 	width: 220px;
 	background: #7ad0f5;
 	top: -172px;
@@ -183,7 +183,7 @@ body {
 }
 
 .screen__background__shape3 {
-	height: 540px;
+	height: 50%;
 	width: 190px;
 	background: linear-gradient(270deg, #92a4a9, #69aac4);
 	top: -24px;
@@ -192,7 +192,7 @@ body {
 }
 
 .screen__background__shape3b {
-	height: 540px;
+	height: 50%;
 	width: 190px;
 	background: linear-gradient(270deg, #5babc2, #97c3ee);
 	top: -24px;
@@ -201,7 +201,7 @@ body {
 }
 
 .screen__background__shape4 {
-	height: 400px;
+	height: 50%;
 	width: 200px;
 	background: #ccffc1;
 	top: 420px;
@@ -210,7 +210,7 @@ body {
 }
 
 .screen__background__shape4b {
-	height: 400px;
+	height: 25%;
 	width: 200px;
 	background: #51e0a9;
 	top: 420px;

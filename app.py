@@ -1,14 +1,16 @@
 from flask import Flask, render_template
 from flask_migrate import Migrate
-from models.UserModel import db
-from routes.user_bp import user_bp
+from models.UserLoginSignupModel import db
+from routes.UserLoginSignupBP import UserLoginSignupBP
+from routes.UserQuestionHandlerBP import UserQuestionHandlerBP
 from config import DEBUG
 
 app = Flask(__name__)
 app.config.from_object('config')
 db.init_app(app)
 migrate = Migrate(app, db)
-app.register_blueprint(user_bp)
+app.register_blueprint(UserLoginSignupBP)
+app.register_blueprint(UserQuestionHandlerBP)
 
 
 @app.route('/')
