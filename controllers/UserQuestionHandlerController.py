@@ -52,14 +52,14 @@ def generateMCQuestions():
         intNumberOptions = int(numberOptions)
     except ValueError:
         intNumberOptions = 4
+    finally:
+        for statement in statements:
+            answer = findRandomKeyword(statement)
+            for question in applyT5Model(statement, findRandomKeyword(statement)):
+                answers.append(answer)
+                distractors = generateChoices(answer, intNumberOptions)
+                options.append(distractors)
+                questions.append(question)
 
-    for statement in statements:
-        answer = findRandomKeyword(statement)
-        for question in applyT5Model(statement, findRandomKeyword(statement)):
-            answers.append(answer)
-            distractors = generateChoices(answer, intNumberOptions)
-            options.append(distractors)
-            questions.append(question)
-
-    # todo temporarily save answers somewhere with a unique id to use for marking
-    render_template('multipleChoice.html', questions=questions, options=options)
+        # todo temporarily save answers somewhere with a unique id to use for marking
+        return render_template('multipleChoice.html', questions=questions, options=options)

@@ -25,10 +25,10 @@
 	<div class="choiceFit">
 		  <div class="screen">
 			  <div class="screen__content">
-				  {% for i in range(0, len(questions)) %>
+				  {% for i in range(0, questions|length) %}
 					<div class="question-num">
 						<label>
-							<textarea placeholder={{i}} id="passage" name="passage" rows="1" cols="10" contenteditable="false"></textarea>
+							<textarea placeholder="Question {{i + 1}}" id="passage" name="passage" rows="1" cols="10" contenteditable="false"></textarea>
 						</label>
 					</div>
 
@@ -38,7 +38,7 @@
 
 				  <form method="GET">
 					  <br>
-					  {% for option in options[i] %}}
+					  {% for option in options[i] %}
 					  <input class="choice-linka" type="button" value={{option}}/>
 					  <br><br>
 					  {% endfor %}
