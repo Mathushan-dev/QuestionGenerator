@@ -3,15 +3,18 @@ import string
 import nltk
 import scipy
 import spacy
+import readability
 from allennlp.predictors.predictor import Predictor
 from nltk import tokenize
 from nltk.tree import Tree
 from sentence_transformers import SentenceTransformer
 from transformers import TFGPT2LMHeadModel, GPT2Tokenizer
+from T5QuestionGenerator import applyT5Model
 
 nltk.download('punkt')
 nlp = spacy.load("en_core_web_sm")
-predictor = Predictor.from_path("https://s3-us-west-2.amazonaws.com/allennlp/models/elmo-constituency-parser-2018.03.14.tar.gz")
+predictor = Predictor.from_path(
+    "https://s3-us-west-2.amazonaws.com/allennlp/models/elmo-constituency-parser-2018.03.14.tar.gz")
 # The model below an All-round model tuned for many use-cases. Trained on a large and diverse dataset of over 1 billion training pairs.
 BERTModel = SentenceTransformer('sentence-transformers/all-distilroberta-v1')
 
@@ -63,7 +66,7 @@ def actiavteTopKPSampling(model, inputIds, maximumLengthStatement):
         top_p=0.85,
         top_k=30,
         repetition_penalty=10.0,
-        num_return_sequences=10
+        num_return_sequences=5
     )
 
 
@@ -80,30 +83,30 @@ def element1(x):
     return x[1]
 
 
-def findFinalFalseStatement(docs, query):
-    docEmbeddings = BERTModel.encode(docs)
-    queryEmbeddings = BERTModel.encode([query])
-    scores = \
-        scipy.spatial.distance.cdist(queryEmbeddings, docEmbeddings, "cosine")[0]
-    docScorePairs = zip(range(len(scores)), scores)
-    docScorePairs = sorted(docScorePairs, key=element1)
-    dissimilarStatements = []
-    for index, distance in docScorePairs:
-        dissimilarStatements.append(docs[index])
-    try:
-        return next(reversed(dissimilarStatements))
-    except StopIteration:
-        return None
+def getReadabilityScore(text):
+    results = readability.getmeasures(text, lang='en')
+    return results['readability grades']['FleschReadingEase']
 
 
-def completeRightMostPStatement(incompleteRightMostPStatement, originalStatement):
+def slice_per(source, step):
+    return [source[i::step] for i in range(step)]
+
+
+def findFinalFalseStatement(generatedStatements):
+    return slice_per(sorted(generatedStatements, key=getReadabilityScore), 4)[-1][0]
+
+
+def completeRightMostPStatement(incompleteRightMostPStatement):
     tokeniser = GPT2Tokenizer.from_pretrained("gpt2")
     model = TFGPT2LMHeadModel.from_pretrained("gpt2", pad_token_id=tokeniser.eos_token_id)
     inputIds = tokeniser.encode(incompleteRightMostPStatement, return_tensors='tf')
-    maximumLengthStatement = len(incompleteRightMostPStatement.split()) + 40 #
+    maximumLengthStatement = len(incompleteRightMostPStatement.split()) + 40
     sampleOuputs = actiavteTopKPSampling(model, inputIds, maximumLengthStatement)
     generatedStatements = generateSentences(sampleOuputs, tokeniser)
-    return findFinalFalseStatement(generatedStatements, originalStatement)
+    cleanedGeneratedStatements = []
+    for statement in generatedStatements:
+        cleanedGeneratedStatements.append(statement.replace(u'\xa0', u''))
+    return findFinalFalseStatement(cleanedGeneratedStatements)
 
 
 def falsifyStatement(originalStatement):
@@ -114,7 +117,8 @@ def falsifyStatement(originalStatement):
     cleanedRightMostVP = removeTreeAttributes(rightMostVP)
     longestRightMostP = max(cleanedRightMostNP, cleanedRightMostVP)
     incompleteRightMostPStatement = removeRightMostP(cleanedOriginalStatement, longestRightMostP)
-    return correctSpaces(completeRightMostPStatement(incompleteRightMostPStatement, originalStatement))
+    print(incompleteRightMostPStatement)
+    return applyT5Model(incompleteRightMostPStatement, None, False)
 
 
 def cleanUpStatement(originalStatement):
@@ -122,5 +126,5 @@ def cleanUpStatement(originalStatement):
 
 
 if __name__ == "__main__":
-    print(falsifyStatement("The young boy played tag with his friends."))
+    print(falsifyStatement("The student was very sad and he started crying."))
 # todo maybe measure level of readability for assessing difficulty of generated false statements - text stat, bleu score
