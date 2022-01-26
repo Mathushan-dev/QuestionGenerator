@@ -1,0 +1,104 @@
+/* First div - information div */ 
+.first-div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 20px 0px 20px;
+}
+
+.first-div h2{
+    text-decoration: underline;
+    color: #5c96a6;
+    font-size: 33px;
+    margin-bottom: 0;
+}
+
+.text1{
+    font-size: 25px;
+    font-weight: normal;
+}
+
+.text2{
+    font-size: 20px;
+}
+
+.try-link{
+    align-self: center;
+    text-decoration: none;
+    color: white;
+    background-color: #5c96a6;
+    padding: 10px 30px;
+    border: 1px solid #5c96a6;
+    border-radius: 24px;
+    text-transform: uppercase;
+}
+
+.try-link:hover{
+    background-color: white;
+    color: #5c96a6;
+    text-decoration: underline;
+}
+
+
+/* Second div - why choose us div */ 
+
+.second-div{
+    background-color: #EEEEEE;
+    margin: 10px auto;
+    padding: 10px 50px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.second-div h1{
+    color: #5c96a6;
+    font-size: 35px; 
+}
+
+.features{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.feature1, .feature2, .feature3{
+    width: 33.3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px 50px;
+}
+
+.feature1, .feature2{
+    border-right: 1px solid grey;
+}
+
+.feature1 h2, .feature2 h2, .feature3 h2{
+    margin: 0 0;
+}
+
+/* Third div - try free div */ 
+
+.third-div{
+    margin: 10px auto;
+    padding: 10px 50px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.third-div h1{
+    color: black;
+    font-size: 30px;
+    text-transform: uppercase;
+}
