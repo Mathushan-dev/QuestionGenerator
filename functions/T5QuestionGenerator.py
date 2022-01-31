@@ -29,7 +29,7 @@ def applyT5Model(statement, answer):
 def generateQuestionsFromBeamOutputs(beamOutputs):
     questions = []
     for output in beamOutputs:
-        questions.append(t5Tokeniser.decode(output, skip_special_tokens=True, clean_up_tokenization_spaces=True)).split(' ', 1)[1])
+        questions.append(t5Tokeniser.decode(output, skip_special_tokens=True, clean_up_tokenization_spaces=True).split(' ', 1)[1])
 
     return questions
 
