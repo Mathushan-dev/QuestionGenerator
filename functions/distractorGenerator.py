@@ -1,60 +1,32 @@
-import nltk
-
-nltk.download('wordnet')
-
-from nltk.corpus import wordnet
+from collections import OrderedDict
+from sense2vec import Sense2Vec
 import random
-
+import os
+s2v = Sense2Vec().from_disk(os.path.abspath("../s2v_old"))
 
 def generateChoices(word, totalChoicesRequired):
-    syns = generateSynset(word)
-    syn = selectValidSyn(syns, word)
-    choices = generateDistractors(syn, word)
-    requiredChoices = getRandomChoices(choices, totalChoicesRequired)
-    requiredChoices.append(word)
-    return requiredChoices
+    answer = word
+    global s2v
+    choices = []
+    word = word.lower().replace(" ", "_")
+
+    sense = s2v.get_best_sense(word)
+    mostSimilarWord = s2v.most_similar(sense, n=20)
+
+    for option in mostSimilarWord:
+        distractor = option[0].split("|")[0].replace("_", " ").lower()
+        if distractor.lower() != word.lower():
+            choices.append(distractor.title())
 
 
-def generateSynset(word):
-    word = word.lower()
-    syns = wordnet.synsets(word)
-
-    return syns
-
-
-def selectValidSyn(syns, word):
-    # todo using syns[0] because assumption of the word's definition is made (need to distinguish correct definition)
-    syn = syns[0]
-    return syn
-
-
-def generateDistractors(syn, word):
-    distractors = []
-    word = word.lower()
-    word = word.replace(" ", "_")
-
-    hypernyms = syn.hypernyms()
-    if len(hypernyms) == 0:
-        return distractors
-
-    # todo using hypernyms[0] because assumption of the word's hypernym is made (need to distinguish correct hypernym)
-    for hyponym in hypernyms[0].hyponyms():
-        distractor = hyponym.lemmas()[0].name()
-        if distractor == word:
-            continue
-        if distractor is not None and distractor not in distractors:
-            distractors.append(distractor)
-
-    return distractors
-
+    return getRandomChoices(list(OrderedDict.fromkeys(choices)), answer, totalChoicesRequired)
 
 # Using random ensures multiple users will get different possible choices for mcq's
-def getRandomChoices(choices, totalChoicesRequired):
-    return random.sample(choices, totalChoicesRequired - 1)
+def getRandomChoices(choices, answer, totalChoicesRequired):
+    shuffledDistractors = random.sample(choices, totalChoicesRequired - 1)
+    shuffledDistractors.insert(random.randrange(len(shuffledDistractors) + 1), answer)
+    return shuffledDistractors
 
 
 if __name__ == "__main__":
-    print(generateChoices("machine learning", 4))
-#  todo some words may not appear in wordnet: catch errors and provide alternative way of generating distractors - (
-#  wikileaks)
-#  todo talk about weaknesses of using wordnet and why alternative was chosen
+    print(generateChoices("monkey", 4))
