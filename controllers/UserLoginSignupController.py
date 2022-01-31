@@ -1,4 +1,3 @@
-import bcrypt
 from flask import render_template, request
 from models.UserLoginSignupModel import UserLoginSignup
 from flask_sqlalchemy import SQLAlchemy

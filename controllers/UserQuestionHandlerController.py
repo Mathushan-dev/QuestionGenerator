@@ -1,4 +1,3 @@
-import bcrypt
 import random
 from functions.distractorGenerator import generateChoices
 from functions.falsifyStatement import falsifyStatement
@@ -6,7 +5,6 @@ from functions.keywordGenerator import findRandomKeyword
 from functions.T5QuestionGenerator import applyT5Model
 from flask import render_template, request
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import IntegrityError
 from config import DEBUG
 
 db = SQLAlchemy()
