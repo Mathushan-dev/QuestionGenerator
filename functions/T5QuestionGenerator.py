@@ -8,8 +8,8 @@ deviceT5Model = t5Model.to(device)
 
 
 def generateBeamOutputs(statement, answer):
-    modelInput = "context: " + statement + " " + "answer: " + answer + " </s>"
-    encoding = t5Tokeniser.encode_plus(modelInput, max_length=512, padding=True, return_tensors="pt")
+    modelInput = "context: " + statement + " " + "answer: " + answer
+    encoding = t5Tokeniser.encode_plus(modelInput, padding=True, return_tensors="pt")
     inputIds, attentionMask = encoding["input_ids"].to(device), encoding["attention_mask"].to(device)
     deviceT5Model.eval()
     return deviceT5Model.generate(
@@ -29,7 +29,7 @@ def applyT5Model(statement, answer):
 def generateQuestionsFromBeamOutputs(beamOutputs):
     questions = []
     for output in beamOutputs:
-        questions.append(t5Tokeniser.decode(output, skip_special_tokens=True, clean_up_tokenization_spaces=True))
+        questions.append(t5Tokeniser.decode(output, skip_special_tokens=True, clean_up_tokenization_spaces=True)).split(' ', 1)[1])
 
     return questions
 
