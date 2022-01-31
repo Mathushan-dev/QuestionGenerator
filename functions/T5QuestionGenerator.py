@@ -17,7 +17,7 @@ def generateBeamOutputs(statement, answer):
         max_length=72,
         early_stopping=True,
         num_beams=5,
-        num_return_sequences=3
+        num_return_sequences=1
     )
 
 
