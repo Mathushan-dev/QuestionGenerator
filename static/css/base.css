@@ -1,10 +1,15 @@
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-	font-family: Raleway, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2&family=Inter:wght@300&family=Poppins:wght@200&display=swap');
+
+*, *::before, *::after{
+    box-sizing: border-box;
 }
 
-body {
-	background: linear-gradient(120deg, #ffffff, #ffffff);
+/* Whole body */ 
+body{
+    background-color: white;
+    font-family: 'Poppins', sans-serif;
+    padding: 0;
+    margin: 0;
+    font-size: 1.2rem;
+    min-height: 100vh;
 }
