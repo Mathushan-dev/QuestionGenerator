@@ -56,7 +56,7 @@ def generateMCQuestions():
                 continue
             answer = findRandomKeyword(statement)
             question = applyT5Model(statement, findRandomKeyword(statement))
-            answers.append(answer)
+            answers.append(answer.lower())
             distractors = generateChoices(answer, intNumberOptions)
             options.append(distractors)
             questions.append(question)

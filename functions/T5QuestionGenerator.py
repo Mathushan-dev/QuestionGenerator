@@ -1,37 +1,18 @@
-import torch
-from transformers import T5ForConditionalGeneration, T5Tokenizer
+from transformers import AutoModelWithLMHead, AutoTokenizer
 
-t5Model = T5ForConditionalGeneration.from_pretrained("mrm8488/t5-base-finetuned-question-generation-ap")
-t5Tokeniser = T5Tokenizer.from_pretrained("mrm8488/t5-base-finetuned-question-generation-ap")
-device = torch.device("cpu")
-deviceT5Model = t5Model.to(device)
+tokenizer = AutoTokenizer.from_pretrained("mrm8488/t5-base-finetuned-question-generation-ap")
+model = AutoModelWithLMHead.from_pretrained("mrm8488/t5-base-finetuned-question-generation-ap")
 
 
-def generateBeamOutputs(statement, answer):
-    modelInput = "context: " + statement + " " + "answer: " + answer
-    encoding = t5Tokeniser.encode_plus(modelInput, padding=True, return_tensors="pt")
-    inputIds, attentionMask = encoding["input_ids"].to(device), encoding["attention_mask"].to(device)
-    deviceT5Model.eval()
-    return deviceT5Model.generate(
-        input_ids=inputIds, attention_mask=attentionMask,
-        max_length=72,
-        early_stopping=True,
-        num_beams=5,
-        num_return_sequences=1
-    )
+def applyT5Model(context, answer, max_length=64):
+    input_text = "answer: %s  context: %s </s>" % (answer, context)
+    features = tokenizer([input_text], return_tensors='pt')
 
+    output = model.generate(input_ids=features['input_ids'],
+                            attention_mask=features['attention_mask'],
+                            max_length=max_length)
 
-def applyT5Model(statement, answer):
-    beamOutputs = generateBeamOutputs(statement, answer)
-    return generateQuestionsFromBeamOutputs(beamOutputs)
-
-
-def generateQuestionsFromBeamOutputs(beamOutputs):
-    questions = []
-    for output in beamOutputs:
-        questions.append(t5Tokeniser.decode(output, skip_special_tokens=True, clean_up_tokenization_spaces=True).split(' ', 1)[1])
-
-    return questions
+    return tokenizer.decode(output[0], skip_special_tokens=True, clean_up_tokenization_spaces=True).split(' ', 1)[1]
 
 
 if __name__ == "__main__":

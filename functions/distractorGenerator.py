@@ -2,7 +2,9 @@ from collections import OrderedDict
 from sense2vec import Sense2Vec
 import random
 import os
+
 s2v = Sense2Vec().from_disk(os.path.abspath("../QuestionGenerator/s2v_old"))
+
 
 def generateChoices(word, totalChoicesRequired):
     answer = word
@@ -16,10 +18,10 @@ def generateChoices(word, totalChoicesRequired):
     for option in mostSimilarWord:
         distractor = option[0].split("|")[0].replace("_", " ").lower()
         if distractor.lower() != word.lower():
-            choices.append(distractor.title())
-
+            choices.append(distractor.title().lower())
 
     return getRandomChoices(list(OrderedDict.fromkeys(choices)), answer, totalChoicesRequired)
+
 
 # Using random ensures multiple users will get different possible choices for mcq's
 def getRandomChoices(choices, answer, totalChoicesRequired):
