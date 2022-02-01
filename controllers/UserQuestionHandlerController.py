@@ -16,7 +16,7 @@ def generateTFQuestions():
     context = request.form.get("context")  # todo assuming context is at least 5 words
     statements = context.split(".")
     if len(statements) == 0:
-        return render_template('enterText.html')  # this should never occur as frontend validates input text is at
+        return render_template('try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
 
     questions = []
@@ -29,7 +29,7 @@ def generateTFQuestions():
             questions.append(statement)
             answers.append(True)
     # todo temporarily save answers somewhere with a unique id to use for marking
-    render_template('trueFalse.html', questions=questions)
+    render_template('true-false-template.html', questions=questions)
 
 
 def generateMCQuestions():
@@ -39,7 +39,7 @@ def generateMCQuestions():
     numberOptions = request.form.get("numberOptions")
     statements = context.split(".")
     if len(statements) == 0:
-        return render_template('enterText.html')  # this should never occur as frontend validates input text is at
+        return render_template('try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
 
     questions = []
@@ -52,12 +52,14 @@ def generateMCQuestions():
         intNumberOptions = 4
     finally:
         for statement in statements:
+            if statement.strip() == "":
+                continue
             answer = findRandomKeyword(statement)
-            for question in applyT5Model(statement, findRandomKeyword(statement)):
-                answers.append(answer)
-                distractors = generateChoices(answer, intNumberOptions)
-                options.append(distractors)
-                questions.append(question)
+            question = applyT5Model(statement, findRandomKeyword(statement))
+            answers.append(answer)
+            distractors = generateChoices(answer, intNumberOptions)
+            options.append(distractors)
+            questions.append(question)
 
         # todo temporarily save answers somewhere with a unique id to use for marking
-        return render_template('multipleChoice.html', questions=questions, options=options)
+        return render_template('multiple-choice-template.html', questions=questions, options=options)

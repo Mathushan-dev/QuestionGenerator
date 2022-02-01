@@ -2,7 +2,7 @@ from collections import OrderedDict
 from sense2vec import Sense2Vec
 import random
 import os
-s2v = Sense2Vec().from_disk("../s2v_old")
+s2v = Sense2Vec().from_disk(os.path.abspath("../QuestionGenerator/s2v_old"))
 
 def generateChoices(word, totalChoicesRequired):
     answer = word

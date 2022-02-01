@@ -18,7 +18,9 @@ Use following command to force Python version in virtual environment is used to 
 4. transformers==2.8.0
 5. sentence-transformers==0.4.0
 6. tensorflow-2.7.0
-7. 
+7. flask_migrate
+8. bcrypt
+9. psycopg2-binary
 
 Required External Packages:
 

@@ -1,3 +1,4 @@
+"""
 import textrazor
 
 textrazor.api_key = "30fe67fd47af0a4748a1f6646973773bb0286768e9272425170ee562"
@@ -25,15 +26,16 @@ def findQuestionKeywords(text):
 
 # todo handle no keywords error
 
+ """
 
 def findRandomKeyword(text):
     return "cheetah"
 
 
-def fake(text):
+""" def fake(text):
     keywords = findQuestionKeywords(text)
     if len(keywords) > 1:
         return random.choice(keywords)
     return keywords
 
-# maybe use text rank, also consider wikifier
+# maybe use text rank, also consider wikifier """
