@@ -17,17 +17,23 @@
         </header>
         <div class="quiz-container">
             {% for i in range(0, questions|length) %}
-            <div class="question-number">
-                <h3>Question {{i+1}} of {{questions|length}}</h3>
-            </div>
-            <div class="question">
-                <p id="question">{{questions[i]}}</p>
-            </div>
-            <div class="options">
+                <div class="question-number">
+                    <h3>Question {{i+1}} of {{questions|length}}</h3>
+                </div>
+                <div class="question">
+                    <p id="question">{{questions[i]}}</p>
+                </div>
                 {% for option in options[i] %}
-                <div id="{{i-1}}}" class="option{{i}}}" data-number="{{i}}}" value={{option}}>{{option}}</div>
+                    {% if (option == correct) %}
+                        <div class="options">
+                            <button type="button" class="option-button" data-number="1">{{options}}}</button>
+                        </div>
+                    {% else %}
+                        <div class="options">
+                            <button type="button" class="option-button" data-number="2">{{option}}</button>
+                        </div>
+                    {% endif %}
                 {% endfor %}
-            </div>
             {% endfor %}
         </div>
         <script src="../static/javascript/multiple-choice.js"></script>
