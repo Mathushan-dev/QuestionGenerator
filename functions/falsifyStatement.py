@@ -13,7 +13,7 @@ nltk.download('punkt')
 nlp = spacy.load("en_core_web_sm")
 predictor = Predictor.from_path("https://s3-us-west-2.amazonaws.com/allennlp/models/elmo-constituency-parser-2018.03.14.tar.gz")
 # The model below an All-round model tuned for many use-cases. Trained on a large and diverse dataset of over 1 billion training pairs.
-BERTModel = SentenceTransformer('sentence-transformers/all-distilroberta-v1')
+BERTModel = SentenceTransformer('sentence-transformers/distilbert-base-nli-stsb-mean-tokens')
 
 
 def generateTree(cleanedOriginalStatement):
@@ -91,8 +91,8 @@ def findFinalFalseStatement(docs, query):
     for index, distance in docScorePairs:
         dissimilarStatements.append(docs[index])
     try:
-        return next(reversed(dissimilarStatements))
-    except StopIteration:
+        return dissimilarStatements[len(dissimilarStatements) % 2]
+    except IndexError:
         return None
 
 
@@ -112,7 +112,14 @@ def falsifyStatement(originalStatement):
     rightMostNP, rightMostVP = getRightMostNPVP(tree)
     cleanedRightMostNP = removeTreeAttributes(rightMostNP)
     cleanedRightMostVP = removeTreeAttributes(rightMostVP)
-    longestRightMostP = max(cleanedRightMostNP, cleanedRightMostVP)
+    if cleanedRightMostNP is None and cleanedRightMostVP is None:
+        return "A false statement could not be generated for\"" + originalStatement + "\"."
+    if cleanedRightMostNP is None:
+        longestRightMostP = cleanedRightMostVP
+    if cleanedRightMostVP is None:
+        longestRightMostP = cleanedRightMostNP
+    if cleanedRightMostVP is not None and cleanedRightMostNP is not None:
+        longestRightMostP = max(cleanedRightMostNP, cleanedRightMostVP)
     incompleteRightMostPStatement = removeRightMostP(cleanedOriginalStatement, longestRightMostP)
     return correctSpaces(completeRightMostPStatement(incompleteRightMostPStatement, originalStatement))
 
@@ -122,5 +129,5 @@ def cleanUpStatement(originalStatement):
 
 
 if __name__ == "__main__":
-    print(falsifyStatement("The young boy played tag with his friends."))
+    print(falsifyStatement("The old woman was sitting down and sipping tea."))
 # todo maybe measure level of readability for assessing difficulty of generated false statements - text stat, bleu score

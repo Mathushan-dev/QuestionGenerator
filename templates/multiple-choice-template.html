@@ -11,29 +11,30 @@
     </head>
     <body>
         <header class="main-header">
-            <a href="launchpage.html" class="brand-logo">
+            <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo">
                 <img src="../static/images/x5learn_logo.png" alt="Logo">
             </a>
         </header>
         <div class="quiz-container">
-            <div class="question-number">
-                <h3>Question 1 of 1</h3>
-            </div>
-            <div class="question">
-                <p id="question">Which animal is the fastest land animal?</p>
-            </div>
-            <div class="options">
-                <button type="button" class="option-button" data-number="1">Cheeath</button>
-            </div>
-            <div class="options">
-                <button type="button" class="option-button" data-number="2">Lion</button>
-            </div>
-            <div class="options">
-                <button type="button" class="option-button" data-number="3">Jaguar</button>
-            </div>
-            <div class="options">
-                <button type="button" class="option-button" data-number="4">Tiger</button>
-            </div>
+            {% for i in range(0, questions|length) %}
+                <div class="question-number">
+                    <h3>Question {{i+1}} of {{questions|length}}</h3>
+                </div>
+                <div class="question">
+                    <p id="question">{{questions[i]}}</p>
+                </div>
+                {% for option in options[i] %}
+                    {% if (option == correct) %}
+                        <div class="options">
+                            <button type="button" class="option-button" data-number="1">{{options}}}</button>
+                        </div>
+                    {% else %}
+                        <div class="options">
+                            <button type="button" class="option-button" data-number="2">{{option}}</button>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
         </div>
         <script src="../static/javascript/multiple-choice.js"></script>
     </body>
