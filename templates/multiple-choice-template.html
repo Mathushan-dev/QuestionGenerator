@@ -24,13 +24,13 @@
                     <p id="question">{{questions[i]}}</p>
                 </div>
                 {% for option in options[i] %}
-                    {% if (option == correct) %}
+                    {% if (option == answers[i]) %}
                         <div class="options">
-                            <button type="button" class="option-button" data-number="1">{{option}}</button>
+                            <button type="button" class="option-button" data-number="1" data-questionnumber={{i}}>{{option}}</button>
                         </div>
                     {% else %}
                         <div class="options">
-                            <button type="button" class="option-button" data-number="2">{{option}}</button>
+                            <button type="button" class="option-button" data-number="2" data-questionnumber={{i}}>{{option}}</button>
                         </div>
                     {% endif %}
                 {% endfor %}
