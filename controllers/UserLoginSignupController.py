@@ -1,4 +1,3 @@
-import bcrypt
 from flask import render_template, request
 from models.UserLoginSignupModel import UserLoginSignup
 from flask_sqlalchemy import SQLAlchemy
@@ -18,14 +17,18 @@ def index():
         if firstLaunch:
             clearTable()
             firstLaunch = False
-    return render_template('index.html')
+    return render_template('launchpage.html')
 
 
 def loginSignupForm(message=""):
     if DEBUG:
         print("loginForm called", message)
-    return render_template('login.html', loginErrorMessage=message)
+    return render_template('signup-login.html', loginErrorMessage=message)
 
+def loadEnterText():
+    if DEBUG:
+        print("try-input-passage page called")
+    return render_template('try-input-passage.html')
 
 def signUp():
     if DEBUG:
@@ -45,7 +48,7 @@ def signUp():
     db.session.commit()
     global LoggedOnUserId
     LoggedOnUserId = userId
-    return render_template('enterText.html')
+    return loadEnterText()
 
 
 def logIn():
@@ -65,7 +68,7 @@ def logIn():
         if users[0].isPasswordValid(password):
             global LoggedOnUserId
             LoggedOnUserId = userId
-            return render_template('enterText.html')  # todo change to user homepage
+            return loadEnterText()  # todo change to user homepage
         return loginSignupForm(message="The password is incorrect.")
 
 

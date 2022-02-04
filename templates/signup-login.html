@@ -11,27 +11,29 @@
     </head>
     <body>
         <header class="main-header">
-            <a href="launchpage.html" class="brand-logo">
+            <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo">
                 <img src="../static/images/x5learn_logo.png" alt="Logo">
             </a>
         </header>
         <div class="screen">
             <div class="container" id="container">
                 <div class="form-container sign-up-container">
-                    <form action="#">
+                    <form method="POST">
                         <h1>Sign Up</h1>
-                        <input type="email" id="email" placeholder="Email" />
-                        <input type="password" id="password" placeholder="Password" />
-                        <button>Sign Up</button>
+                        <p>{{loginErrorMessage}}</p>
+                        <input type="email" id="email" placeholder="Email" name="email"/>
+                        <input type="password" id="password" placeholder="Password" name="password"/>
+                        <button formaction="/signUp">Sign Up</button>
                     </form>
                 </div>
                 <div class="form-container log-in-container">
-                    <form action="#">
+                    <form method="POST">
                         <h1>Log In</h1>
-                        <input type="email" id="email" placeholder="Email" />
-                        <input type="password" id="password" placeholder="Password" />
-                        <a href="#">Forgot your password?</a>
-                        <button>Log In</button>
+                        <p>{{loginErrorMessage}}</p>
+                        <input type="email" id="email" placeholder="Email" name="email"/>
+                        <input type="password" id="password" placeholder="Password" name="password"/>
+                        <a href="#">Forgot your password?</a><!--todo do this-->
+                        <button formaction="/logIn">Log In</button>
                     </form>
                 </div>
                 <div class="overlay-container">
