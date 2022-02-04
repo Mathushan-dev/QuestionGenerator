@@ -38,7 +38,6 @@
     border-radius: 5px;
     padding:15px;
     position: relative;
-    overflow: scroll;
     transition: 0.4s;
 }
 
@@ -47,6 +46,23 @@
     background-color: #8CE6FF;
 }
 
+.button .btn{
+    padding: 10px 30px;
+    background-color: #5c96a6;
+    font-size: 18px;
+    color: white;
+    border:none;
+    cursor:pointer;
+    border-radius: 5px;
+    display: inline-block;
+    margin:10px 0;
+    transition: 0.4s;
+}
+
+.button button:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0 18px 36px -18px inset;
+}
 .correct button, .correct button:hover{
     background-color: green;
 }
