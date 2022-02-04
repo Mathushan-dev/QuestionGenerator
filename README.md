@@ -30,4 +30,4 @@ Required External Packages:
 
 Final Execution:
 
-3. Execute Program with pyenv version of python
+1. Execute Program with pyenv version of python
