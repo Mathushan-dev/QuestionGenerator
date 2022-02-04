@@ -62,4 +62,4 @@ def generateMCQuestions():
             questions.append(question)
 
         # todo temporarily save answers somewhere with a unique id to use for marking
-        return render_template('multiple-choice-template.html', questions=questions, options=options)
+        return render_template('multiple-choice-template.html', questions=questions, options=options, correct=answer)
