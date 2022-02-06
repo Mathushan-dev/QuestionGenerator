@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>X5Learn</title>
+        <link href="../static/css/base.css" rel="stylesheet">
+        <link href="../static/css/profile.css" rel="stylesheet">
+        <link href="../static/css/header.css" rel="stylesheet">
+    </head>
+    <body>
+        <header class="main-header">
+            <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo">
+                <img src="../static/images/x5learn_logo.png" alt="Logo">
+            </a>
+        </header>
+            <div class="container">
+                <div class="card-body">
+                    <div class="user-info">
+                        <img src="../static/images/user-icon.png" alt="User Icon">
+                        <h2>NAME SURNAME</h2>
+                    </div>
+                    <div class="test-info">
+                        <div class="general-stats">
+                            <h2>Tests Completed: 1</h2>
+                            <div class="detailed-stats">
+                                <div class="correct-incorrect-info">
+                                    <h5 class="correct">Correct Answers: 15</h5>
+                                    <h5 class="incorrect">Incorrect Answers: 5</h5>
+                                </div>
+                                <div class="percentage">
+                                    <h4>75%</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="specific-info">
+                            <h1>Your Test Records</h1>
+                            <div class="test" id="test">
+                                <h3 class="test-name">Biology</h3>
+                                <h3 class="test-date">2 days ago.</h3>
+                            </div>
+                        </div>
+                        <div id="testModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <p>Test: Biology</p>
+                                <p>Date Taken: 02/06/2022</p>
+                                <p class="correct">Correct: 15</p>
+                                <p class="incorrect">Incorrect: 5</p>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <script src="../static/javascript/modal.js"></script>
+    </body>
+    
