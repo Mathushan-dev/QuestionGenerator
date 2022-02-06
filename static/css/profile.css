@@ -1,0 +1,155 @@
+body{
+    background-color: #e2e8f0;
+}
+
+.container{
+    margin-top: 40px;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 100px;
+}
+
+/* Left Side */ 
+.user-info{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    gap: 10px;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 30px;
+}
+
+.user-info h2{
+    font-weight: bold;
+}
+
+/* Right Side */ 
+.test-info{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    align-content: center;
+    gap: 20px;
+}
+
+/* Right Top Side */ 
+.general-stats{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 30px;
+}
+
+.general-stats h2{
+    font-weight: normal;
+    color: blue;
+}
+
+.detailed-stats{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 300px;
+}
+
+.correct{
+    color: green;
+}
+
+.incorrect{
+    color: red;
+}
+
+.percentage h4{
+    color: orange;
+    font-size: 30px;
+}
+
+/* Right Bottom Side */ 
+.specific-info{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    align-content: center;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 20px;
+    justify-content: center;
+    gap: 5px;
+}
+
+.specific-info h1{
+    align-self: center;
+    font-size: 25px;
+}
+
+.specific-info div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #8BF7C5;
+    transition: 0.5s;
+}
+
+.specific-info div:hover{
+    cursor: pointer;
+    background-color: #8FFFCB;
+    transform: scale(1.05);
+}
+
+.modal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    font-weight: bold;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
