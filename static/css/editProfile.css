@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2&family=Inter:wght@300&family=Poppins:wght@200&display=swap');
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+
+/* Whole body */
+
+body {
+	background-color: white;
+	font-family: 'Poppins', sans-serif;
+	font-size: 1.2rem;
+	min-height: 100vh;
+
+}
+
+
+.ContentBody{
+
+    height : auto;
+    width  : 60%;
+    margin : auto;
+
+}
+
+.UserInfo{
+
+    background-color: #f2f2f5;
+    width : 100%;
+    //height : 300px;
+    justify-self: flex-start;
+    display: flex;
+    align-items: flex-start;
+    flex: 60%;
+    height: auto;
+    overflow: hidden;
+    margin-right: 16px;
+
+
+}
+
+.Pic{
+    margin : 20px 50px 20px 50px;
+    height : 200px;
+    width  : 200px;
+    //background: #86c7ff;
+
+    font-size: 18px;
+    color: #5f84a8;
+    border: 1px #d7edff solid;
+    border-radius: 8px;
+    //margin: 0px 0px 7px 0px;
+    box-shadow:5px 5px 10px gray;
+    background: linear-gradient(to right,#d7edff, #a7d6ff);
+}
+
+
+
+.Avatar{
+    height : 100%;
+    width : 100%;
+}
+
+.Welcome{
+    margin-top: 20px;
+   // background-color: #5e0623;
+    height : 200px;
+    width : 800px;
+    text-align: center;
+    background: #fdd4b5;
+    font-size: 18px;
+    color: #5f84a8;
+    border: 1px #e7daca solid;
+    border-radius: 8px;
+     //margin: 0px 0px 7px 0px;
+     box-shadow:5px 5px 10px gray;
+
+  background: linear-gradient(to right, #e7daca, #ffc987); /* 标准的语法（必须放在最后） */}
+
+
+
+.Msg{
+   font-family: "Hiragino Kaku Gothic Pro";
+   font-size: 100px;
+}
+
+.EditInfo{
+    display: block;
+
+    width: 100%;
+    height : auto;
+    margin-top: 10px;
+}
+
+.InfoHead{
+    background-color: aquamarine;
+    height: 48px;
+    line-height: 48px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2e2e2e;
+    padding-left: 16px;
+    border-bottom: 1px solid #f0f0f2;
+}
+
+.InfoContent{
+    padding: 16px 58px 16px 0;
+    position: relative;
+    background-color: bisque;
+}
+
+
+.Lists {
+    line-height: 24px;
+    font-size: 20px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: baseline;
+    align-items: center;
+}
+
+.ContentShowLeft{
+    width: 56px;
+    color: #555666;
+    margin-right: 40px;
+    flex-shrink: 0;
+    padding-left: 16px;
+    display: flex;
+    box-sizing: content-box;
+    justify-content: space-between;
+}
+
+.ContentShowRight{
+    margin-top: 10px;
+    display: flex;
+    width: 360px;
+
+}
+
+.InputBox{
+
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+}
+
+
+
+.SubmitButton{
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #08f5e1;
+  border: none;
+  color: #110b0b;
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+  width: 150px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.SubmitButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+.SubmitButton span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.SubmitButton:hover span {
+  padding-right: 25px;
+}
+.SubmitButton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+
+
+
+
+
