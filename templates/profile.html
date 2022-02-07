@@ -20,6 +20,18 @@
                     <div class="user-info">
                         <img src="../static/images/user-icon.png" alt="User Icon">
                         <h2>NAME SURNAME</h2>
+                        <h2>COUNTRY</h2>
+                        <button class="change-info" id="change-info-button">Edit</button>
+                    </div>
+                    <div id="infoModal" class="info-modal">
+                        <div class="info-modal-content">
+                            <span class="close2">&times;</span>
+                            <input type="text" id="name" placeholder="Name" name="name"/>
+                            <input type="text" id="surname" placeholder="Surname" name="surname"/>
+                            <input type="text" id="location" placeholder="Location" name="location"/> 
+                            <input class="email" type="email" id="email" placeholder="Email" name="email" disabled/>
+                            <button class="save-info" id="save-info-button">Save Changes</button>
+                        </div>
                     </div>
                     <div class="test-info">
                         <div class="general-stats">
@@ -41,8 +53,8 @@
                                 <h3 class="test-date">2 days ago.</h3>
                             </div>
                         </div>
-                        <div id="testModal" class="modal">
-                            <div class="modal-content">
+                        <div id="testModal" class="test-modal">
+                            <div class="test-modal-content">
                                 <span class="close">&times;</span>
                                 <p>Test: Biology</p>
                                 <p>Date Taken: 02/06/2022</p>
@@ -52,6 +64,7 @@
                         </div>
                 </div>
             </div>
-            <script src="../static/javascript/modal.js"></script>
+            <script src="../static/javascript/test-modal.js"></script>
+            <script src="../static/javascript/info-modal.js"></script>
     </body>
     
