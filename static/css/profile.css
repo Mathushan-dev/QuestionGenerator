@@ -35,6 +35,46 @@ body{
     font-weight: bold;
 }
 
+.change-info, .save-info{
+    text-decoration: none;
+    color: white;
+    background-color: #5c96a6;
+    padding: 10px 30px;
+    border: 1px solid #5c96a6;
+    border-radius: 24px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.change-info{
+    scale: 1.5;
+}
+
+.change-info:hover, .save-info:hover{
+    background-color: white;
+    color: #2596be;
+    text-decoration: underline;
+}
+
+
+.info-modal-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.info-modal-content input{
+        background-color: #eee;
+        border: none;
+        padding: 12px 15px;
+        margin: 8px 0;
+        width: 100%;
+}
+
+.email{
+    cursor: not-allowed;
+}
+
+
 /* Right Side */ 
 .test-info{
     display: flex;
@@ -119,7 +159,7 @@ body{
     transform: scale(1.05);
 }
 
-.modal{
+.test-modal, .info-modal{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -132,24 +172,32 @@ body{
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.modal-content {
+.test-modal-content, .info-modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 50%; /* Could be more or less, depending on screen size */
     font-weight: bold;
+    animation-name: modal_animation;
+    animation-duration: 1.5s
 }
 
-.close {
+.close, .close2 {
+    align-self: flex-end;
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
   
-.close:hover, .close:focus {
+.close:hover, .close:focus, .close2:hover, .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+@keyframes modal_animation {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
 }
