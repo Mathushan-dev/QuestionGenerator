@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.UserLoginSignupController import index, loginSignupForm, loadEnterText, signUp, logIn, updatePassword, deleteAccount
+from controllers.UserLoginSignupController import index, loginSignupForm, loadEnterText, signUp, logIn, updatePassword, deleteAccount, saveQuestionAttributes
 
 UserLoginSignupBP = Blueprint('UserLoginSignupBP', __name__)
 
@@ -10,3 +10,4 @@ UserLoginSignupBP.route('/signUp', methods=['POST', 'GET'])(signUp)
 UserLoginSignupBP.route('/logIn', methods=['POST', 'GET'])(logIn)
 UserLoginSignupBP.route('/updatePassword', methods=['POST', 'GET'])(updatePassword)
 UserLoginSignupBP.route('/deleteAccount', methods=['POST', 'GET'])(deleteAccount)
+UserLoginSignupBP.route('/saveQuestionAttributes', methods=['POST', 'GET'])(saveQuestionAttributes)

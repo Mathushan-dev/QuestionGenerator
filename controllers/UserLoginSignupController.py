@@ -1,8 +1,10 @@
 from flask import render_template, request
 from models.UserLoginSignupModel import UserLoginSignup
+from controllers.UserQuestionHandlerController import loadCurrentQuestions
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from config import DEBUG
+import json
 
 db = SQLAlchemy()
 
@@ -104,6 +106,58 @@ def deleteAccount():
         except:
             print(stackTrace)
         return index()
+
+
+def stringifyList(list):
+    output = ""
+    for i in range(0, len(list)):
+        element = str(list[i])
+        if element.strip() == "":
+            continue
+        output += str(element)
+        if i == len(list) - 1:
+            break
+        output += ","
+    return output
+
+
+def updateRecords(user, questionIdHash, score, tries):
+    attemptedQuestionIds = user.attemptedQuestionIds.split(",")
+    questionScores = user.questionScores.split(",")
+    numberOfAttempts = user.numberOfAttempts.split(",")
+
+    for i in range(0, len(attemptedQuestionIds)):
+        if attemptedQuestionIds[i].strip() == questionIdHash:
+            questionScores[i] = score
+            numberOfAttempts[i] = tries
+            break
+
+        if i == len(attemptedQuestionIds) - 1:
+            attemptedQuestionIds.append(questionIdHash)
+            questionScores.append(score)
+            numberOfAttempts.append(tries)
+
+    return stringifyList(attemptedQuestionIds), stringifyList(questionScores), stringifyList(numberOfAttempts)
+
+
+def saveQuestionAttributes():
+    if DEBUG:
+        print("saveQuestionAttributes called")
+
+    attributesDump = json.dumps(request.get_json())
+    attributes = json.loads(attributesDump)
+    questionIdHash = attributes["questionid"]
+    score = attributes["score"]
+    tries = attributes["tries"]
+
+    user = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == LoggedOnUserId).first()
+    if user is not None:
+        user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts = updateRecords(user, questionIdHash,
+                                                                                              score,
+                                                                                              tries)
+        db.session.commit()
+
+    return loadCurrentQuestions("mcq")
 
 
 def clearTable():

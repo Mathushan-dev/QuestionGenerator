@@ -11,6 +11,11 @@ from config import DEBUG
 db = SQLAlchemy()
 firstLaunch = True
 
+currentQuestionIdHashes = None
+currentQuestions = None
+currentOptions = None
+currentAnswers = None
+
 
 def addQuestionToDatabase(questionId, context, question, answer, options):
     global firstLaunch
@@ -19,15 +24,35 @@ def addQuestionToDatabase(questionId, context, question, answer, options):
         firstLaunch = False
 
     optionsLinear = ""
-    for option in options:
+    for i in range(0, len(options)):
+        option = options[i]
         optionsLinear += option
-        optionsLinear += "}"
+        if i == len(options) - 1:
+            break
+        optionsLinear += ","
 
-    question = UserQuestionHandler(questionId, context, question, answer, optionsLinear.strip())
+    question = UserQuestionHandler(questionId.strip(), context.strip(), question.strip(), answer.strip(), optionsLinear.strip())
 
     db.session.add(question)
     db.session.flush()
     db.session.commit()
+
+
+def saveCurrentQuestions(questionIdHashes, questions, options, answers):
+    global currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers
+
+    currentQuestionIdHashes = questionIdHashes
+    currentQuestions = questions
+    currentOptions = options
+    currentAnswers = answers
+
+
+def loadCurrentQuestions(choice):
+    if choice == "mcq":
+        return render_template('multiple-choice-template.html', questionIdHashes=currentQuestionIdHashes,
+                               questions=currentQuestions, options=currentOptions, answers=currentAnswers)
+    return render_template('true-false-template.html', questionIdHashes=currentQuestionIdHashes,
+                        questions=currentQuestions, options=currentOptions, answers=currentAnswers)
 
 
 def generateTFQuestions():
@@ -58,8 +83,8 @@ def generateTFQuestions():
             UserQuestionHandler.makeQuestionIdHash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
         addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1])
 
-    render_template('true-false-template.html', questionIdHashes=questionIdHashes, questions=questions, options=options,
-                    answers=answers)
+    saveCurrentQuestions(questionIdHashes, questions, options, answers)
+    loadCurrentQuestions("tf")
 
 
 def generateMCQuestions():
@@ -97,8 +122,8 @@ def generateMCQuestions():
                 UserQuestionHandler.makeQuestionIdHash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
             addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1])
 
-        return render_template('multiple-choice-template.html', questionIdHashes=questionIdHashes, questions=questions,
-                               options=options, answers=answers)
+        saveCurrentQuestions(questionIdHashes, questions, options, answers)
+        return loadCurrentQuestions("mcq")
 
 
 def clearTable():

@@ -35,4 +35,4 @@ class UserQuestionHandler(db.Model):
         return hash.decode('utf-8')
 
     def isQuestionIdMatch(self, questionId):
-        return bcrypt.checkpw(questionId.encode('utf-8'), self.hashedPassword.encode('utf-8'))
+        return bcrypt.checkpw(questionId.encode('utf-8'), self.questionId.encode('utf-8'))
