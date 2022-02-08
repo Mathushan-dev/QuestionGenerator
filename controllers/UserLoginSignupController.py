@@ -25,24 +25,29 @@ def loginSignupForm(message=""):
         print("loginForm called", message)
     return render_template('signup-login.html', loginErrorMessage=message)
 
+
 def loadEnterText():
     if DEBUG:
         print("try-input-passage page called")
     return render_template('try-input-passage.html')
 
+
 def signUp():
     if DEBUG:
         print("signUp called")
     userId = request.form.get("email")  # todo assuming email is valid in the frontend
+    fName = request.form.get("fName")  # todo assuming fName is valid in the frontend
+    lName = request.form.get("lName")  # todo assuming lName is valid in the frontend
     password = request.form.get("password")  # todo assuming passwordHash is strong in the frontend
 
     passwordHash = UserLoginSignup.makePasswordHash(password)
-    user = UserLoginSignup(userId, passwordHash)
+    user = UserLoginSignup(userId, fName, lName, passwordHash)
 
     try:
         db.session.add(user)
         db.session.flush()
-    except IntegrityError:
+    except IntegrityError as e:
+        print(e)
         db.session.rollback()
         return loginSignupForm(message="Those records already exist on the server, please log in instead.")
     db.session.commit()

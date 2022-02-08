@@ -7,17 +7,32 @@ db = SQLAlchemy()
 class UserLoginSignup(db.Model):
     __tablename__ = 'users'
     userId = db.Column(db.String, primary_key=True)
+    fName = db.Column(db.String)
+    lName = db.Column(db.String)
     hashedPassword = db.Column(db.String)
+    attemptedQuestionIds = db.Column(db.String)  # id, id2, id3
+    questionScores = db.Column(db.String)  # 1, 0, 1 - means id and id3 answered correctly but id2 answered incorrectly
+    numberOfAttempts = db.Column(db.String)  # 4, 4, 1, 3 - means 4 tries till correct answer on first two questions and then 1 and 3 tries in the following questions
 
-    def __init__(self, userId, hashedPassword):
+    def __init__(self, userId, fName, lName, hashedPassword):
         self.userId = userId
+        self.fName = fName
+        self.lName = lName
         self.hashedPassword = hashedPassword
+        self.attemptedQuestionIds = ""
+        self.questionScores = ""
+        self.numberOfAttempts = ""
 
     @property
     def serialize(self):
         return {
             'userId': self.userId,
-            'hashedPassword': self.hashedPassword
+            'fName': self.fName,
+            'lName': self.lName,
+            'hashedPassword': self.hashedPassword,
+            'attemptedQuestionIds': self.attemptedQuestionIds,
+            'questionScores': self.questionScores,
+            'numberOfAttempts': self.numberOfAttempts
         }
 
     @staticmethod
