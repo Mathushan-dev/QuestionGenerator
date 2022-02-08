@@ -123,6 +123,12 @@ body{
     font-size: 30px;
 }
 
+#my-pie-chart {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
 /* Right Bottom Side */ 
 .specific-info{
     display: flex;
