@@ -16,12 +16,12 @@ function disableButtons(questionId){      // Disabling buttons after selecting a
     }
 }
 
-function postData(questionId){
+function postData(questionId, score){
     let xhr = new XMLHttpRequest();
     xhr.open("POST", '/saveQuestionAttributes', true);
     xhr.setRequestHeader('content-Type', 'application/json');
-    console.log(JSON.stringify({"questionid": questionId, "score": 1, "tries": tries}));
-    xhr.send(JSON.stringify({"questionid": questionId, "score": 1, "tries": tries}));
+    console.log(JSON.stringify({"questionid": questionId, "score": score, "tries": tries}));
+    xhr.send(JSON.stringify({"questionid": questionId, "score": score, "tries": tries}));
 }
 
 choices.forEach(choice => {     // Loop to give each option button an eventlistener
@@ -35,12 +35,12 @@ choices.forEach(choice => {     // Loop to give each option button an eventliste
         selectedChoice.parentElement.classList.add(classToApply);
         if (classToApply == "correct") {
             disableButtons(questionId);
-            postData(questionId);
+            postData(questionId, 1);
             tries = 1;
         }
         if (classToApply == "incorrect"){
             tries += 1;
-            postData(questionId);
+            postData(questionId, 0);
         }
     })
 })
