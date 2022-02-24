@@ -14,6 +14,7 @@
             <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo">
                 <img src="../static/images/x5learn_logo.png" alt="Logo">
             </a>
+            <a href="{{ url_for('UserLoginSignupBP.loadHome') }}" class="login-link">Profile</a>
         </header>
         <div class="quiz-container">
             {% for i in range(0, questions|length) %}

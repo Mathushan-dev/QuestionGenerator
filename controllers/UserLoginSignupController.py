@@ -20,7 +20,11 @@ def index():
         if firstLaunch:
             clearTable()
             firstLaunch = False
-    return render_template('launchpage.html')
+    loggedOn = 1
+    global LoggedOnUserId
+    if LoggedOnUserId is None:
+        loggedOn = 0
+    return render_template('launchpage.html', loggedOn=loggedOn)
 
 
 def loginSignupForm(message=""):
@@ -32,7 +36,11 @@ def loginSignupForm(message=""):
 def loadEnterText():
     if DEBUG:
         print("try-input-passage page called")
-    return render_template('try-input-passage.html')
+    loggedOn = 1
+    global LoggedOnUserId
+    if LoggedOnUserId is None:
+        loggedOn = 0
+    return render_template('try-input-passage.html', loggedOn=loggedOn)
 
 
 def signUp():
@@ -52,8 +60,10 @@ def signUp():
     except IntegrityError as e:
         print(e)
         db.session.rollback()
+        db.session.flush()
         return loginSignupForm(message="Those records already exist on the server, please log in instead.")
     db.session.commit()
+    db.session.flush()
     global LoggedOnUserId
     LoggedOnUserId = userId
     return loadEnterText()
@@ -81,11 +91,23 @@ def logIn():
         return loginSignupForm(message="The password is incorrect.")
 
 
+def logOut():
+    if DEBUG:
+        print("logOut called")
+    global LoggedOnUserId
+    LoggedOnUserId = None
+    return index()
+
+
 def loadHome():
     if DEBUG:
         print("logIn called")
 
     global LoggedOnUserId
+
+    if LoggedOnUserId is None:
+        return loginSignupForm("Please login or sign up for an account before viewing question results.")
+
     userId = LoggedOnUserId
 
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == userId).all()
@@ -96,10 +118,9 @@ def loadHome():
         # This should never happen and something has gone terribly wrong if duplicate emails exist on database
     else:
         fName, lName, totalRight, totalWrong, questions, contexts, options, scores, attempts = getProfileStats(userId)
-        print("right: ", totalRight, "\nwrong: ", totalWrong)
-        for i in range(0, len(questions)):
-            print("question: ", questions[i], "score: ", scores[i], "attempt: ", attempts[i])
-        return render_template('profile.html', fName=fName, lName=lName, totalRight=totalRight, totalWrong=totalWrong, questions=questions, contexts=contexts, options=options, scores=scores, attempts=attempts)
+        return render_template('profile.html', fName=fName, lName=lName, totalRight=totalRight, totalWrong=totalWrong,
+                               questions=questions, contexts=contexts, options=options, scores=scores,
+                               attempts=attempts, loggedOn=1)
 
 
 def updatePassword():
@@ -120,6 +141,7 @@ def deleteAccount():
         LoggedOnUserId = None
         try:
             stackTrace = db.session.delete(users[0])
+            db.session.flush()
         except:
             print(stackTrace)
         return index()
@@ -173,6 +195,7 @@ def saveQuestionAttributes():
                                                                                               score,
                                                                                               tries)
         db.session.commit()
+        db.session.flush()
 
     return loadCurrentQuestions("mcq")
 
@@ -183,6 +206,7 @@ def clearTable():
         for user in users:
             db.session.delete(user)
             db.session.commit()
+            db.session.flush()
         print("Table is cleared.")
     else:
         print("Table can only be cleared in debug mode.")
