@@ -26,7 +26,7 @@
     justify-content: center;
 }
 
-.button-div a{
+.button-div button{
     align-self: center;
     text-decoration: none;
     color: white;
@@ -37,7 +37,7 @@
     text-transform: uppercase;
 }
 
-.button-div a:hover{
+.button-div button:hover{
     background-color: white;
     color: #5c96a6;
     text-decoration: underline;

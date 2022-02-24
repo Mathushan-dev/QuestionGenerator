@@ -129,5 +129,5 @@ def cleanUpStatement(originalStatement):
 
 
 if __name__ == "__main__":
-    print(falsifyStatement("The old woman was sitting down and sipping tea."))
+    print(falsifyStatement("Tom loves cake"))
 # todo maybe measure level of readability for assessing difficulty of generated false statements - text stat, bleu score

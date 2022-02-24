@@ -19,65 +19,56 @@
                 <div class="card-body">
                     <div class="user-info">
                         <img src="../static/images/user-icon.png" alt="User Icon">
-                        <h2>NAME SURNAME</h2>
-                        <h2>COUNTRY</h2>
+                        <h2>{{fName}} {{lName}}</h2>
                         <button class="change-info" id="change-info-button">Edit</button>
+                        <a href="{{ url_for('UserLoginSignupBP.loadEnterText') }}" class="try-link">Attempt Questions</a>
                     </div>
                     <div id="infoModal" class="info-modal">
                         <div class="info-modal-content">
                             <span class="close2">&times;</span>
-                            <input type="text" id="name" placeholder="Name" name="name" required/>
-                            <input type="text" id="surname" placeholder="Surname" name="surname" required/>
-                            <input type="text" id="location" placeholder="Location" name="location" required/> 
+                            <input type="text" id="name" placeholder={{fName}} name="name" required/>
+                            <input type="text" id="surname" placeholder={{lName}} name="surname" required/>
                             <input class="email" type="email" id="email" placeholder="Email" name="email" disabled/>
                             <button class="save-info" id="save-info-button">Save Changes</button>
                         </div>
                     </div>
                     <div class="test-info">
                         <div class="general-stats">
-                            <h2>Tests Completed: 1</h2>
+                            <h2>Tests Completed: {{totalRight + totalWrong}}</h2>
                             <div class="detailed-stats">
                                 <div class="correct-incorrect-info">
-                                    <h5 class="correct">Correct Answers: 15</h5>
-                                    <h5 class="incorrect">Incorrect Answers: 5</h5>
+                                    <h5 class="correct">Correct Answers: {{totalRight}}</h5>
+                                    <h5 class="incorrect">Incorrect Answers: {{totalWrong}}</h5>
                                 </div>
-                                <div style="background: conic-gradient(green 75%, red 25%);" id="my-pie-chart">
-                                </div>
+                                {% if (totalRight > 0 or totalWrong > 0) %}
+                                    <div style="background: conic-gradient(green {{(100 * totalRight)/(totalRight + totalWrong)}}%, red {{(100 * totalWrong)/(totalRight + totalWrong)}}%);" id="my-pie-chart">
+                                    </div>
+                                {% else %}
+                                    <div style="background: conic-gradient(green 0%, red 0%);" id="my-pie-chart">
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="specific-info">
                             <h1>Your Test Records</h1>
                             <div class="test-wrapper">
-                                <div class="test" id="test">
-                                    <h3 class="test-name">Biology</h3>
-                                    <h3 class="test-date">2 days ago.</h3>
-                                </div>
-                                <div class="test" id="test">
-                                    <h3 class="test-name">Biology</h3>
-                                    <h3 class="test-date">2 days ago.</h3>
-                                </div>
-                                <div class="test" id="test">
-                                    <h3 class="test-name">Biology</h3>
-                                    <h3 class="test-date">2 days ago.</h3>
-                                </div>
-                                <div class="test" id="test">
-                                    <h3 class="test-name">Biology</h3>
-                                    <h3 class="test-date">2 days ago.</h3>
-                                </div>
+                                {% for i in range(0, questions|length) %}
+                                    <div class="test" id="test">
+                                        <h3 class="test-name">{{questions[i]}}</h3>
+                                        <p>Attempts: {{attempts[i]}} Context: {{contexts[i]}} Options: {{options[i]}} Date Taken: 02/06/2022 </p>
+                                        {% if (scores[i] == "1") %}
+                                        <p class="correct">Correct: Yes</p>
+                                        {% else %}
+                                        <p class="incorrect">Correct: No</p>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div>
-                        <div id="testModal" class="test-modal">
-                            <div class="test-modal-content">
-                                <span class="close">&times;</span>
-                                <p>Test: Biology</p>
-                                <p>Date Taken: 02/06/2022</p>
-                                <p class="correct">Correct: 15</p>
-                                <p class="incorrect">Incorrect: 5</p>
-                            </div>
-                        </div>
+                    </div>
                 </div>
             </div>
-            <script src="../static/javascript/test-modal.js"></script>
             <script src="../static/javascript/info-modal.js"></script>
     </body>
+</html>
     

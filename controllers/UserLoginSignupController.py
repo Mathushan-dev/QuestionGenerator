@@ -1,6 +1,7 @@
 from flask import render_template, request
 from models.UserLoginSignupModel import UserLoginSignup
 from controllers.UserQuestionHandlerController import loadCurrentQuestions
+from functions.profileStatsCalculator import getProfileStats
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from config import DEBUG
@@ -66,6 +67,7 @@ def logIn():
 
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == userId).all()
     db.session.flush()
+
     if len(users) == 0:
         return loginSignupForm(message="Those records do not exist on the server, please sign up instead.")
     elif len(users) != 1:
@@ -75,14 +77,29 @@ def logIn():
         if users[0].isPasswordValid(password):
             global LoggedOnUserId
             LoggedOnUserId = userId
-            return loadEnterText()  # todo change to user homepage
+            return loadHome()  # todo change to user homepage
         return loginSignupForm(message="The password is incorrect.")
 
 
 def loadHome():
-    pass
-    # todo change this to user profile page
-    # return render_template('')
+    if DEBUG:
+        print("logIn called")
+
+    global LoggedOnUserId
+    userId = LoggedOnUserId
+
+    users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == userId).all()
+    db.session.flush()
+
+    if len(users) != 1:
+        return loginSignupForm(message="The server is currently down. Please try logging in later.")
+        # This should never happen and something has gone terribly wrong if duplicate emails exist on database
+    else:
+        fName, lName, totalRight, totalWrong, questions, contexts, options, scores, attempts = getProfileStats(userId)
+        print("right: ", totalRight, "\nwrong: ", totalWrong)
+        for i in range(0, len(questions)):
+            print("question: ", questions[i], "score: ", scores[i], "attempt: ", attempts[i])
+        return render_template('profile.html', fName=fName, lName=lName, totalRight=totalRight, totalWrong=totalWrong, questions=questions, contexts=contexts, options=options, scores=scores, attempts=attempts)
 
 
 def updatePassword():
