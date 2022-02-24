@@ -60,7 +60,10 @@
                                 {% for i in range(0, questions|length) %}
                                     <div class="test" id="test">
                                         <h3 class="test-name">{{questions[i]}}</h3>
-                                        <p>Attempts: {{attempts[i]}} Context: {{contexts[i]}} Options: {{options[i]}} Date Taken: 02/06/2022 </p>
+                                        <p>Attempts - {{attempts[i]}}
+                                            Context - {{contexts[i]}}
+                                            Options - {{options[i]}}</p>
+                                        <p>Date Taken - 02/06/2022 </p>
                                         {% if (scores[i] == "1") %}
                                         <p class="correct">Correct: Yes</p>
                                         {% else %}

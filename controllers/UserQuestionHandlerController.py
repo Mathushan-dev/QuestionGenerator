@@ -36,7 +36,6 @@ def addQuestionToDatabase(questionId, context, question, answer, options):
 
     db.session.add(question)
     db.session.commit()
-    db.session.flush()
 
 
 def saveCurrentQuestions(questionIdHashes, questions, options, answers):
@@ -134,7 +133,6 @@ def clearTable():
         for question in questions:
             db.session.delete(question)
             db.session.commit()
-            db.session.flush()
         print("Table is cleared.")
     else:
         print("Table can only be cleared in debug mode.")

@@ -56,14 +56,11 @@ def signUp():
 
     try:
         db.session.add(user)
-        db.session.flush()
     except IntegrityError as e:
         print(e)
         db.session.rollback()
-        db.session.flush()
         return loginSignupForm(message="Those records already exist on the server, please log in instead.")
     db.session.commit()
-    db.session.flush()
     global LoggedOnUserId
     LoggedOnUserId = userId
     return loadEnterText()
@@ -76,7 +73,6 @@ def logIn():
     password = request.form.get("password")  # todo assuming password is strong in the frontend
 
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == userId).all()
-    db.session.flush()
 
     if len(users) == 0:
         return loginSignupForm(message="Those records do not exist on the server, please sign up instead.")
@@ -104,14 +100,12 @@ def loadHome():
         print("logIn called")
 
     global LoggedOnUserId
+    userId = LoggedOnUserId
 
     if LoggedOnUserId is None:
         return loginSignupForm("Please login or sign up for an account before viewing question results.")
 
-    userId = LoggedOnUserId
-
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == userId).all()
-    db.session.flush()
 
     if len(users) != 1:
         return loginSignupForm(message="The server is currently down. Please try logging in later.")
@@ -129,7 +123,6 @@ def updatePassword():
 
 def deleteAccount():
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == userId).all()
-    db.session.flush()
     if len(users) == 0:
         # todo the account does not exist, so it may have been deleted already
         return index()
@@ -141,7 +134,6 @@ def deleteAccount():
         LoggedOnUserId = None
         try:
             stackTrace = db.session.delete(users[0])
-            db.session.flush()
         except:
             print(stackTrace)
         return index()
@@ -190,12 +182,12 @@ def saveQuestionAttributes():
     tries = attributes["tries"]
 
     user = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == LoggedOnUserId).first()
+
     if user is not None:
         user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts = updateRecords(user, questionIdHash,
                                                                                               score,
                                                                                               tries)
         db.session.commit()
-        db.session.flush()
 
     return loadCurrentQuestions("mcq")
 
@@ -206,7 +198,6 @@ def clearTable():
         for user in users:
             db.session.delete(user)
             db.session.commit()
-            db.session.flush()
         print("Table is cleared.")
     else:
         print("Table can only be cleared in debug mode.")
