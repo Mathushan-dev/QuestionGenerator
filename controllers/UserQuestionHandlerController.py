@@ -25,16 +25,16 @@ def addQuestionToDatabase(questionId, context, question, answer, options):
 
     optionsLinear = ""
     for i in range(0, len(options)):
-        option = options[i]
+        option = str(options[i])
         optionsLinear += option
         if i == len(options) - 1:
             break
         optionsLinear += ","
 
-    question = UserQuestionHandler(questionId.strip(), context.strip(), question.strip(), answer.strip(), optionsLinear.strip())
+    question = UserQuestionHandler(questionId.strip(), context.strip(), question.strip(), str(answer).strip(),
+                                   optionsLinear.strip())
 
     db.session.add(question)
-    db.session.flush()
     db.session.commit()
 
 
@@ -48,11 +48,12 @@ def saveCurrentQuestions(questionIdHashes, questions, options, answers):
 
 
 def loadCurrentQuestions(choice):
+    # Structured in this way to allow for different templates for different types of questions during project extension
     if choice == "mcq":
         return render_template('multiple-choice-template.html', questionIdHashes=currentQuestionIdHashes,
                                questions=currentQuestions, options=currentOptions, answers=currentAnswers)
-    return render_template('true-false-template.html', questionIdHashes=currentQuestionIdHashes,
-                        questions=currentQuestions, options=currentOptions, answers=currentAnswers)
+    return render_template('multiple-choice-template.html', questionIdHashes=currentQuestionIdHashes,
+                           questions=currentQuestions, options=currentOptions, answers=currentAnswers)
 
 
 def generateTFQuestions():
@@ -73,18 +74,18 @@ def generateTFQuestions():
     for statement in statements:
         if random.choice([True, False]):  # if a statement should be falsified
             questions.append(falsifyStatement(statement))
-            answers.append(False)
+            answers.append("False")
         else:
             questions.append(statement)
-            answers.append(True)
+            answers.append("True")
 
-        options.append([True, False])
+        options.append(["True", "False"])
         questionIdHashes.append(
             UserQuestionHandler.makeQuestionIdHash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
         addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1])
 
     saveCurrentQuestions(questionIdHashes, questions, options, answers)
-    loadCurrentQuestions("tf")
+    return loadCurrentQuestions("tf")
 
 
 def generateMCQuestions():

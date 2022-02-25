@@ -1,6 +1,7 @@
 from flask import render_template, request
 from models.UserLoginSignupModel import UserLoginSignup
 from controllers.UserQuestionHandlerController import loadCurrentQuestions
+from functions.profileStatsCalculator import getProfileStats
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from config import DEBUG
@@ -19,7 +20,11 @@ def index():
         if firstLaunch:
             clearTable()
             firstLaunch = False
-    return render_template('launchpage.html')
+    loggedOn = 1
+    global LoggedOnUserId
+    if LoggedOnUserId is None:
+        loggedOn = 0
+    return render_template('launchpage.html', loggedOn=loggedOn)
 
 
 def loginSignupForm(message=""):
@@ -31,7 +36,11 @@ def loginSignupForm(message=""):
 def loadEnterText():
     if DEBUG:
         print("try-input-passage page called")
-    return render_template('try-input-passage.html')
+    loggedOn = 1
+    global LoggedOnUserId
+    if LoggedOnUserId is None:
+        loggedOn = 0
+    return render_template('try-input-passage.html', loggedOn=loggedOn)
 
 
 def signUp():
@@ -47,7 +56,6 @@ def signUp():
 
     try:
         db.session.add(user)
-        db.session.flush()
     except IntegrityError as e:
         print(e)
         db.session.rollback()
@@ -65,7 +73,7 @@ def logIn():
     password = request.form.get("password")  # todo assuming password is strong in the frontend
 
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == userId).all()
-    db.session.flush()
+
     if len(users) == 0:
         return loginSignupForm(message="Those records do not exist on the server, please sign up instead.")
     elif len(users) != 1:
@@ -75,14 +83,38 @@ def logIn():
         if users[0].isPasswordValid(password):
             global LoggedOnUserId
             LoggedOnUserId = userId
-            return loadEnterText()  # todo change to user homepage
+            return loadHome()  # todo change to user homepage
         return loginSignupForm(message="The password is incorrect.")
 
 
+def logOut():
+    if DEBUG:
+        print("logOut called")
+    global LoggedOnUserId
+    LoggedOnUserId = None
+    return index()
+
+
 def loadHome():
-    pass
-    # todo change this to user profile page
-    # return render_template('')
+    if DEBUG:
+        print("logIn called")
+
+    global LoggedOnUserId
+    userId = LoggedOnUserId
+
+    if LoggedOnUserId is None:
+        return loginSignupForm("Please login or sign up for an account before viewing question results.")
+
+    users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == userId).all()
+
+    if len(users) != 1:
+        return loginSignupForm(message="The server is currently down. Please try logging in later.")
+        # This should never happen and something has gone terribly wrong if duplicate emails exist on database
+    else:
+        fName, lName, totalRight, totalWrong, questions, contexts, options, scores, attempts = getProfileStats(userId)
+        return render_template('profile.html', fName=fName, lName=lName, totalRight=totalRight, totalWrong=totalWrong,
+                               questions=questions, contexts=contexts, options=options, scores=scores,
+                               attempts=attempts, loggedOn=1)
 
 
 def updatePassword():
@@ -91,7 +123,6 @@ def updatePassword():
 
 def deleteAccount():
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == userId).all()
-    db.session.flush()
     if len(users) == 0:
         # todo the account does not exist, so it may have been deleted already
         return index()
@@ -151,6 +182,7 @@ def saveQuestionAttributes():
     tries = attributes["tries"]
 
     user = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == LoggedOnUserId).first()
+
     if user is not None:
         user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts = updateRecords(user, questionIdHash,
                                                                                               score,
