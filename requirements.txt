@@ -1,7 +1,6 @@
 absl-py==1.0.0
 alabaster==0.7.12
 alembic==1.7.5
-allennlp==0.9.0
 astunparse==1.6.3
 attrs==21.4.0
 autoflake==1.4
@@ -108,6 +107,7 @@ sentencepiece==0.1.96
 six==1.16.0
 smart-open==5.2.1
 snowballstemmer==2.2.0
+spacy==2.3.7
 spacy-legacy==3.0.8
 spacy-loggers==1.0.1
 Sphinx==4.4.0
