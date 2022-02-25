@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>X5Learn</title>
+        <link href="../static/css/base.css" rel="stylesheet">
+        <link href="../static/css/profile.css" rel="stylesheet">
+        <link href="../static/css/header.css" rel="stylesheet">
+    </head>
+    <body>
+        <header class="main-header">
+            <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo">
+                <img src="../static/images/x5learn_logo.png" alt="Logo">
+            </a>
+            {% if (loggedOn == 1) %}
+                <a href="{{ url_for('UserLoginSignupBP.logOut') }}" class="login-link">logOut</a>
+            {% else %}
+                <a href="{{ url_for('UserLoginSignupBP.loginSignupForm') }}" class="login-link">Log in</a>
+            {% endif %}
+        </header>
+            <div class="container">
+                <div class="card-body">
+                    <div class="user-info">
+                        <img src="../static/images/user-icon.png" alt="User Icon">
+                        <h2>{{fName}} {{lName}}</h2>
+                        <button class="change-info" id="change-info-button">Edit</button>
+                        <a href="{{ url_for('UserLoginSignupBP.loadEnterText') }}" class="try-link">Attempt Questions</a>
+                    </div>
+                    <div id="infoModal" class="info-modal">
+                        <div class="info-modal-content">
+                            <span class="close2">&times;</span>
+                            <input type="text" id="name" placeholder={{fName}} name="name" required/>
+                            <input type="text" id="surname" placeholder={{lName}} name="surname" required/>
+                            <input class="email" type="email" id="email" placeholder="Email" name="email" disabled/>
+                            <button class="save-info" id="save-info-button">Save Changes</button>
+                        </div>
+                    </div>
+                    <div class="test-info">
+                        <div class="general-stats">
+                            <h2>Tests Completed: {{totalRight + totalWrong}}</h2>
+                            <div class="detailed-stats">
+                                <div class="correct-incorrect-info">
+                                    <h5 class="correct">Correct Answers: {{totalRight}}</h5>
+                                    <h5 class="incorrect">Incorrect Answers: {{totalWrong}}</h5>
+                                </div>
+                                {% if (totalRight > 0 or totalWrong > 0) %}
+                                    <div style="background: conic-gradient(green {{(100 * totalRight)/(totalRight + totalWrong)}}%, red {{(100 * totalWrong)/(totalRight + totalWrong)}}%);" id="my-pie-chart">
+                                    </div>
+                                {% else %}
+                                    <div style="background: conic-gradient(green 0%, red 0%);" id="my-pie-chart">
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="specific-info">
+                            <h1>Your Test Records</h1>
+                            <div class="test-wrapper">
+                                {% for i in range(0, questions|length) %}
+                                    <div class="test" id="test">
+                                        <h3 class="test-name">{{questions[i]}}</h3>
+                                        <p>Attempts - {{attempts[i]}}
+                                            Context - {{contexts[i]}}
+                                            Options - {{options[i]}}</p>
+                                        <p>Date Taken - 02/06/2022 </p>
+                                        {% if (scores[i] == "1") %}
+                                        <p class="correct">Correct: Yes</p>
+                                        {% else %}
+                                        <p class="incorrect">Correct: No</p>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="../static/javascript/info-modal.js"></script>
+    </body>
+</html>
+    

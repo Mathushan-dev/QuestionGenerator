@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>X5Learn</title>
+        <link href="../static/css/header.css" rel="stylesheet">
+        <link href="../static/css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../static/css/input-passage.css">
+    </head>
+    <body>
+        <header class="main-header">
+            <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo">
+                <img src="../static/images/x5learn_logo.png" alt="Logo">
+            </a>
+            {% if (loggedOn == 1) %}
+                <a href="{{ url_for('UserLoginSignupBP.loadHome') }}" class="login-link">Profile</a>
+                <a href="{{ url_for('UserLoginSignupBP.logOut') }}" class="login-link">logOut</a>
+            {% else %}
+                <a href="{{ url_for('UserLoginSignupBP.loginSignupForm') }}" class="login-link">Log in</a>
+            {% endif %}
+        </header>
+        <div class="main-section">
+            <h1 class="instruction-text">Enter a passage to try for free!</h1>
+            <form method="POST">
+                <textarea placeholder="Enter your passage!" name="context" id="context" cols="10" rows="10" required></textarea>
+                <div class="option-amount">
+                    <label for="optionNumber">Number of options: </label>
+                    <select id="optionNumber" name="numberOptions">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+
+                <div class="button-div">
+                    <button class="generate-button" formaction="/generateMCQuestions">Generate questions</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>X5Learn</title>
+        <link href="../static/css/header.css" rel="stylesheet">
+        <link href="../static/css/base.css" rel="stylesheet">
+        <link href="../static/css/multiple-choice.css" rel="stylesheet">
+    </head>
+    <body>
+        <header class="main-header">
+            <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo">
+                <img src="../static/images/x5learn_logo.png" alt="Logo">
+            </a>
+            <a href="{{ url_for('UserLoginSignupBP.loadHome') }}" class="login-link">Profile</a>
+        </header>
+        <div class="quiz-container">
+            {% for i in range(0, questions|length) %}
+                <div class="question-number">
+                    <h3>Question {{i+1}} of {{questions|length}}</h3>
+                </div>
+                <div class="question">
+                    <p id="question">{{questions[i]}}</p>
+                </div>
+                {% for option in options[i] %}
+                    {% if (option == answers[i]) %}
+                        <div class="options">
+                            <button type="button" class="option-button" data-number="1" data-questionid={{questionIdHashes[i]}}>{{option}}</button>
+                        </div>
+                    {% else %}
+                        <div class="options">
+                            <button type="button" class="option-button" data-number="2" data-questionid={{questionIdHashes[i]}}>{{option}}</button>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <script src="../static/javascript/multiple-choice.js"></script>
+    </body>
+</html>

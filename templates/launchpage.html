@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>X5Learn</title>
+        <link href="../static/css/header.css" rel="stylesheet">
+        <link href="../static/css/launchpage.css" rel="stylesheet">
+        <link href="../static/css/base.css" rel="stylesheet">
+        <link href="../static/css/footer.css" rel="stylesheet">
+    </head>
+    <body>
+        <header class="main-header">
+            <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo">
+                <img src="../static/images/x5learn_logo.png" alt="Logo">
+            </a>
+            {% if (loggedOn == 1) %}
+                <a href="{{ url_for('UserLoginSignupBP.loadHome') }}" class="login-link">Profile</a>
+                <a href="{{ url_for('UserLoginSignupBP.logOut') }}" class="login-link">logOut</a>
+            {% else %}
+                <a href="{{ url_for('UserLoginSignupBP.loginSignupForm') }}" class="login-link">Log in</a>
+            {% endif %}
+        </header>
+        <div class="first-div">
+            <h2>Explore Open Educational Resources</h2>
+            <p class="text1">Cross-site and cross-lingual recommendations powered by AI. Increase user engagement, 
+                grow visibility and drive new audiences, for stronger content consumption and learning at 
+                the same time.</p>
+            <p class="text2">X5LEARN is part of the X5GON family of products. It helps OER publishers get the most 
+                from their content pages. The recommendation engine is designed to increase content engagement, 
+                quality assurance, audience engagement and footfall, directly improving site metrics. X5LEARN's 
+                core product is an AI engine connecting millions of pieces of OER content from different sites, 
+                cultures and in different languages in one interface based on relevance and personal learning needs. 
+                OER publishers use X5LEARN's tools to recirculate their content within other sites, and use it as the 
+                first AI powered open education learning environment.</p>
+            <a href="{{ url_for('UserLoginSignupBP.loadEnterText') }}" class="try-link">Try For Free</a>
+        </div>
+        <div class="second-div">
+            <h1>Why choose X5Learn?</h1>
+            <div class="features">
+                <div class="feature1">
+                    <img src="../static/images/question-icon.png" alt="Generate Question Icon">
+                    <h2>Generate Questions</h2>
+                    <p>You can automatically create well-written questions by entering your desired text. The website
+                        will create multiple questions with different difficulties. You can use this to prepare for a test
+                         or learning new information for fun!
+                    </p>
+                </div>
+                <div class="feature2">
+                    <img src="../static/images/result-icon.png" alt="Track Result Icon">
+                    <h2>Track Your Results</h2>
+                    <p>You can easily track your results in order to check how knowledgeable you are in the selected
+                        topic. It is also very helpful to understand the parts that needs improvement. 
+                    </p>
+                </div>
+                <div class="feature3">
+                    <img src="../static/images/share-icon.png" alt="Share Icon">
+                    <h2>Share Questions</h2>
+                    <p>You can share the questions that you generated with your friends! If you are a student, you can compete
+                        with your peers for fun while stuyding for your courses. If you are a teacher, you can test your
+                         students to see how well they understood that day's lesson. It's up to you!
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="third-div">
+            <h1>Would you like to test the question generator for free?</h1>
+            <a href="{{ url_for('UserLoginSignupBP.loadEnterText') }}" class="try-link">Try For Free</a>
+        </div>
+        <footer class="main-footer">
+            <img src="../static/images/eu-flag.png" alt="European Union Flag">
+            <p>This project has received funding from the European Union’s Horizon new policy 2020 
+                research and innovation programme under grant agreement No 761758.</p>
+        </footer>
+    </body>
+    
