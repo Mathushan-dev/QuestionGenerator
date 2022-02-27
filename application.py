@@ -5,19 +5,19 @@ from routes.UserLoginSignupBP import UserLoginSignupBP
 from routes.UserQuestionHandlerBP import UserQuestionHandlerBP
 from config import DEBUG
 
-app = Flask(__name__)
-app.config.from_object('config')
-db.init_app(app)
-migrate = Migrate(app, db)
-app.register_blueprint(UserLoginSignupBP)
-app.register_blueprint(UserQuestionHandlerBP)
+application = Flask(__name__)
+application.config.from_object('config')
+db.init_app(application)
+migrate = Migrate(application, db)
+application.register_blueprint(UserLoginSignupBP)
+application.register_blueprint(UserQuestionHandlerBP)
 
 
-@app.route('/')
+@application.route('/')
 def index():
     return render_template('launchpage.html')
 
 
 if __name__ == '__main__':
-    app.debug = DEBUG
-    app.run()
+    application.debug = DEBUG
+    application.run()
