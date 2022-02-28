@@ -5,6 +5,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # Enable debug mode.
 DEBUG = True
 # Connect to the database
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:postgres@localhost/qgen'
+SQLALCHEMY_DATABASE_URI = 'postgresql://vczoqebk:Xyf9h4SyYkWYyeSYu3N9oE4wqIloAYI7@jelani.db.elephantsql.com/vczoqebk'
 # Turn off the Flask-SQLAlchemy event system and warning
 SQLALCHEMY_TRACK_MODIFICATIONS = False

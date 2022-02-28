@@ -1,3 +1,5 @@
 .idea
 s2v_old
 *.pyc
+QuestionGeneratorVenv
+runtime.txt

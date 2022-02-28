@@ -20,4 +20,5 @@ def index():
 
 if __name__ == '__main__':
     application.debug = DEBUG
-    application.run()
+    application.run(host='0.0.0.0')
+    db.create_all()
