@@ -1,7 +1,5 @@
 import bcrypt
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from models.UserLoginSignupModel import db
 
 
 class UserQuestionHandler(db.Model):
@@ -30,7 +28,7 @@ class UserQuestionHandler(db.Model):
         }
 
     @staticmethod
-    def makeQuestionIdHash(questionId): # questionId = question
+    def makeQuestionIdHash(questionId):  # questionId = question
         hash = bcrypt.hashpw(password=questionId.encode('utf-8'), salt=bcrypt.gensalt())
         return hash.decode('utf-8')
 

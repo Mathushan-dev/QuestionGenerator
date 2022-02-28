@@ -4,11 +4,10 @@ from functions.falsifyStatement import falsifyStatement
 from functions.keywordGenerator import findRandomKeyword
 from functions.T5QuestionGenerator import applyT5Model
 from models.UserQuestionHandlerModel import UserQuestionHandler
+from models.UserLoginSignupModel import db
 from flask import render_template, request
-from flask_sqlalchemy import SQLAlchemy
 from config import DEBUG
 
-db = SQLAlchemy()
 firstLaunch = True
 
 currentQuestionIdHashes = None

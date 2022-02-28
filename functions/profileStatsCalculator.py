@@ -1,8 +1,6 @@
 from models.UserLoginSignupModel import UserLoginSignup
 from models.UserQuestionHandlerModel import UserQuestionHandler
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from models.UserLoginSignupModel import db
 
 
 def getTotalRightWrong(questionScores):

@@ -1,13 +1,11 @@
 from flask import render_template, request
 from models.UserLoginSignupModel import UserLoginSignup
+from models.UserLoginSignupModel import db
 from controllers.UserQuestionHandlerController import loadCurrentQuestions
 from functions.profileStatsCalculator import getProfileStats
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from config import DEBUG
 import json
-
-db = SQLAlchemy()
 
 LoggedOnUserId = None
 firstLaunch = True
