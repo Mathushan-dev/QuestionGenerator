@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, make_response
 from models.UserLoginSignupModel import UserLoginSignup
 from models.UserLoginSignupModel import db
 from controllers.UserQuestionHandlerController import loadCurrentQuestions
@@ -7,7 +7,6 @@ from sqlalchemy.exc import IntegrityError
 from config import DEBUG
 import json
 
-LoggedOnUserId = None
 firstLaunch = True
 
 
@@ -19,8 +18,7 @@ def index():
             clearTable()
             firstLaunch = False
     loggedOn = 1
-    global LoggedOnUserId
-    if LoggedOnUserId is None:
+    if request.cookies.get('LoggedOnUserId') is None:
         loggedOn = 0
     return render_template('launchpage.html', loggedOn=loggedOn)
 
@@ -35,8 +33,9 @@ def loadEnterText():
     if DEBUG:
         print("try-input-passage page called")
     loggedOn = 1
-    global LoggedOnUserId
-    if LoggedOnUserId is None:
+    print(request.cookies.get('LoggedOnUserId'))
+    if request.cookies.get('LoggedOnUserId') is None:
+        print("hi")
         loggedOn = 0
     return render_template('try-input-passage.html', loggedOn=loggedOn)
 
@@ -59,9 +58,9 @@ def signUp():
         db.session.rollback()
         return loginSignupForm(message="Those records already exist on the server, please log in instead.")
     db.session.commit()
-    global LoggedOnUserId
-    LoggedOnUserId = userId
-    return loadEnterText()
+    resp = make_response(loadEnterText())
+    resp.set_cookie('LoggedOnUserId', userId)
+    return resp
 
 
 def logIn():
@@ -79,28 +78,27 @@ def logIn():
         # This should never happen and something has gone terribly wrong if duplicate emails exist on database
     else:
         if users[0].isPasswordValid(password):
-            global LoggedOnUserId
-            LoggedOnUserId = userId
-            return loadHome()  # todo change to user homepage
+            resp = make_response(loadEnterText())
+            resp.set_cookie('LoggedOnUserId', userId)
+            return resp
         return loginSignupForm(message="The password is incorrect.")
 
 
 def logOut():
     if DEBUG:
         print("logOut called")
-    global LoggedOnUserId
-    LoggedOnUserId = None
-    return index()
+    resp = make_response(index())
+    resp.set_cookie('LoggedOnUserId', 'None', expires=0)
+    return resp
 
 
 def loadHome():
     if DEBUG:
         print("logIn called")
 
-    global LoggedOnUserId
-    userId = LoggedOnUserId
+    userId = request.cookies.get('LoggedOnUserId')
 
-    if LoggedOnUserId is None:
+    if request.cookies.get('LoggedOnUserId') is None:
         return loginSignupForm("Please login or sign up for an account before viewing question results.")
 
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == userId).all()
@@ -128,13 +126,13 @@ def deleteAccount():
         return loginSignupForm(message="The server is currently down. Please try logging in later.")
         # This should never happen and something has gone terribly wrong if duplicate emails exist on database
     else:
-        global LoggedOnUserId
-        LoggedOnUserId = None
+        resp = make_response(index)
+        resp.set_cookie('LoggedOnUserId', 'None', expires=0)
         try:
             stackTrace = db.session.delete(users[0])
         except:
             print(stackTrace)
-        return index()
+        return resp
 
 
 def stringifyList(list):
@@ -179,7 +177,7 @@ def saveQuestionAttributes():
     score = attributes["score"]
     tries = attributes["tries"]
 
-    user = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == LoggedOnUserId).first()
+    user = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == request.cookies.get('LoggedOnUserId')).first()
 
     if user is not None:
         user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts = updateRecords(user, questionIdHash,

@@ -14,12 +14,6 @@
             <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo">
                 <img src="../static/images/image.png" alt="Logo">
             </a>
-            {% if (loggedOn == 1) %}
-                <a href="{{ url_for('UserLoginSignupBP.loadHome') }}" class="login-link">Profile</a>
-                <a href="{{ url_for('UserLoginSignupBP.logOut') }}" class="login-link">logOut</a>
-            {% else %}
-                <a href="{{ url_for('UserLoginSignupBP.loginSignupForm') }}" class="login-link">Log in</a>
-            {% endif %}
         </header>
         <div class="main-section">
             <h1 class="instruction-text">Enter a passage to try for free!</h1>
