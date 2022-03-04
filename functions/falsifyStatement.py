@@ -4,7 +4,7 @@ tokenizer = AutoTokenizer.from_pretrained("ramsrigouthamg/t5_boolean_questions")
 model = AutoModelWithLMHead.from_pretrained("ramsrigouthamg/t5_boolean_questions")
 
 
-def falsifyStatement(context, answer, max_length=64):
+def applyT5Model(context, answer, max_length=64):
     input_text = "truefalse: %s  passage: %s </s>" % (answer, context)
     features = tokenizer([input_text], return_tensors='pt')
 
@@ -16,4 +16,4 @@ def falsifyStatement(context, answer, max_length=64):
 
 
 if __name__ == "__main__":
-    print(falsifyStatement("Jack walked to the park", "yes"))
+    print(applyT5Model("Jack walked to the park", "yes"))

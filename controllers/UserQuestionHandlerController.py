@@ -71,14 +71,14 @@ def generateTFQuestions():
     answers = []
 
     for statement in statements:
-        if random.choice(["yes", "no"]):  # if a statement should be falsified
+        if random.choice([True, False]):  # if a statement should be falsified
             questions.append(falsifyStatement(statement))
-            answers.append("no")
+            answers.append("False")
         else:
             questions.append(statement)
-            answers.append("yes")
+            answers.append("True")
 
-        options.append(["yes", "no"])
+        options.append(["True", "False"])
         questionIdHashes.append(
             UserQuestionHandler.makeQuestionIdHash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
         addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1])
