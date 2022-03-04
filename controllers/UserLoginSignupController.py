@@ -87,7 +87,7 @@ def logIn():
 def logOut():
     if DEBUG:
         print("logOut called")
-    resp = make_response(index())
+    resp = make_response(loadEnterText())
     resp.set_cookie('LoggedOnUserId', 'None', expires=0)
     return resp
 
