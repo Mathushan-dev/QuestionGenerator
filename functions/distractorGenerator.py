@@ -9,7 +9,7 @@ s2v = Sense2Vec().from_disk(os.path.abspath("../QuestionGenerator/s2v_old"))
 
 def generateMisspellings(answer):
     misspelt = []
-    for x in range(0, 10):
+    for _ in range(0, 10):
         ix = random.choice(range(len(answer)))
         new_word = ''.join([answer[w] if w != ix else random.choice(string.ascii_letters) for w in range(len(answer))])
         misspelt.append(new_word)

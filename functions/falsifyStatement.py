@@ -4,7 +4,6 @@ import nltk
 import scipy
 import spacy
 from nltk import tokenize
-from nltk.tree import Tree
 from sentence_transformers import SentenceTransformer
 from transformers import TFGPT2LMHeadModel, GPT2Tokenizer
 
@@ -32,7 +31,7 @@ def actiavteTopKPSampling(model, inputIds, maximumLengthStatement):
         top_p=0.9,
         top_k=20,
         repetition_penalty=20.0,
-        num_return_sequences=10
+        num_return_sequences=5
     )
 
 
@@ -83,7 +82,7 @@ def falsifyStatement(originalStatement):
     statementLength = len(cleanedOriginalStatement.split(" "))
     incompleteStatement = ""
     for i in range(0, statementLength):
-        if i < statementLength - 2:
+        if i < statementLength - 1:
             incompleteStatement += (cleanedOriginalStatement.split(" ")[i]) + " "
     return correctSpaces(completeRightMostPStatement(incompleteStatement.strip(), originalStatement))
 
