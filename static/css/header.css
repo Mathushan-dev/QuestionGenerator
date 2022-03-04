@@ -5,8 +5,7 @@
     align-items: center;
     margin: 0 auto;
     padding: 10px 50px;
-    border-bottom: 2px dotted black;
-    background-color: black;
+    background-image: linear-gradient(black, grey);
 }
 
 .login-link{
