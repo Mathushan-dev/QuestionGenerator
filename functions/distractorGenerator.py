@@ -36,14 +36,22 @@ def generateChoices(word, totalChoicesRequired):
             choices.append(distractor.title().lower())
 
     return getRandomChoices(list(OrderedDict.fromkeys(choices)), answer, totalChoicesRequired)
+        return getRandomChoices(list(OrderedDict.fromkeys(choices)), answer, totalChoicesRequired)
+    except ValueError:
+        misspellings = generateMisspellings(answer)
+        return getRandomChoices(misspellings, answer, totalChoicesRequired)
 
 
 # Using random ensures multiple users will get different possible choices for mcq's
 def getRandomChoices(choices, answer, totalChoicesRequired):
-    shuffledDistractors = random.sample(choices, totalChoicesRequired - 1)
+    filteredChoices = []
+    for choice in choices:
+        if answer not in choice:
+            filteredChoices.append(choice)
+    shuffledDistractors = random.sample(filteredChoices, totalChoicesRequired - 1)
     shuffledDistractors.insert(random.randrange(len(shuffledDistractors) + 1), answer.lower())
     return shuffledDistractors
 
 
 if __name__ == "__main__":
-    print(generateChoices("monkey", 4))
+    print(generateChoices("father", 10))
