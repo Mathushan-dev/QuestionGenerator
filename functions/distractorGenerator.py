@@ -35,7 +35,7 @@ def generateChoices(word, totalChoicesRequired):
         if distractor.lower().strip() != word.lower().strip():
             choices.append(distractor.title().lower())
 
-    return getRandomChoices(list(OrderedDict.fromkeys(choices)), answer, totalChoicesRequired)
+    try:
         return getRandomChoices(list(OrderedDict.fromkeys(choices)), answer, totalChoicesRequired)
     except ValueError:
         misspellings = generateMisspellings(answer)
