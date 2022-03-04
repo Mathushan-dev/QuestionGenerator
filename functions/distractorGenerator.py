@@ -46,7 +46,7 @@ def generateChoices(word, totalChoicesRequired):
 def getRandomChoices(choices, answer, totalChoicesRequired):
     filteredChoices = []
     for choice in choices:
-        if answer not in choice:
+        if answer not in choice and choice not in answer:
             filteredChoices.append(choice)
     shuffledDistractors = random.sample(filteredChoices, totalChoicesRequired - 1)
     shuffledDistractors.insert(random.randrange(len(shuffledDistractors) + 1), answer.lower())
