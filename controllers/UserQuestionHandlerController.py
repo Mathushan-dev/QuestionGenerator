@@ -71,11 +71,11 @@ def generateTFQuestions():
     answers = []
 
     for statement in statements:
-        if random.choice(["yes", "no"]):  # if a statement should be falsified
-            questions.append(falsifyStatement(statement))
+        if random.choice([True, False]):  # if a statement should be falsified
+            questions.append(falsifyStatement(statement, "no"))
             answers.append("no")
         else:
-            questions.append(statement)
+            questions.append(falsifyStatement(statement, "yes"))
             answers.append("yes")
 
         options.append(["yes", "no"])
