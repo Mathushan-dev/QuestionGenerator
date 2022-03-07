@@ -19,6 +19,6 @@ def generateTFQuestionAPI():
     questionIdHashes, questions, options, answers = createTFQuestions(context)
 
     json_data = {'questions': questions, 'options': options, 'answers': answers}
-    return requests.post(json=json_data)
+    return json_data
 
 # url='http://example.com/api/foobar', json=json_data
