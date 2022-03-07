@@ -59,11 +59,20 @@ def generateTFQuestions():
     if DEBUG:
         print("generateTFQuestions called")
     context = request.form.get("context")  # todo assuming context is at least 5 words
-    statements = context.split(".")
-    if len(statements) == 0:
+
+    if len(context.split(".")) == 0:
         return render_template(
             'try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
+
+    questionIdHashes, questions, options, answers = createTFQuestions(context)
+    saveCurrentQuestions(questionIdHashes, questions, options, answers)
+
+    return loadCurrentQuestions("tf")
+
+
+def createTFQuestions(context):
+    statements = context.split(".")
 
     questionIdHashes = []
     questions = []
@@ -85,8 +94,7 @@ def generateTFQuestions():
             UserQuestionHandler.makeQuestionIdHash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
         addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1])
 
-    saveCurrentQuestions(questionIdHashes, questions, options, answers)
-    return loadCurrentQuestions("tf")
+    return questionIdHashes, questions, options, answers
 
 
 def generateMCQuestions():
@@ -94,11 +102,20 @@ def generateMCQuestions():
         print("generateMCQuestions called")
     context = request.form.get("context")  # todo assuming context is at least 5 words
     numberOptions = request.form.get("numberOptions")
-    statements = context.split(".")
-    if len(statements) == 0:
+
+    if len(context.split(".")) == 0:
         return render_template(
             'try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
+
+    questionIdHashes, questions, options, answers = createMCQuestions(context, numberOptions)
+    saveCurrentQuestions(questionIdHashes, questions, options, answers)
+
+    return loadCurrentQuestions("mcq")
+
+
+def createMCQuestions(context, numberOptions):
+    statements = context.split(".")
 
     questionIdHashes = []
     questions = []
@@ -124,8 +141,7 @@ def generateMCQuestions():
                 UserQuestionHandler.makeQuestionIdHash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
             addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1])
 
-        saveCurrentQuestions(questionIdHashes, questions, options, answers)
-        return loadCurrentQuestions("mcq")
+        return questionIdHashes, questions, options, answers
 
 
 def clearTable():
