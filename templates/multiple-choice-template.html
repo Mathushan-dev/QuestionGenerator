@@ -14,43 +14,7 @@
             <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo">
                 <img src="../static/images/image.png" alt="Logo">
             </a>
-            <a href="{{ url_for('UserLoginSignupBP.loadHome') }}" class="login-link">Profile</a>
         </header>
-        <div class="show-text-container">
-            <button id="show-text-button" class="show-text">Show Text</button>
-            <div id="text-modal" class="text-modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <div class="text">
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="quiz-container">
             {% for i in range(0, questions|length) %}
                 <div class="question-number">
@@ -60,19 +24,18 @@
                     <p id="question">{{questions[i]}}</p>
                 </div>
                 {% for option in options[i] %}
-                    {% if (option == answers[i]) %}
+                    {% if (option == correct) %}
                         <div class="options">
-                            <button type="button" class="option-button" data-number="1" data-questionid={{questionIdHashes[i]}}>{{option}}</button>
+                            <button type="button" class="option-button" data-number="1">{{option}}</button>
                         </div>
                     {% else %}
                         <div class="options">
-                            <button type="button" class="option-button" data-number="2" data-questionid={{questionIdHashes[i]}}>{{option}}</button>
+                            <button type="button" class="option-button" data-number="2">{{option}}</button>
                         </div>
                     {% endif %}
                 {% endfor %}
             {% endfor %}
         </div>
         <script src="../static/javascript/multiple-choice.js"></script>
-        <script src="../static/javascript/show-text.js"></script>
     </body>
 </html>
