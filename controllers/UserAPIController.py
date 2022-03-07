@@ -1,6 +1,5 @@
 from controllers.UserQuestionHandlerController import createMCQuestions, createTFQuestions
 from flask import request
-import requests
 
 
 def generateMCQuestionAPI():
@@ -10,7 +9,7 @@ def generateMCQuestionAPI():
     questionIdHashes, questions, options, answers = createMCQuestions(context, numberOptions)
 
     json_data = {'questions': questions, 'options': options, 'answers': answers}
-    return requests.post(json=json_data)
+    return json_data
 
 
 def generateTFQuestionAPI():
@@ -20,5 +19,3 @@ def generateTFQuestionAPI():
 
     json_data = {'questions': questions, 'options': options, 'answers': answers}
     return json_data
-
-# url='http://example.com/api/foobar', json=json_data
