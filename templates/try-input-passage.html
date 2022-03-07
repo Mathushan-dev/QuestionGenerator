@@ -14,12 +14,11 @@
             <a href="{{ url_for('UserLoginSignupBP.index') }}" class="brand-logo">
                 <img src="../static/images/image.png" alt="Logo">
             </a>
-            <a href="{{ url_for('UserLoginSignupBP.loginSignupForm') }}" class="login-link">Log in</a>
         </header>
         <div class="main-section">
             <h1 class="instruction-text">Enter a passage to try for free!</h1>
             <form method="POST">
-                <textarea placeholder="Enter your passage!" name="context" id="context" cols="10" rows="10"></textarea>
+                <textarea placeholder="Enter your passage!" name="context" id="context" cols="10" rows="10" required></textarea>
                 <div class="option-amount">
                     <label for="optionNumber">Number of options: </label>
                     <select id="optionNumber" name="numberOptions">
@@ -28,10 +27,13 @@
                         <option value="4">4</option>
                     </select>
                 </div>
-                <!--<div class="button-div">
-                    <a class="generate-button" href="/generateMCQuestions">Generate example question</a>
-                </div>-->
-                <button formaction="/generateMCQuestions"> Generate mcq questions </button><!--todo change this-->
+
+                <div class="button-div">
+                    <button class="generate-button" formaction="/generateMCQuestions">Generate MC questions</button>
+                </div>
+                <div class="button-div">
+                    <button class="generate-button" formaction="/generateTFQuestions">Generate TF questions</button>
+                </div>
             </form>
         </div>
     </body>

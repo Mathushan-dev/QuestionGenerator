@@ -129,21 +129,6 @@ body{
     border-radius: 50%;
 }
 
-.report-button{
-    border: none;
-    background-color: transparent;
-    color: blue;
-    text-decoration: underline;
-}
-
-.report-button:hover{
-    cursor: pointer;
-}
-
-.report{
-    display: none !important;
-}
-
 /* Right Bottom Side */ 
 .specific-info{
     display: flex;

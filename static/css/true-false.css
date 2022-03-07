@@ -7,18 +7,6 @@
     padding: 30px;
 }
 
-#progress{
-    margin-bottom: 10px;
-    width: 30%;
-    background-color: grey;
-}
-
-#bar {
-    width: 10%;
-    height: 30px;
-    background-color: #5c96a6;
-}
-
 .question-number h3 {
     color:#5c96a6;
     border-bottom: 1px solid #5c96a6;
