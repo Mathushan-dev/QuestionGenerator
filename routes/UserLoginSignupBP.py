@@ -1,15 +1,15 @@
 from flask import Blueprint
-from controllers.UserLoginSignupController import index, loginSignupForm, loadEnterText, signUp, logIn, logOut, loadHome, updatePassword, deleteAccount, saveQuestionAttributes
+from controllers.UserLoginSignupController import index, login_signup_form, load_enter_text, sign_up, log_in, log_out, load_home, update_password, delete_account, save_question_attributes
 
 UserLoginSignupBP = Blueprint('UserLoginSignupBP', __name__)
 
 UserLoginSignupBP.route('/', methods=['GET'])(index)
-UserLoginSignupBP.route('/loginForm', methods=['POST', 'GET'])(loginSignupForm)
-UserLoginSignupBP.route('/enterText', methods=['POST', 'GET'])(loadEnterText)
-UserLoginSignupBP.route('/signUp', methods=['POST', 'GET'])(signUp)
-UserLoginSignupBP.route('/logIn', methods=['POST', 'GET'])(logIn)
-UserLoginSignupBP.route('/logOut', methods=['POST', 'GET'])(logOut)
-UserLoginSignupBP.route('/loadHome', methods=['POST', 'GET'])(loadHome)
-UserLoginSignupBP.route('/updatePassword', methods=['POST', 'GET'])(updatePassword)
-UserLoginSignupBP.route('/deleteAccount', methods=['POST', 'GET'])(deleteAccount)
-UserLoginSignupBP.route('/saveQuestionAttributes', methods=['POST', 'GET'])(saveQuestionAttributes)
+UserLoginSignupBP.route('/loginForm', methods=['POST', 'GET'])(login_signup_form)
+UserLoginSignupBP.route('/enterText', methods=['POST', 'GET'])(load_enter_text)
+UserLoginSignupBP.route('/signUp', methods=['POST', 'GET'])(sign_up)
+UserLoginSignupBP.route('/logIn', methods=['POST', 'GET'])(log_in)
+UserLoginSignupBP.route('/logOut', methods=['POST', 'GET'])(log_out)
+UserLoginSignupBP.route('/loadHome', methods=['POST', 'GET'])(load_home)
+UserLoginSignupBP.route('/updatePassword', methods=['POST', 'GET'])(update_password)
+UserLoginSignupBP.route('/deleteAccount', methods=['POST', 'GET'])(delete_account)
+UserLoginSignupBP.route('/saveQuestionAttributes', methods=['POST', 'GET'])(save_question_attributes)

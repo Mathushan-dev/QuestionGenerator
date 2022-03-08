@@ -1,10 +1,14 @@
-import random
 import nltk
 
 nltk.download('averaged_perceptron_tagger')
 
 
-def findRandomKeyword(text):
+def find_random_keyword(text):
+    """
+    todo
+    :param text:
+    :return: Any
+    """
     is_noun = lambda pos: pos[:2] == 'NN'
     tokenized = nltk.word_tokenize(text)
     nouns = [word for (word, pos) in nltk.pos_tag(tokenized) if is_noun(pos)]
@@ -16,4 +20,4 @@ def findRandomKeyword(text):
 
 
 if __name__ == "__main__":
-    print(findRandomKeyword("The cheetah is the fastest land animal on earth."))
+    print(find_random_keyword("The cheetah is the fastest land animal on earth."))

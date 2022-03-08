@@ -1,8 +1,8 @@
 import random
-from functions.distractorGenerator import generateChoices
-from functions.falsifyStatement import falsifyStatement
-from functions.keywordGenerator import findRandomKeyword
-from functions.T5QuestionGenerator import applyT5Model
+from functions.distractorGenerator import generate_choices
+from functions.falsifyStatement import falsify_statement
+from functions.keywordGenerator import find_random_keyword
+from functions.T5QuestionGenerator import apply_t5_model
 from models.UserQuestionHandlerModel import UserQuestionHandler
 from models.UserLoginSignupModel import db
 from flask import render_template, request
@@ -16,37 +16,61 @@ currentOptions = None
 currentAnswers = None
 
 
-def addQuestionToDatabase(questionId, context, question, answer, options, questionNumber, questionSetCode):
+def add_question_to_database(question_id, context, question, answer, options, question_number, question_set_code):
+    """
+    todo
+    :param question_id:
+    :param context:
+    :param question:
+    :param answer:
+    :param options:
+    :param question_number:
+    :param question_set_code:
+    :return: None
+    """
     global firstLaunch
     if firstLaunch:
-        clearTable()
+        clear_table()
         firstLaunch = False
 
-    optionsLinear = ""
+    options_linear = ""
     for i in range(0, len(options)):
         option = str(options[i])
-        optionsLinear += option
+        options_linear += option
         if i == len(options) - 1:
             break
-        optionsLinear += ","
+        options_linear += ","
 
-    question = UserQuestionHandler(questionId.strip(), context.strip(), question.strip(), str(answer).strip(),
-                                   optionsLinear.strip(), str(questionNumber).strip(), questionSetCode.strip())
+    question = UserQuestionHandler(question_id.strip(), context.strip(), question.strip(), str(answer).strip(),
+                                   options_linear.strip(), str(question_number).strip(), question_set_code.strip())
 
     db.session.add(question)
     db.session.commit()
 
 
-def saveCurrentQuestions(questionIdHashes, questions, options, answers):
+def save_current_questions(question_id_hashes, questions, options, answers):
+    """
+    todo
+    :param question_id_hashes:
+    :param questions:
+    :param options:
+    :param answers:
+    :return: None
+    """
     global currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers
 
-    currentQuestionIdHashes = questionIdHashes
+    currentQuestionIdHashes = question_id_hashes
     currentQuestions = questions
     currentOptions = options
     currentAnswers = answers
 
 
-def loadCurrentQuestions(choice):
+def load_current_questions(choice):
+    """
+    todo
+    :param choice:
+    :return: str
+    """
     # Structured in this way to allow for different templates for different types of questions during project extension
     if choice == "mcq":
         return render_template('multiple-choice-template.html', questionIdHashes=currentQuestionIdHashes,
@@ -55,137 +79,164 @@ def loadCurrentQuestions(choice):
                            questions=currentQuestions, options=currentOptions, answers=currentAnswers)
 
 
-def generateTFQuestions():
+def generate_tf_questions():
+    """
+    todo
+    :return: str
+    """
     if DEBUG:
         print("generateTFQuestions called")
-    context = request.form.get("context")  # todo assuming context is at least 5 words
+    context = request.form.get("context")
 
     if len(context.split(".")) == 0:
         return render_template(
             'try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
 
-    questionIdHashes, questions, options, answers = createTFQuestions(context)
-    saveCurrentQuestions(questionIdHashes, questions, options, answers)
+    question_id_hashes, questions, options, answers = create_tf_questions(context)
+    save_current_questions(question_id_hashes, questions, options, answers)
 
-    return loadCurrentQuestions("tf")
+    return load_current_questions("tf")
 
 
-def createTFQuestions(context):
+def create_tf_questions(context):
+    """
+    todo
+    :param context:
+    :return: Tuple[List[str], List[str], List[List[str]], List[str]]
+    """
     statements = context.split(".")
 
-    questionIdHashes = []
+    question_id_hashes = []
     questions = []
     options = []
     answers = []
 
-    questionNumber = 0
-    questionSetCode = UserQuestionHandler.makeQuestionIdHash(context)
+    question_number = 0
+    question_set_code = UserQuestionHandler.make_question_id_hash(context)
     for statement in statements:
         if statement.strip() == "":
             continue
-        questionNumber += 1
+        question_number += 1
         if random.choice([True, False]):  # if a statement should be falsified
-            questions.append(falsifyStatement(statement))
+            questions.append(falsify_statement(statement))
             answers.append("False")
         else:
             questions.append(statement)
             answers.append("True")
 
         options.append(["True", "False"])
-        questionIdHashes.append(
-            UserQuestionHandler.makeQuestionIdHash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
-        addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1], questionNumber,
-                              questionSetCode)
+        question_id_hashes.append(
+            UserQuestionHandler.make_question_id_hash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
+        add_question_to_database(question_id_hashes[-1], statement, questions[-1], answers[-1], options[-1], question_number,
+                                 question_set_code)
 
-    return questionIdHashes, questions, options, answers
+    return question_id_hashes, questions, options, answers
 
 
-def generateMCQuestions():
+def generate_mc_questions():
+    """
+    todo
+    :return: str
+    """
     if DEBUG:
         print("generateMCQuestions called")
-    context = request.form.get("context")  # todo assuming context is at least 5 words
-    numberOptions = request.form.get("numberOptions")
+    context = request.form.get("context")
+    number_options = request.form.get("numberOptions")
 
     if len(context.split(".")) == 0:
         return render_template(
             'try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
 
-    questionIdHashes, questions, options, answers = createMCQuestions(context, numberOptions)
-    saveCurrentQuestions(questionIdHashes, questions, options, answers)
+    question_id_hashes, questions, options, answers = create_mc_questions(context, number_options)
+    save_current_questions(question_id_hashes, questions, options, answers)
 
-    return loadCurrentQuestions("mcq")
+    return load_current_questions("mcq")
 
 
-def createMCQuestions(context, numberOptions):
+def create_mc_questions(context, number_options):
+    """
+    todo
+    :param context:
+    :param number_options:
+    :return: Tuple[List[str], list, List[list], list]
+    """
     statements = context.split(".")
 
-    questionIdHashes = []
+    question_id_hashes = []
     questions = []
     options = []
     answers = []
 
     try:
-        intNumberOptions = int(numberOptions)
+        int_number_options = int(number_options)
     except ValueError:
-        intNumberOptions = 4
+        int_number_options = 4
     finally:
-        questionNumber = 0
-        questionSetCode = UserQuestionHandler.makeQuestionIdHash(context)
+        question_number = 0
+        question_set_code = UserQuestionHandler.make_question_id_hash(context)
         for statement in statements:
             if statement.strip() == "":
                 continue
-            questionNumber += 1
-            answer = findRandomKeyword(statement)
-            question = applyT5Model(statement, findRandomKeyword(statement))
+            question_number += 1
+            answer = find_random_keyword(statement)
+            question = apply_t5_model(statement, find_random_keyword(statement))
             answers.append(answer.lower())
-            distractors = generateChoices(answer, intNumberOptions)
+            distractors = generate_choices(answer, int_number_options)
             options.append(distractors)
             questions.append(question)
 
-            questionIdHashes.append(
-                UserQuestionHandler.makeQuestionIdHash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
-            addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1],
-                                  questionNumber, questionSetCode)
+            question_id_hashes.append(
+                UserQuestionHandler.make_question_id_hash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
+            add_question_to_database(question_id_hashes[-1], statement, questions[-1], answers[-1], options[-1],
+                                     question_number, question_set_code)
 
-        return questionIdHashes, questions, options, answers
+        return question_id_hashes, questions, options, answers
 
 
-def generateExistQuestions():
+def generate_exist_questions():
+    """
+    todo
+    :return: str
+    """
     if DEBUG:
         print("generateExistQuestions called")
-    questionSetCode = request.form.get("context")  # todo assuming context is at least 5 words
+    question_set_code = request.form.get("context")
 
-    if questionSetCode.strip() == "":
+    if question_set_code.strip() == "":
         return render_template(
             'try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
 
-    questionsAll = db.session.query(UserQuestionHandler).filter(
-        UserQuestionHandler.questionSetCode == questionSetCode).all()
+    questions_all = db.session.query(UserQuestionHandler).filter(
+        UserQuestionHandler.questionSetCode == question_set_code).all()
     db.session.flush()
 
-    if len(questionsAll) == 0:
+    if len(questions_all) == 0:
         return render_template('try-input-passage.html')
 
-    questionIdHashes = []
+    question_id_hashes = []
     questions = []
     options = []
     answers = []
 
-    for question in questionsAll:
-        questionIdHashes.append(question.questionId)
+    for question in questions_all:
+        question_id_hashes.append(question.questionId)
         questions.append(question.question)
         options.append(question.options.split(","))
         answers.append(question.answer)
 
-    saveCurrentQuestions(questionIdHashes, questions, options, answers)
+    save_current_questions(question_id_hashes, questions, options, answers)
 
-    return loadCurrentQuestions("tf")
+    return load_current_questions("tf")
 
 
-def clearTable():
+def clear_table():
+    """
+    todo
+    :return: None
+    """
     if DEBUG:
         questions = db.session.query(UserQuestionHandler).filter(UserQuestionHandler.questionId != "")
         for question in questions:

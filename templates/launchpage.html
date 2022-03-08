@@ -16,10 +16,10 @@
                 <img src="../static/images/image.png" alt="Logo">
             </a>
             {% if (loggedOn == 1) %}
-                <a href="{{ url_for('UserLoginSignupBP.loadHome') }}" class="login-link">Profile</a>
-                <a href="{{ url_for('UserLoginSignupBP.logOut') }}" class="login-link">logOut</a>
+                <a href="{{ url_for('UserLoginSignupBP.load_home') }}" class="login-link">Profile</a>
+                <a href="{{ url_for('UserLoginSignupBP.log_out') }}" class="login-link">logOut</a>
             {% else %}
-                <a href="{{ url_for('UserLoginSignupBP.loginSignupForm') }}" class="login-link">Log in</a>
+                <a href="{{ url_for('UserLoginSignupBP.login_signup_form') }}" class="login-link">Log in</a>
             {% endif %}
         </header>
         <div class="first-div">
@@ -34,7 +34,7 @@
                 cultures and in different languages in one interface based on relevance and personal learning needs. 
                 OER publishers use X5LEARN's tools to recirculate their content within other sites, and use it as the 
                 first AI powered open education learning environment.</p>
-            <a href="{{ url_for('UserLoginSignupBP.loadEnterText') }}" class="try-link">Try For Free</a>
+            <a href="{{ url_for('UserLoginSignupBP.load_enter_text') }}" class="try-link">Try For Free</a>
         </div>
         <div class="second-div">
             <h1>Why choose X5Learn?</h1>
@@ -66,7 +66,7 @@
         </div>
         <div class="third-div">
             <h1>Would you like to test the question generator for free?</h1>
-            <a href="{{ url_for('UserLoginSignupBP.loadEnterText') }}" class="try-link">Try For Free</a>
+            <a href="{{ url_for('UserLoginSignupBP.load_enter_text') }}" class="try-link">Try For Free</a>
         </div>
         <footer class="main-footer">
             <img src="../static/images/eu-flag.png" alt="European Union Flag">

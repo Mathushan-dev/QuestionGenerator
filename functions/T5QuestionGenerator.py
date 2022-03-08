@@ -8,7 +8,14 @@ model = AutoModelWithLMHead.from_pretrained("mrm8488/t5-base-finetuned-question-
 
 # https://huggingface.co/mrm8488/t5-base-finetuned-question-generation-ap
 
-def applyT5Model(context, answer, max_length=64):
+def apply_t5_model(context, answer, max_length=64):
+    """
+    todo
+    :param context:
+    :param answer:
+    :param max_length:
+    :return: Any
+    """
     input_text = "answer: %s  context: %s </s>" % (answer, context)
     features = tokenizer([input_text], return_tensors='pt')
 
@@ -20,4 +27,4 @@ def applyT5Model(context, answer, max_length=64):
 
 
 if __name__ == "__main__":
-    print(applyT5Model("The cheetah is the fastest land animal.", "cheetah"))
+    print(apply_t5_model("The cheetah is the fastest land animal.", "cheetah"))

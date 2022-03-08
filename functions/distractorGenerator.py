@@ -7,7 +7,12 @@ import os
 s2v = Sense2Vec().from_disk(os.path.abspath("../QuestionGenerator/s2v_old"))
 
 
-def generateMisspellings(answer):
+def generate_misspellings(answer):
+    """
+    todo
+    :param answer:
+    :return: List[str]
+    """
     misspelt = []
     for _ in range(0, 10):
         ix = random.choice(range(len(answer)))
@@ -17,7 +22,13 @@ def generateMisspellings(answer):
     return misspelt
 
 
-def generateChoices(word, totalChoicesRequired):
+def generate_choices(word, total_choices_required):
+    """
+    todo
+    :param word:
+    :param total_choices_required:
+    :return: list
+    """
     answer = word
     global s2v
     choices = []
@@ -25,33 +36,40 @@ def generateChoices(word, totalChoicesRequired):
 
     sense = s2v.get_best_sense(word)
     if sense is None:
-        misspellings = generateMisspellings(answer)
-        return getRandomChoices(misspellings, answer, totalChoicesRequired)
+        misspellings = generate_misspellings(answer)
+        return get_random_choices(misspellings, answer, total_choices_required)
 
-    mostSimilarWord = s2v.most_similar(sense, n=20)
+    most_similar_word = s2v.most_similar(sense, n=20)
 
-    for option in mostSimilarWord:
+    for option in most_similar_word:
         distractor = option[0].split("|")[0].replace("_", " ").lower()
         if distractor.lower().strip() != word.lower().strip():
             choices.append(distractor.title().lower())
 
     try:
-        return getRandomChoices(list(OrderedDict.fromkeys(choices)), answer, totalChoicesRequired)
+        return get_random_choices(list(OrderedDict.fromkeys(choices)), answer, total_choices_required)
     except ValueError:
-        misspellings = generateMisspellings(answer)
-        return getRandomChoices(misspellings, answer, totalChoicesRequired)
+        misspellings = generate_misspellings(answer)
+        return get_random_choices(misspellings, answer, total_choices_required)
 
 
 # Using random ensures multiple users will get different possible choices for mcq's
-def getRandomChoices(choices, answer, totalChoicesRequired):
-    filteredChoices = []
+def get_random_choices(choices, answer, total_choices_required):
+    """
+    todo
+    :param choices:
+    :param answer:
+    :param total_choices_required:
+    :return: list
+    """
+    filtered_choices = []
     for choice in choices:
         if answer not in choice and choice not in answer:
-            filteredChoices.append(choice)
-    shuffledDistractors = random.sample(filteredChoices, totalChoicesRequired - 1)
-    shuffledDistractors.insert(random.randrange(len(shuffledDistractors) + 1), answer.lower())
-    return shuffledDistractors
+            filtered_choices.append(choice)
+    shuffled_distractors = random.sample(filtered_choices, total_choices_required - 1)
+    shuffled_distractors.insert(random.randrange(len(shuffled_distractors) + 1), answer.lower())
+    return shuffled_distractors
 
 
 if __name__ == "__main__":
-    print(generateChoices("father", 10))
+    print(generate_choices("father", 10))

@@ -1,21 +1,29 @@
-from controllers.UserQuestionHandlerController import createMCQuestions, createTFQuestions
+from controllers.UserQuestionHandlerController import create_mc_questions, create_tf_questions
 from flask import request
 
 
-def generateMCQuestionAPI():
+def generate_mc_question_api():
+    """
+    todo
+    :rtype: object
+    """
     context = request.args['context']
-    numberOptions = request.args['numberOptions']
+    number_options = request.args['numberOptions']
 
-    questionIdHashes, questions, options, answers = createMCQuestions(context, numberOptions)
+    question_id_hashes, questions, options, answers = create_mc_questions(context, number_options)
 
     json_data = {'questions': questions, 'options': options, 'answers': answers}
     return json_data
 
 
-def generateTFQuestionAPI():
+def generate_tf_question_api():
+    """
+    todo
+    :rtype: object
+    """
     context = request.args['context']
 
-    questionIdHashes, questions, options, answers = createTFQuestions(context)
+    question_id_hashes, questions, options, answers = create_tf_questions(context)
 
     json_data = {'questions': questions, 'options': options, 'answers': answers}
     return json_data

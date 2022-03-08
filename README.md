@@ -1,4 +1,4 @@
--# QuestionGenerator
+# QuestionGenerator
 
 Requirements:
 
@@ -10,16 +10,7 @@ Use the following link to help you - https://akrabat.com/creating-virtual-enviro
 
 Required Pip Packages:
 
-Use following command to force Python version in virtual environment is used to download the pip packages below - pyenv exec pip install --quiet package_name==version
-
-1. sense2vec==1.0.2
-2. overrides==4.1.2
-3. transformers==2.8.0
-4. sentence-transformers==0.4.0
-5. tensorflow==2.7.0
-6. flask_migrate
-7. bcrypt
-8. psycopg2-binary
+Use following command to force Python version in virtual environment is used to download the pip packages below - pyenv exec pip install --quiet package_name==version. The required pip packages can be found in requirements.txt.
 
 Required External Packages:
 

@@ -15,6 +15,10 @@ application.register_blueprint(UserQuestionHandlerBP)
 
 @application.route('/')
 def index():
+    """
+    true
+    :return: str
+    """
     return render_template('launchpage.html')
 
 
