@@ -163,7 +163,7 @@ body{
     font-size: 25px;
 }
 
-.test-wrapper div{
+.test-wrapper1 div{
     height: auto;
     max-height: 150px;
     display: flex;
@@ -176,9 +176,22 @@ body{
     transition: 0.5s;
 }
 
+.test-wrapper2 div{
+    height: auto;
+    max-height: 150px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #e35c78;
+    transition: 0.5s;
+}
+
 .test-wrapper div:hover{
     cursor: pointer;
-    background-color: #8FFFCB;
+    background-color: #5d71c7;
     transform: scale(1.05);
 }
 
