@@ -1,8 +1,12 @@
 from transformers import AutoModelWithLMHead, AutoTokenizer
 
-tokenizer = AutoTokenizer.from_pretrained("mrm8488/t5-base-finetuned-question-generation-ap")  # using a pretrained model available on hugging face after discussion with client
+tokenizer = AutoTokenizer.from_pretrained(
+    "mrm8488/t5-base-finetuned-question-generation-ap")  # using a pretrained model available on hugging face after
+# discussion with client
 model = AutoModelWithLMHead.from_pretrained("mrm8488/t5-base-finetuned-question-generation-ap")
 
+
+# https://huggingface.co/mrm8488/t5-base-finetuned-question-generation-ap
 
 def applyT5Model(context, answer, max_length=64):
     input_text = "answer: %s  context: %s </s>" % (answer, context)

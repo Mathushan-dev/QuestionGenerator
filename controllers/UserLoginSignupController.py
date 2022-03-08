@@ -161,7 +161,6 @@ def updateRecords(user, questionIdHash, score, tries):
     numberOfAttempts = user.numberOfAttempts.split(",")
     attemptedDates = user.attemptedDates.split(",")
     attemptedTimes = user.attemptedTimes.split(",")
-    attemptedOrders = user.attemptedOrders.split(",")
 
     for i in range(0, len(attemptedQuestionIds)):
         if attemptedQuestionIds[i].strip() == questionIdHash:
@@ -169,7 +168,6 @@ def updateRecords(user, questionIdHash, score, tries):
             numberOfAttempts[i] = tries
             attemptedDates[i] = attemptedDate
             attemptedTimes[i] = attemptedTime
-            attemptedOrders[i] = len(attemptedQuestionIds)
             break
 
         if i == len(attemptedQuestionIds) - 1:
@@ -178,9 +176,8 @@ def updateRecords(user, questionIdHash, score, tries):
             numberOfAttempts.append(tries)
             attemptedDates.append(attemptedDate)
             attemptedTimes.append(attemptedTime)
-            attemptedOrders.append(len(attemptedQuestionIds))
 
-    return stringifyList(attemptedQuestionIds), stringifyList(questionScores), stringifyList(numberOfAttempts), stringifyList(attemptedDates), stringifyList(attemptedTimes), stringifyList(attemptedOrders)
+    return stringifyList(attemptedQuestionIds), stringifyList(questionScores), stringifyList(numberOfAttempts), stringifyList(attemptedDates), stringifyList(attemptedTimes)
 
 
 def saveQuestionAttributes():
@@ -196,7 +193,7 @@ def saveQuestionAttributes():
     user = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == request.cookies.get('LoggedOnUserId')).first()
 
     if user is not None:
-        user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts, user.attemptedDates, user.attemptedTimes, user.attemptedOrders = updateRecords(user, questionIdHash, score, tries)
+        user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts, user.attemptedDates, user.attemptedTimes = updateRecords(user, questionIdHash, score, tries)
         db.session.commit()
 
     return loadCurrentQuestions("mcq")

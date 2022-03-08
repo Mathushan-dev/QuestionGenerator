@@ -157,7 +157,7 @@ def generateExistQuestions():
         print("generateExistQuestions called")
     questionSetCode = request.form.get("context")  # todo assuming context is at least 5 words
 
-    if questionSetCode is None:
+    if questionSetCode.strip() == "":
         return render_template(
             'try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
@@ -165,6 +165,9 @@ def generateExistQuestions():
     questionsAll = db.session.query(UserQuestionHandler).filter(
         UserQuestionHandler.questionSetCode == questionSetCode).all()
     db.session.flush()
+
+    if len(questionsAll) == 0:
+        return render_template('try-input-passage.html')
 
     questionIdHashes = []
     questions = []
