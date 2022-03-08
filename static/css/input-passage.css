@@ -26,6 +26,12 @@
     justify-content: center;
 }
 
+.select, .select:active, select:focus, .select:hover{
+    border: 0px;
+    outline: 0px;
+}
+
+
 .button-div button{
     align-self: center;
     text-decoration: none;
@@ -38,6 +44,7 @@
 }
 
 .button-div button:hover{
+    cursor: pointer;
     background-color: white;
     color: #5c96a6;
     text-decoration: underline;
