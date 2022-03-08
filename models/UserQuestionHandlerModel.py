@@ -9,13 +9,17 @@ class UserQuestionHandler(db.Model):
     question = db.Column(db.String)
     answer = db.Column(db.String)
     options = db.Column(db.String)
+    questionNumber = db.Column(db.String)
+    questionSetCode = db.Column(db.String)
 
-    def __init__(self, questionId, context, question, answer, options):
+    def __init__(self, questionId, context, question, answer, options, questionNumber, questionSetCode):
         self.questionId = questionId
         self.context = context
         self.question = question
         self.answer = answer
         self.options = options
+        self.questionNumber = questionNumber
+        self.questionSetCode = questionSetCode
 
     @property
     def serialize(self):
@@ -24,7 +28,9 @@ class UserQuestionHandler(db.Model):
             'context': self.context,
             'question': self.question,
             'answer': self.answer,
-            'options': self.options
+            'options': self.options,
+            'questionNumber': self.questionNumber,
+            'questionSetCode': self.questionSetCode
         }
 
     @staticmethod

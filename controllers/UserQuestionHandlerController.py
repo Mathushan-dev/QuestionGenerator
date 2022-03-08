@@ -16,7 +16,7 @@ currentOptions = None
 currentAnswers = None
 
 
-def addQuestionToDatabase(questionId, context, question, answer, options):
+def addQuestionToDatabase(questionId, context, question, answer, options, questionNumber, questionSetCode):
     global firstLaunch
     if firstLaunch:
         clearTable()
@@ -31,7 +31,7 @@ def addQuestionToDatabase(questionId, context, question, answer, options):
         optionsLinear += ","
 
     question = UserQuestionHandler(questionId.strip(), context.strip(), question.strip(), str(answer).strip(),
-                                   optionsLinear.strip())
+                                   optionsLinear.strip(), str(questionNumber).strip(), questionSetCode.strip())
 
     db.session.add(question)
     db.session.commit()
@@ -79,9 +79,12 @@ def createTFQuestions(context):
     options = []
     answers = []
 
+    questionNumber = 0
+    questionSetCode = UserQuestionHandler.makeQuestionIdHash(context)
     for statement in statements:
         if statement.strip() == "":
             continue
+        questionNumber += 1
         if random.choice([True, False]):  # if a statement should be falsified
             questions.append(falsifyStatement(statement))
             answers.append("False")
@@ -92,7 +95,8 @@ def createTFQuestions(context):
         options.append(["True", "False"])
         questionIdHashes.append(
             UserQuestionHandler.makeQuestionIdHash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
-        addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1])
+        addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1], questionNumber,
+                              questionSetCode)
 
     return questionIdHashes, questions, options, answers
 
@@ -127,9 +131,12 @@ def createMCQuestions(context, numberOptions):
     except ValueError:
         intNumberOptions = 4
     finally:
+        questionNumber = 0
+        questionSetCode = UserQuestionHandler.makeQuestionIdHash(context)
         for statement in statements:
             if statement.strip() == "":
                 continue
+            questionNumber += 1
             answer = findRandomKeyword(statement)
             question = applyT5Model(statement, findRandomKeyword(statement))
             answers.append(answer.lower())
@@ -139,9 +146,40 @@ def createMCQuestions(context, numberOptions):
 
             questionIdHashes.append(
                 UserQuestionHandler.makeQuestionIdHash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
-            addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1])
+            addQuestionToDatabase(questionIdHashes[-1], statement, questions[-1], answers[-1], options[-1],
+                                  questionNumber, questionSetCode)
 
         return questionIdHashes, questions, options, answers
+
+
+def generateExistQuestions():
+    if DEBUG:
+        print("generateExistQuestions called")
+    questionSetCode = request.form.get("context")  # todo assuming context is at least 5 words
+
+    if questionSetCode is None:
+        return render_template(
+            'try-input-passage.html')  # this should never occur as frontend validates input text is at
+        # least 5 words
+
+    questionsAll = db.session.query(UserQuestionHandler).filter(
+        UserQuestionHandler.questionSetCode == questionSetCode).all()
+    db.session.flush()
+
+    questionIdHashes = []
+    questions = []
+    options = []
+    answers = []
+
+    for question in questionsAll:
+        questionIdHashes.append(question.questionId)
+        questions.append(question.question)
+        options.append(question.options.split(","))
+        answers.append(question.answer)
+
+    saveCurrentQuestions(questionIdHashes, questions, options, answers)
+
+    return loadCurrentQuestions("tf")
 
 
 def clearTable():

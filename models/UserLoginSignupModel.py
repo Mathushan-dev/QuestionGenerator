@@ -13,6 +13,9 @@ class UserLoginSignup(db.Model):
     attemptedQuestionIds = db.Column(db.String)  # id, id2, id3
     questionScores = db.Column(db.String)  # 1, 0, 1 - means id and id3 answered correctly but id2 answered incorrectly
     numberOfAttempts = db.Column(db.String)  # 4, 4, 1, 3 - means 4 tries till correct answer on first two questions and then 1 and 3 tries in the following questions
+    attemptedDates = db.Column(db.String)
+    attemptedTimes = db.Column(db.String)
+    attemptedOrders = db.Column(db.String)
 
     def __init__(self, userId, fName, lName, hashedPassword):
         self.userId = userId
@@ -22,6 +25,9 @@ class UserLoginSignup(db.Model):
         self.attemptedQuestionIds = ""
         self.questionScores = ""
         self.numberOfAttempts = ""
+        self.attemptedDates = ""
+        self.attemptedTimes = ""
+        self.attemptedOrders = ""
 
     @property
     def serialize(self):
@@ -32,7 +38,10 @@ class UserLoginSignup(db.Model):
             'hashedPassword': self.hashedPassword,
             'attemptedQuestionIds': self.attemptedQuestionIds,
             'questionScores': self.questionScores,
-            'numberOfAttempts': self.numberOfAttempts
+            'numberOfAttempts': self.numberOfAttempts,
+            'attemptedDates': self.attemptedDates,
+            'attemptedTimes': self.attemptedTimes,
+            'attemptedOrders': self.attemptedOrders
         }
 
     @staticmethod

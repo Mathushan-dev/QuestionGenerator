@@ -5,6 +5,7 @@ from controllers.UserQuestionHandlerController import loadCurrentQuestions
 from functions.profileStatsCalculator import getProfileStats
 from sqlalchemy.exc import IntegrityError
 from config import DEBUG
+from datetime import date, datetime
 import json
 
 firstLaunch = True
@@ -149,22 +150,37 @@ def stringifyList(list):
 
 
 def updateRecords(user, questionIdHash, score, tries):
+    today = date.today()
+    d1 = today.strftime("%d/%m/%Y")
+    now = datetime.now()
+    attemptedDate = d1
+    attemptedTime = now
+
     attemptedQuestionIds = user.attemptedQuestionIds.split(",")
     questionScores = user.questionScores.split(",")
     numberOfAttempts = user.numberOfAttempts.split(",")
+    attemptedDates = user.attemptedDates.split(",")
+    attemptedTimes = user.attemptedTimes.split(",")
+    attemptedOrders = user.attemptedOrders.split(",")
 
     for i in range(0, len(attemptedQuestionIds)):
         if attemptedQuestionIds[i].strip() == questionIdHash:
             questionScores[i] = score
             numberOfAttempts[i] = tries
+            attemptedDates[i] = attemptedDate
+            attemptedTimes[i] = attemptedTime
+            attemptedOrders[i] = len(attemptedQuestionIds)
             break
 
         if i == len(attemptedQuestionIds) - 1:
             attemptedQuestionIds.append(questionIdHash)
             questionScores.append(score)
             numberOfAttempts.append(tries)
+            attemptedDates.append(attemptedDate)
+            attemptedTimes.append(attemptedTime)
+            attemptedOrders.append(len(attemptedQuestionIds))
 
-    return stringifyList(attemptedQuestionIds), stringifyList(questionScores), stringifyList(numberOfAttempts)
+    return stringifyList(attemptedQuestionIds), stringifyList(questionScores), stringifyList(numberOfAttempts), stringifyList(attemptedDates), stringifyList(attemptedTimes), stringifyList(attemptedOrders)
 
 
 def saveQuestionAttributes():
@@ -180,9 +196,7 @@ def saveQuestionAttributes():
     user = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == request.cookies.get('LoggedOnUserId')).first()
 
     if user is not None:
-        user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts = updateRecords(user, questionIdHash,
-                                                                                              score,
-                                                                                              tries)
+        user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts, user.attemptedDates, user.attemptedTimes, user.attemptedOrders = updateRecords(user, questionIdHash, score, tries)
         db.session.commit()
 
     return loadCurrentQuestions("mcq")

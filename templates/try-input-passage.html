@@ -16,7 +16,7 @@
             </a>
         </header>
         <div class="main-section">
-            <h1 class="instruction-text">Enter a passage to try for free!</h1>
+            <h1 class="instruction-text">Enter a passage!</h1>
             <form method="POST">
                 <textarea placeholder="Enter your passage!" name="context" id="context" cols="10" rows="10" required></textarea>
                 <div class="option-amount">
@@ -33,6 +33,9 @@
                 </div>
                 <div class="button-div">
                     <button class="generate-button" formaction="/generateTFQuestions">Generate TF questions</button>
+                </div>
+                <div class="button-div">
+                    <button class="generate-button" formaction="/generateExistQuestions">Generate Code questions</button>
                 </div>
             </form>
         </div>
