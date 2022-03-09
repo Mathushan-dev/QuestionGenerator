@@ -1,14 +1,10 @@
 from collections import OrderedDict
 from sense2vec import Sense2Vec
-from config import TEST
 import random
 import string
 import os
 
-if TEST:
-    s2v = Sense2Vec().from_disk(os.path.abspath("../s2v_old"))
-else:
-    s2v = Sense2Vec().from_disk(os.path.abspath("../QuestionGenerator/s2v_old"))
+s2v = Sense2Vec().from_disk(os.path.abspath("../QuestionGenerator/s2v_old"))
 
 
 def generate_misspellings(answer):
