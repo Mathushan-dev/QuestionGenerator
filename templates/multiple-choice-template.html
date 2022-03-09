@@ -52,6 +52,7 @@
             </div>
         </div>
         <div class="quiz-container">
+        {% if questions %}
             {% for i in range(0, questions|length) %}
                 <div class="question-number">
                     <h3>Question {{i+1}} of {{questions|length}}</h3>
@@ -71,6 +72,7 @@
                     {% endif %}
                 {% endfor %}
             {% endfor %}
+        {% endif %}
         </div>
         <script src="../static/javascript/multiple-choice.js"></script>
         <script src="../static/javascript/show-text.js"></script>

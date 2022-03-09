@@ -1,7 +1,7 @@
 import random
-from functions.distractorGenerator import generate_choices
-from functions.falsifyStatement import falsify_statement
-from functions.keywordGenerator import find_random_keyword
+from functions.DistractorGenerator import generate_choices
+from functions.StatementFalsifier import falsify_statement
+from functions.KeywordFinder import find_random_keyword
 from functions.T5QuestionGenerator import apply_t5_model
 from models.UserQuestionHandlerModel import UserQuestionHandler
 from models.UserLoginSignupModel import db
