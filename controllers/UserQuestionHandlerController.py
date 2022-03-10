@@ -14,6 +14,7 @@ currentQuestionIdHashes = None
 currentQuestions = None
 currentOptions = None
 currentAnswers = None
+currentContext = None
 
 
 def add_question_to_database(question_id, context, question, answer, options, question_number, question_set_code):
@@ -48,13 +49,14 @@ def add_question_to_database(question_id, context, question, answer, options, qu
     db.session.commit()
 
 
-def save_current_questions(question_id_hashes, questions, options, answers):
+def save_current_questions(question_id_hashes, questions, options, answers, context):
     """
     todo
     :param question_id_hashes:
     :param questions:
     :param options:
     :param answers:
+    :param context:
     :return: None
     """
     global currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers
@@ -63,6 +65,7 @@ def save_current_questions(question_id_hashes, questions, options, answers):
     currentQuestions = questions
     currentOptions = options
     currentAnswers = answers
+    currentContext = context
 
 
 def load_current_questions(choice):
@@ -74,9 +77,11 @@ def load_current_questions(choice):
     # Structured in this way to allow for different templates for different types of questions during project extension
     if choice == "mcq":
         return render_template('multiple-choice-template.html', questionIdHashes=currentQuestionIdHashes,
-                               questions=currentQuestions, options=currentOptions, answers=currentAnswers)
+                               questions=currentQuestions, options=currentOptions, answers=currentAnswers,
+                               context=currentContext)
     return render_template('multiple-choice-template.html', questionIdHashes=currentQuestionIdHashes,
-                           questions=currentQuestions, options=currentOptions, answers=currentAnswers)
+                           questions=currentQuestions, options=currentOptions, answers=currentAnswers,
+                           context=currentContext)
 
 
 def generate_tf_questions():
@@ -94,7 +99,7 @@ def generate_tf_questions():
         # least 5 words
 
     question_id_hashes, questions, options, answers = create_tf_questions(context)
-    save_current_questions(question_id_hashes, questions, options, answers)
+    save_current_questions(question_id_hashes, questions, options, answers, context)
 
     return load_current_questions("tf")
 
@@ -128,7 +133,8 @@ def create_tf_questions(context):
         options.append(["True", "False"])
         question_id_hashes.append(
             UserQuestionHandler.make_question_id_hash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
-        add_question_to_database(question_id_hashes[-1], statement, questions[-1], answers[-1], options[-1], question_number,
+        add_question_to_database(question_id_hashes[-1], statement, questions[-1], answers[-1], options[-1],
+                                 question_number,
                                  question_set_code)
 
     return question_id_hashes, questions, options, answers
@@ -150,7 +156,7 @@ def generate_mc_questions():
         # least 5 words
 
     question_id_hashes, questions, options, answers = create_mc_questions(context, number_options)
-    save_current_questions(question_id_hashes, questions, options, answers)
+    save_current_questions(question_id_hashes, questions, options, answers, context)
 
     return load_current_questions("mcq")
 
@@ -188,7 +194,8 @@ def create_mc_questions(context, number_options):
             questions.append(question)
 
             question_id_hashes.append(
-                UserQuestionHandler.make_question_id_hash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
+                UserQuestionHandler.make_question_id_hash(
+                    statement + questions[-1] + answers[-1] + ''.join(options[-1])))
             add_question_to_database(question_id_hashes[-1], statement, questions[-1], answers[-1], options[-1],
                                      question_number, question_set_code)
 
@@ -227,7 +234,7 @@ def generate_exist_questions():
         options.append(question.options.split(","))
         answers.append(question.answer)
 
-    save_current_questions(question_id_hashes, questions, options, answers)
+    save_current_questions(question_id_hashes, questions, options, answers, context)
 
     return load_current_questions("tf")
 
