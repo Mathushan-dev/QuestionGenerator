@@ -59,7 +59,7 @@ def save_current_questions(question_id_hashes, questions, options, answers, cont
     :param context:
     :return: None
     """
-    global currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers
+    global currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers, currentContext
 
     currentQuestionIdHashes = question_id_hashes
     currentQuestions = questions
