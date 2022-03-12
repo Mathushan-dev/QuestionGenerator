@@ -202,3 +202,59 @@ input {
 .container.right-panel-active .overlay-right {
 	transform: translateX(20%);
 }
+
+.terms-div{
+	padding-left: 2px;
+	padding-right: 2px;
+	display: block;
+}
+
+.terms-div input {
+	height: 2em;
+	width: 2em;
+	vertical-align: middle;
+}
+
+.terms-div label, .terms-div a{
+	font-size: 13px;
+}
+
+.terms-div a{
+	color: blue;
+	cursor: pointer;
+}
+
+.terms-modal{
+	display: none; 
+	position: fixed;
+	z-index: 1; 
+	left: 0;
+	top: 0;
+	width: 100%; 
+	height: 100%; 
+	overflow: auto; 
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4); 
+}
+
+.terms-modal-content {
+	background-color: #fefefe;
+	margin: 15% auto; 
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%; 
+}
+
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+  }
