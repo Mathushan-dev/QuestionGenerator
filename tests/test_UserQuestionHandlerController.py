@@ -1,6 +1,7 @@
 from application import application
-from controllers.UserLoginSignupController import stringify_list, update_records
-from models.UserLoginSignupModel import UserLoginSignup
+from controllers.UserQuestionHandlerController import add_question_to_database, save_current_questions, \
+    load_current_questions
+from models.UserQuestionHandlerModel import UserQuestionHandler
 
 
 class UserLoginSignupControllerTester:
@@ -16,46 +17,62 @@ class UserLoginSignupControllerTester:
 test_application = UserLoginSignupControllerTester()
 
 
-def test_index():
+def test_add_question_to_database():
     """
     GIVEN a Flask application configured for testing
-    WHEN the '/' page is requested (GET)
+    WHEN the 'add_question_to_database' method is called
     THEN check that the response is valid
     :return: None
     """
-    with test_application.flask_app.test_client() as test_client:
-        response = test_client.get('/')
-        assert response.status_code == 200
-        assert b'X5LEARN' in response.data
-        assert b'Why choose X5Learn?' in response.data
+    question = add_question_to_database()
+    assert question.questionId == "test_question_id"
+    assert question.context == "test_question_context"
+    assert question.question == "test_question"
+    assert question.answer == "test_answer"
+    assert question.options == "test_options"
+    assert question.questionNumber == "test_question_number"
+    assert question.questionSetCode == "test_question_set_code"
 
 
-def test_login_signup_form():
+def test_save_current_questions():
     """
     GIVEN a Flask application configured for testing
-    WHEN the '/loginForm' page is requested (GET)
+    WHEN the 'save_current_questions' method is called
     THEN check that the response is valid
     :return: None
     """
-    with test_application.flask_app.test_client() as test_client:
-        response = test_client.get('/loginForm')
-        assert response.status_code == 200
-        assert b'Sign Up' in response.data
-        assert b'Log In' in response.data
+    currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers, currentContext = save_current_questions()
+    assert currentQuestionIdHashes == "test_question_id_hashes"
+    assert currentQuestions == "test_questions"
+    assert currentOptions == "test_options"
+    assert currentAnswers == "test_answers"
+    assert currentContext == "test_context"
 
 
-def test_load_enter_text():
+def test_load_current_questions():
     """
     GIVEN a Flask application configured for testing
-    WHEN the '/enterText' page is requested (GET)
+    WHEN the 'load_current_questions' method is called
     THEN check that the response is valid
     :return: None
     """
-    with test_application.flask_app.test_client() as test_client:
-        response = test_client.get('/enterText')
-        assert response.status_code == 200
-        assert b'Enter a passage!' in response.data
-        assert b'Number of options:' in response.data
+    response = load_current_questions("mcq")
+    assert b'Question' in response
+    response = load_current_questions("tf")
+    assert b'Question' in response
+
+
+def test_generate_tf_questions():
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the 'generate_tf_questions' method is called
+    THEN check that the response is valid
+    :return: None
+    """
+    response = load_current_questions("mcq")
+    assert b'Question' in response
+    response = load_current_questions("tf")
+    assert b'Question' in response
 
 
 def test_sign_up():

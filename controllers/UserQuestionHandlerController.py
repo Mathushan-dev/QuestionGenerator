@@ -17,7 +17,7 @@ currentAnswers = None
 currentContext = None
 
 
-def add_question_to_database(question_id, context, question, answer, options, question_number, question_set_code):
+def add_question_to_database(question_id="test_question_id", context="test_context", question="test_question", answer="test_answer", options=["test_options"], question_number="test_question_number", question_set_code="test_question_set_code"):
     """
     todo
     :param question_id:
@@ -48,8 +48,10 @@ def add_question_to_database(question_id, context, question, answer, options, qu
     db.session.add(question)
     db.session.commit()
 
+    return question
 
-def save_current_questions(question_id_hashes, questions, options, answers, context):
+
+def save_current_questions(question_id_hashes="test_question_id_hashes", questions="test_questions", options="test_options", answers="test_answers", context="test_context"):
     """
     todo
     :param question_id_hashes:
@@ -66,6 +68,8 @@ def save_current_questions(question_id_hashes, questions, options, answers, cont
     currentOptions = options
     currentAnswers = answers
     currentContext = context
+
+    return currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers, currentContext
 
 
 def load_current_questions(choice):
