@@ -1,43 +1,28 @@
 import requests
+from application import application
+
+
+class UserLoginSignupControllerTester:
+    flask_app = None
+
+    def __init__(self):
+        """
+        todo
+        """
+        self.flask_app = application
+
+
+test_application = UserLoginSignupControllerTester()
 
 
 def test_generate_mc_question_api():
-    try:
-        response = requests.post('http://40.87.57.232:5000/generateMCQuestionAPI?context="Jack walked to the '
-                                 'shop"&numberOptions=4')
-        assert (response.status_code == 200)
-        response.raise_for_status()
-        # Code here will only run if the request is successful
-    except requests.exceptions.HTTPError as errh:
-        print(errh)
-        assert False
-    except requests.exceptions.ConnectionError as errc:
-        print(errc)
-        assert False
-    except requests.exceptions.Timeout as errt:
-        print(errt)
-        assert False
-    except requests.exceptions.RequestException as err:
-        print(err)
-        assert False
+    with test_application.flask_app.test_client() as test_client:
+        response = test_client.post('/generateMCQuestionAPI?context="Jack walked to the '
+                                    'shop"&numberOptions=4')
+        assert response.status_code == 200
 
 
 def test_generate_tf_question_api():
-    try:
-        response = requests.post(
-            'http://40.87.57.232:5000/generateTFQuestionAPI?context="Jack walked to the shop"')
-        assert (response.status_code == 200)
-        response.raise_for_status()
-        # Code here will only run if the request is successful
-    except requests.exceptions.HTTPError as errh:
-        print(errh)
-        assert False
-    except requests.exceptions.ConnectionError as errc:
-        print(errc)
-        assert False
-    except requests.exceptions.Timeout as errt:
-        print(errt)
-        assert False
-    except requests.exceptions.RequestException as err:
-        print(err)
-        assert False
+    with test_application.flask_app.test_client() as test_client:
+        response = test_client.post('/generateTFQuestionAPI?context="Jack walked to the shop"')
+        assert response.status_code == 200

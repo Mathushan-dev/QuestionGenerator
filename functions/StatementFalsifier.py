@@ -143,7 +143,3 @@ def clean_up_statement(original_statement):
     :return: Any
     """
     return original_statement.translate(str.maketrans('', '', string.punctuation))
-
-
-if __name__ == "__main__":
-    print(falsify_statement("Tom walked to the park"))

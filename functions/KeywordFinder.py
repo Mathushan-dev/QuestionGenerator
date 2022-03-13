@@ -17,7 +17,3 @@ def find_random_keyword(text):
     if len(nouns) < 1:
         return text[-1]
     return nouns[-1]
-
-
-if __name__ == "__main__":
-    print(find_random_keyword("The cheetah is the fastest land animal on earth."))
