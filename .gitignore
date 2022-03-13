@@ -4,3 +4,4 @@ s2v_old
 QuestionGeneratorVenv
 runtime.txt
 s2v_reddit_2015_md.tar.gz
+.coverage
