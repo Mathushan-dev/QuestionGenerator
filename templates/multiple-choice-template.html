@@ -22,36 +22,13 @@
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <div class="text">
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus consequatur ratione 
-                            magnam dolorem nobis fuga corrupti inventore fugiat debitis laborum sequi recusandae qui 
-                            sapiente dolores maxime labore ipsum, vero amet?</p>
+                        <p>{{context}}</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="quiz-container">
+        {% if questions %}
             {% for i in range(0, questions|length) %}
                 <div class="question-number">
                     <h3>Question {{i+1}} of {{questions|length}}</h3>
@@ -71,6 +48,7 @@
                     {% endif %}
                 {% endfor %}
             {% endfor %}
+        {% endif %}
         </div>
         <script src="../static/javascript/multiple-choice.js"></script>
         <script src="../static/javascript/show-text.js"></script>

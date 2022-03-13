@@ -21,3 +21,7 @@ Required External Packages:
 Final Execution:
 
 1. Execute Program with pyenv version of python
+
+Test:
+
+1. coverage run --source=controllers,models,routes,functions --module pytest --verbose tests && coverage report --show-missing

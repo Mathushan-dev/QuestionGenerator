@@ -24,7 +24,3 @@ def apply_t5_model(context, answer, max_length=64):
                             max_length=max_length)
 
     return tokenizer.decode(output[0], skip_special_tokens=True, clean_up_tokenization_spaces=True).split(' ', 1)[1]
-
-
-if __name__ == "__main__":
-    print(apply_t5_model("The cheetah is the fastest land animal.", "cheetah"))

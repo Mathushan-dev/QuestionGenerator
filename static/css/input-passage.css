@@ -27,8 +27,8 @@
 }
 
 .select, .select:active, select:focus, .select:hover{
-    border: 0px;
-    outline: 0px;
+    border: 0;
+    outline: 0;
 }
 
 

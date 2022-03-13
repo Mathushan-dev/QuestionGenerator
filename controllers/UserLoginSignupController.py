@@ -2,9 +2,9 @@ from flask import render_template, request, make_response
 from models.UserLoginSignupModel import UserLoginSignup
 from models.UserLoginSignupModel import db
 from controllers.UserQuestionHandlerController import load_current_questions
-from functions.profileStatsCalculator import get_profile_stats
+from functions.ProfileStatsCalculator import get_profile_stats
 from sqlalchemy.exc import IntegrityError
-from config import DEBUG
+from config import DEBUG, TEST
 from datetime import date, datetime
 import json
 
@@ -22,7 +22,7 @@ def index():
         if firstLaunch:
             clear_table()
             firstLaunch = False
-    logged_on: int = 1
+    logged_on = 1
     if request.cookies.get('LoggedOnUserId') is None:
         logged_on = 0
     return render_template('launchpage.html', loggedOn=logged_on)
@@ -51,17 +51,21 @@ def load_enter_text():
     return render_template('try-input-passage.html', loggedOn=logged_on)
 
 
-def sign_up():
+def sign_up(user_id="test_email", f_name="test_first_name", l_name="test_last_name", password="test_password"):
     """
     todo
     :rtype: object
     """
     if DEBUG:
         print("signUp called")
-    user_id = request.form.get("email")
-    f_name = request.form.get("fName")
-    l_name = request.form.get("lName")
-    password = request.form.get("password")
+
+    if TEST:
+        clear_table()
+    else:
+        user_id = request.form.get("email")
+        f_name = request.form.get("fName")
+        l_name = request.form.get("lName")
+        password = request.form.get("password")
 
     password_hash = UserLoginSignup.make_password_hash(password)
     user = UserLoginSignup(user_id, f_name, l_name, password_hash)
@@ -78,15 +82,17 @@ def sign_up():
     return resp
 
 
-def log_in():
+def log_in(user_id="test_email", password="test_password"):
     """
     todo
     :return: Union[object, Response]
     """
     if DEBUG:
         print("logIn called")
-    user_id = request.form.get("email")
-    password = request.form.get("password")
+
+    if not TEST:
+        user_id = request.form.get("email")
+        password = request.form.get("password")
 
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
 
@@ -115,7 +121,7 @@ def log_out():
     return resp
 
 
-def load_home():
+def load_home(user_id="test_email"):
     """
     todo
     :return: Union[object, str]
@@ -123,7 +129,8 @@ def load_home():
     if DEBUG:
         print("logIn called")
 
-    user_id = request.cookies.get('LoggedOnUserId')
+    if not TEST:
+        user_id = request.cookies.get('LoggedOnUserId')
 
     if request.cookies.get('LoggedOnUserId') is None:
         return login_signup_form("Please login or sign up for an account before viewing question results.")
@@ -150,12 +157,13 @@ def update_password():
     pass
 
 
-def delete_account():
+def delete_account(user_id="test_email"):
     """
     todo
     :return: Union[object, Response]
     """
-    user_id = request.cookies.get('LoggedOnUserId')
+    if not TEST:
+        user_id = request.cookies.get('LoggedOnUserId')
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
     if len(users) == 0:
         return index()
@@ -163,7 +171,7 @@ def delete_account():
         return login_signup_form(message="The server is currently down. Please try logging in later.")
         # This should never happen and something has gone terribly wrong if duplicate emails exist on database
     else:
-        resp = make_response(index)
+        resp = make_response(index())
         resp.set_cookie('LoggedOnUserId', 'None', expires=0)
         try:
             stack_trace = db.session.delete(users[0])
@@ -230,7 +238,7 @@ def update_records(user, question_id_hash, score, tries):
         number_of_attempts), stringify_list(attempted_dates), stringify_list(attempted_times)
 
 
-def save_question_attributes():
+def save_question_attributes(question_id_hash="test_question_id_hash", score="test_score", tries="test_tries"):
     """
     todo
     :return: str
@@ -238,11 +246,12 @@ def save_question_attributes():
     if DEBUG:
         print("saveQuestionAttributes called")
 
-    attributes_dump = json.dumps(request.get_json())
-    attributes = json.loads(attributes_dump)
-    question_id_hash = attributes["questionid"]
-    score = attributes["score"]
-    tries = attributes["tries"]
+    if not TEST:
+        attributes_dump = json.dumps(request.get_json())
+        attributes = json.loads(attributes_dump)
+        question_id_hash = attributes["questionid"]
+        score = attributes["score"]
+        tries = attributes["tries"]
 
     user = db.session.query(UserLoginSignup).filter(
         UserLoginSignup.userId == request.cookies.get('LoggedOnUserId')).first()
@@ -260,7 +269,7 @@ def clear_table():
     todo
     :return: None
     """
-    if DEBUG:
+    if DEBUG or TEST:
         users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId != "")
         for user in users:
             db.session.delete(user)

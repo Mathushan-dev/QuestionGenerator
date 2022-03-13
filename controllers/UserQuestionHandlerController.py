@@ -1,12 +1,12 @@
 import random
-from functions.distractorGenerator import generate_choices
-from functions.falsifyStatement import falsify_statement
-from functions.keywordGenerator import find_random_keyword
+from functions.DistractorGenerator import generate_choices
+from functions.StatementFalsifier import falsify_statement
+from functions.KeywordFinder import find_random_keyword
 from functions.T5QuestionGenerator import apply_t5_model
 from models.UserQuestionHandlerModel import UserQuestionHandler
 from models.UserLoginSignupModel import db
 from flask import render_template, request
-from config import DEBUG
+from config import DEBUG, TEST
 
 firstLaunch = True
 
@@ -14,9 +14,12 @@ currentQuestionIdHashes = None
 currentQuestions = None
 currentOptions = None
 currentAnswers = None
+currentContext = None
 
 
-def add_question_to_database(question_id, context, question, answer, options, question_number, question_set_code):
+def add_question_to_database(question_id="test_question_id", context="test_context", question="test_question",
+                             answer="test_answer", options=["test_options"], question_number="test_question_number",
+                             question_set_code="test_question_set_code"):
     """
     todo
     :param question_id:
@@ -43,29 +46,36 @@ def add_question_to_database(question_id, context, question, answer, options, qu
 
     question = UserQuestionHandler(question_id.strip(), context.strip(), question.strip(), str(answer).strip(),
                                    options_linear.strip(), str(question_number).strip(), question_set_code.strip())
+    if not TEST:
+        db.session.add(question)
+        db.session.commit()
 
-    db.session.add(question)
-    db.session.commit()
+    return question
 
 
-def save_current_questions(question_id_hashes, questions, options, answers):
+def save_current_questions(question_id_hashes="test_question_id_hashes", questions="test_questions",
+                           options="test_options", answers="test_answers", context="test_context"):
     """
     todo
     :param question_id_hashes:
     :param questions:
     :param options:
     :param answers:
+    :param context:
     :return: None
     """
-    global currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers
+    global currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers, currentContext
 
     currentQuestionIdHashes = question_id_hashes
     currentQuestions = questions
     currentOptions = options
     currentAnswers = answers
+    currentContext = context
+
+    return currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers, currentContext
 
 
-def load_current_questions(choice):
+def load_current_questions(choice="mcq"):
     """
     todo
     :param choice:
@@ -74,19 +84,22 @@ def load_current_questions(choice):
     # Structured in this way to allow for different templates for different types of questions during project extension
     if choice == "mcq":
         return render_template('multiple-choice-template.html', questionIdHashes=currentQuestionIdHashes,
-                               questions=currentQuestions, options=currentOptions, answers=currentAnswers)
+                               questions=currentQuestions, options=currentOptions, answers=currentAnswers,
+                               context=currentContext)
     return render_template('multiple-choice-template.html', questionIdHashes=currentQuestionIdHashes,
-                           questions=currentQuestions, options=currentOptions, answers=currentAnswers)
+                           questions=currentQuestions, options=currentOptions, answers=currentAnswers,
+                           context=currentContext)
 
 
-def generate_tf_questions():
+def generate_tf_questions(context="Harry walked to the park"):
     """
     todo
     :return: str
     """
     if DEBUG:
         print("generateTFQuestions called")
-    context = request.form.get("context")
+    if not TEST:
+        context = request.form.get("context")
 
     if len(context.split(".")) == 0:
         return render_template(
@@ -94,7 +107,7 @@ def generate_tf_questions():
         # least 5 words
 
     question_id_hashes, questions, options, answers = create_tf_questions(context)
-    save_current_questions(question_id_hashes, questions, options, answers)
+    save_current_questions(question_id_hashes, questions, options, answers, context)
 
     return load_current_questions("tf")
 
@@ -128,21 +141,24 @@ def create_tf_questions(context):
         options.append(["True", "False"])
         question_id_hashes.append(
             UserQuestionHandler.make_question_id_hash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
-        add_question_to_database(question_id_hashes[-1], statement, questions[-1], answers[-1], options[-1], question_number,
-                                 question_set_code)
+        if not TEST:
+            add_question_to_database(question_id_hashes[-1], statement, questions[-1], answers[-1], options[-1],
+                                     str(question_number),
+                                     question_set_code)
 
     return question_id_hashes, questions, options, answers
 
 
-def generate_mc_questions():
+def generate_mc_questions(context="Harry walked to the park", number_options="4"):
     """
     todo
     :return: str
     """
     if DEBUG:
         print("generateMCQuestions called")
-    context = request.form.get("context")
-    number_options = request.form.get("numberOptions")
+    if not TEST:
+        context = request.form.get("context")
+        number_options = request.form.get("numberOptions")
 
     if len(context.split(".")) == 0:
         return render_template(
@@ -150,7 +166,7 @@ def generate_mc_questions():
         # least 5 words
 
     question_id_hashes, questions, options, answers = create_mc_questions(context, number_options)
-    save_current_questions(question_id_hashes, questions, options, answers)
+    save_current_questions(question_id_hashes, questions, options, answers, context)
 
     return load_current_questions("mcq")
 
@@ -188,21 +204,24 @@ def create_mc_questions(context, number_options):
             questions.append(question)
 
             question_id_hashes.append(
-                UserQuestionHandler.make_question_id_hash(statement + questions[-1] + answers[-1] + ''.join(options[-1])))
-            add_question_to_database(question_id_hashes[-1], statement, questions[-1], answers[-1], options[-1],
-                                     question_number, question_set_code)
+                UserQuestionHandler.make_question_id_hash(
+                    statement + questions[-1] + answers[-1] + ''.join(options[-1])))
+            if not TEST:
+                add_question_to_database(question_id_hashes[-1], statement, questions[-1], answers[-1], options[-1],
+                                     str(question_number), question_set_code)
 
         return question_id_hashes, questions, options, answers
 
 
-def generate_exist_questions():
+def generate_exist_questions(question_set_code="test_question_set_code"):
     """
     todo
     :return: str
     """
     if DEBUG:
         print("generateExistQuestions called")
-    question_set_code = request.form.get("context")
+    if not TEST:
+        question_set_code = request.form.get("context")
 
     if question_set_code.strip() == "":
         return render_template(
@@ -220,14 +239,17 @@ def generate_exist_questions():
     questions = []
     options = []
     answers = []
+    context = None
 
     for question in questions_all:
+        if context is None:
+            context = question.context
         question_id_hashes.append(question.questionId)
         questions.append(question.question)
         options.append(question.options.split(","))
         answers.append(question.answer)
 
-    save_current_questions(question_id_hashes, questions, options, answers)
+    save_current_questions(question_id_hashes, questions, options, answers, context)
 
     return load_current_questions("tf")
 

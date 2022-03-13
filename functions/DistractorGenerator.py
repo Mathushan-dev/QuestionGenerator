@@ -69,7 +69,3 @@ def get_random_choices(choices, answer, total_choices_required):
     shuffled_distractors = random.sample(filtered_choices, total_choices_required - 1)
     shuffled_distractors.insert(random.randrange(len(shuffled_distractors) + 1), answer.lower())
     return shuffled_distractors
-
-
-if __name__ == "__main__":
-    print(generate_choices("father", 10))

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_migrate import Migrate
 from models.UserLoginSignupModel import db
 from routes.UserLoginSignupBP import UserLoginSignupBP
@@ -11,16 +11,6 @@ db.init_app(application)
 migrate = Migrate(application, db)
 application.register_blueprint(UserLoginSignupBP)
 application.register_blueprint(UserQuestionHandlerBP)
-
-
-@application.route('/')
-def index():
-    """
-    true
-    :return: str
-    """
-    return render_template('launchpage.html')
-
 
 if __name__ == '__main__':
     application.debug = DEBUG
