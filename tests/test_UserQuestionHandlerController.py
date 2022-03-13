@@ -87,7 +87,7 @@ def test_create_tf_questions():
     assert len(answers) == 1
 
     question_id_hashes, questions, options, answers = create_tf_questions(
-        "Harry walked to the park. Jack walked to the shop.")
+        "Harry walked to the park. Jack walked to the shop with Mathushan.")
     assert len(question_id_hashes) == 2
     assert len(questions) == 2
     assert len(options) == 2
