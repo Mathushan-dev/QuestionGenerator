@@ -1,7 +1,7 @@
 from wsgi import app
 
 
-class UserLoginSignupControllerTester:
+class UserAPIControllerTester:
     flask_app = None
 
     def __init__(self):
@@ -11,7 +11,7 @@ class UserLoginSignupControllerTester:
         self.flask_app = app
 
 
-test_application = UserLoginSignupControllerTester()
+test_application = UserAPIControllerTester()
 
 
 def test_generate_mc_question_api():
