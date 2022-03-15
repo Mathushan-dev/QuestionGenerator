@@ -3,7 +3,7 @@ from application.controllers.UserQuestionHandlerController import save_current_q
     create_tf_questions, create_mc_questions
 
 
-class UserLoginSignupControllerTester:
+class UserQuestionHandlerControllerTester:
     flask_app = None
 
     def __init__(self):
@@ -13,7 +13,7 @@ class UserLoginSignupControllerTester:
         self.flask_app = app
 
 
-test_application = UserLoginSignupControllerTester()
+test_application = UserQuestionHandlerControllerTester()
 
 
 # def test_add_question_to_database():
