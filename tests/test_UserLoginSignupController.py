@@ -1,4 +1,4 @@
-from __init__ import application
+from wsgi import app
 from application.controllers.UserLoginSignupController import stringify_list, update_records
 from application.models.UserLoginSignupModel import UserLoginSignup
 
@@ -10,7 +10,7 @@ class UserLoginSignupControllerTester:
         """
         todo
         """
-        self.flask_app = application
+        self.flask_app = app
 
 
 test_application = UserLoginSignupControllerTester()

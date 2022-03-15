@@ -1,4 +1,4 @@
-from __init__ import application
+from wsgi import app
 
 
 class UserLoginSignupControllerTester:
@@ -8,7 +8,7 @@ class UserLoginSignupControllerTester:
         """
         todo
         """
-        self.flask_app = application
+        self.flask_app = app
 
 
 test_application = UserLoginSignupControllerTester()

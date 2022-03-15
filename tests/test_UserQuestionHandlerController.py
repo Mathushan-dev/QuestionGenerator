@@ -1,4 +1,4 @@
-from __init__ import application
+from wsgi import app
 from application.controllers.UserQuestionHandlerController import save_current_questions, \
     create_tf_questions, create_mc_questions
 
@@ -10,7 +10,7 @@ class UserLoginSignupControllerTester:
         """
         todo
         """
-        self.flask_app = application
+        self.flask_app = app
 
 
 test_application = UserLoginSignupControllerTester()
