@@ -17,10 +17,16 @@ jobs:
           paths:
             - "venv"
       - run:
+          - name: Installing additional libraries
+          command: |
+            wget https://github.com/explosion/sense2vec/releases/download/v1.0.0/s2v_reddit_2015_md.tar.gz
+            tar -xvf s2v_reddit_2015_md.tar.gz
+            python3 -m spacy download en_core_web_sm
+      - run:
           name: Running tests
           command: |
             . venv/bin/activate
-            python3 tests.py
+            coverage run --source=application/controllers,application/models,application/routes,application/functions --module pytest --verbose tests && coverage report --show-missing
       - store_artifacts:
           path: test-reports/
           destination: python_app
