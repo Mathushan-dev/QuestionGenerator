@@ -27,6 +27,7 @@ jobs:
           name: Running tests
           command: |
             . venv/bin/activate
+            pip install pytest
             pytest tests
       - store_artifacts:
           path: test-reports/
