@@ -13,6 +13,9 @@ class UserLoginSignupControllerTester:
         self.flask_app = app
 
 
+test_application = UserLoginSignupControllerTester()
+
+
 def test_index():
     """
     GIVEN a Flask application configured for testing
@@ -20,7 +23,6 @@ def test_index():
     THEN check that the response is valid
     :return: None
     """
-    test_application = UserLoginSignupControllerTester()
     with test_application.flask_app.test_client() as test_client:
         response = test_client.get('/')
         assert response.status_code == 200
@@ -35,7 +37,6 @@ def test_login_signup_form():
     THEN check that the response is valid
     :return: None
     """
-    test_application = UserLoginSignupControllerTester()
     with test_application.flask_app.test_client() as test_client:
         response = test_client.get('/loginForm')
         assert response.status_code == 200
@@ -50,7 +51,6 @@ def test_load_enter_text():
     THEN check that the response is valid
     :return: None
     """
-    test_application = UserLoginSignupControllerTester()
     with test_application.flask_app.test_client() as test_client:
         response = test_client.get('/enterText')
         assert response.status_code == 200
@@ -65,7 +65,6 @@ def test_sign_up():
     THEN check that the response is valid
     :return: None
     """
-    test_application = UserLoginSignupControllerTester()
     with test_application.flask_app.test_client() as test_client:
         response = test_client.post('/signUp')
         assert response.status_code == 200
@@ -80,7 +79,6 @@ def test_log_in():
     THEN check that the response is valid
     :return: None
     """
-    test_application = UserLoginSignupControllerTester()
     with test_application.flask_app.test_client() as test_client:
         test_client.post('/signUp')
         test_client.post('/')
@@ -97,7 +95,6 @@ def test_log_out():
     THEN check that the response is valid
     :return: None
     """
-    test_application = UserLoginSignupControllerTester()
     with test_application.flask_app.test_client() as test_client:
         test_client.post('/signUp')
         test_client.post('/')
@@ -114,7 +111,6 @@ def test_load_home():
     THEN check that the response is valid
     :return: None
     """
-    test_application = UserLoginSignupControllerTester()
     with test_application.flask_app.test_client() as test_client:
         test_client.post('/signUp')
         response = test_client.post('/loadHome')
@@ -130,7 +126,6 @@ def test_delete_account():
     THEN check that the response is valid
     :return: None
     """
-    test_application = UserLoginSignupControllerTester()
     with test_application.flask_app.test_client() as test_client:
         test_client.post('/signUp')
         response = test_client.post('/deleteAccount')
@@ -200,7 +195,6 @@ def test_save_question_attributes():
     THEN check that the response is valid
     :return: None
     """
-    test_application = UserLoginSignupControllerTester()
     with test_application.flask_app.test_client() as test_client:
         test_client.post('/signUp')
         response = test_client.post('/saveQuestionAttributes')
