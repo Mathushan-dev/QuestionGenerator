@@ -19,11 +19,6 @@ jobs:
       - run:
           name: Installing additional libraries
           command: |
-            ls -a
-            cd ..
-            ls -a
-            cd ..
-            ls -a
             pip install spacy
             python -m spacy download en_core_web_sm
             wget https://github.com/explosion/sense2vec/releases/download/v1.0.0/s2v_reddit_2015_md.tar.gz
