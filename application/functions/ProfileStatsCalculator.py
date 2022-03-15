@@ -1,6 +1,6 @@
-from models.UserLoginSignupModel import UserLoginSignup
-from models.UserQuestionHandlerModel import UserQuestionHandler
-from models.UserLoginSignupModel import db
+from application.models.UserLoginSignupModel import UserLoginSignup
+from application.models.UserQuestionHandlerModel import UserQuestionHandler
+from application.models.UserLoginSignupModel import db
 
 
 def get_total_right_wrong(question_scores):

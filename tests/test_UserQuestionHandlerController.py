@@ -1,5 +1,5 @@
-from application import application
-from controllers.UserQuestionHandlerController import save_current_questions, \
+from __init__ import application
+from application.controllers.UserQuestionHandlerController import save_current_questions, \
     create_tf_questions, create_mc_questions
 
 

@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.UserLoginSignupController import index, login_signup_form, load_enter_text, sign_up, log_in, log_out, load_home, update_password, delete_account, save_question_attributes
+from application.controllers.UserLoginSignupController import index, login_signup_form, load_enter_text, sign_up, log_in, log_out, load_home, update_password, delete_account, save_question_attributes
 
 UserLoginSignupBP = Blueprint('UserLoginSignupBP', __name__)
 

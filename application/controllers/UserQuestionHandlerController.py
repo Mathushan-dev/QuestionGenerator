@@ -1,13 +1,14 @@
 import random
-from functions.DistractorGenerator import generate_choices
-from functions.StatementFalsifier import falsify_statement
-from functions.KeywordFinder import find_random_keyword
-from functions.T5QuestionGenerator import apply_t5_model
-from models.UserQuestionHandlerModel import UserQuestionHandler
-from models.UserLoginSignupModel import db
+from application.functions.DistractorGenerator import generate_choices
+from application.functions.StatementFalsifier import falsify_statement
+from application.functions.KeywordFinder import find_random_keyword
+from application.functions.T5QuestionGenerator import apply_t5_model
+from application.models.UserQuestionHandlerModel import UserQuestionHandler
+from application.models.UserLoginSignupModel import db
 from flask import render_template, request
-from config import DEBUG, TEST
 
+DEBUG = __import__('config').Config.DEBUG
+TEST = __import__('config').Config.TEST
 firstLaunch = True
 
 currentQuestionIdHashes = None

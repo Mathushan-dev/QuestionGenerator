@@ -1,5 +1,4 @@
-import requests
-from application import application
+from __init__ import application
 
 
 class UserLoginSignupControllerTester:
