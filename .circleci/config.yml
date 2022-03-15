@@ -27,7 +27,7 @@ jobs:
           name: Running tests
           command: |
             . venv/bin/activate
-            coverage run --source=application/controllers,application/models,application/routes,application/functions --module pytest --verbose tests && coverage report --show-missing
+            pytests tests
       - store_artifacts:
           path: test-reports/
           destination: python_app
