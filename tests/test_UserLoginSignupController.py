@@ -1,6 +1,6 @@
-from application import application
-from controllers.UserLoginSignupController import stringify_list, update_records
-from models.UserLoginSignupModel import UserLoginSignup
+from __init__ import application
+from application.controllers.UserLoginSignupController import stringify_list, update_records
+from application.models.UserLoginSignupModel import UserLoginSignup
 
 
 class UserLoginSignupControllerTester:

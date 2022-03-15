@@ -1,7 +1,7 @@
 from flask import Blueprint
-from controllers.UserQuestionHandlerController import generate_tf_questions, generate_mc_questions, \
+from application.controllers.UserQuestionHandlerController import generate_tf_questions, generate_mc_questions, \
     generate_exist_questions, load_current_questions
-from controllers.UserAPIController import generate_mc_question_api, generate_tf_question_api
+from application.controllers.UserAPIController import generate_mc_question_api, generate_tf_question_api
 
 UserQuestionHandlerBP = Blueprint('UserQuestionHandlerBP', __name__)
 

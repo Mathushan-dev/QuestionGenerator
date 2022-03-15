@@ -1,4 +1,4 @@
-from controllers.UserQuestionHandlerController import create_mc_questions, create_tf_questions
+from application.controllers.UserQuestionHandlerController import create_mc_questions, create_tf_questions
 from flask import request
 
 

@@ -1,13 +1,14 @@
 from flask import render_template, request, make_response
-from models.UserLoginSignupModel import UserLoginSignup
-from models.UserLoginSignupModel import db
-from controllers.UserQuestionHandlerController import load_current_questions
-from functions.ProfileStatsCalculator import get_profile_stats
+from application.models.UserLoginSignupModel import UserLoginSignup
+from application.models.UserLoginSignupModel import db
+from application.controllers.UserQuestionHandlerController import load_current_questions
+from application.functions.ProfileStatsCalculator import get_profile_stats
 from sqlalchemy.exc import IntegrityError
-from config import DEBUG, TEST
 from datetime import date, datetime
 import json
 
+DEBUG = __import__('config').Config.DEBUG
+TEST = __import__('config').Config.TEST
 firstLaunch = True
 
 

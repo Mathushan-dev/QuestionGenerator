@@ -1,5 +1,5 @@
 import bcrypt
-from models.UserLoginSignupModel import db
+from application.models.UserLoginSignupModel import db
 
 
 class UserQuestionHandler(db.Model):

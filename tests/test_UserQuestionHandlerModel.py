@@ -1,4 +1,4 @@
-from models.UserQuestionHandlerModel import UserQuestionHandler
+from application.models.UserQuestionHandlerModel import UserQuestionHandler
 
 
 def test_new_user_question_handler():

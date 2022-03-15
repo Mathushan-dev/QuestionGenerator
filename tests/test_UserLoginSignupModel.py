@@ -1,4 +1,4 @@
-from models.UserLoginSignupModel import UserLoginSignup
+from application.models.UserLoginSignupModel import UserLoginSignup
 
 
 def test_new_user_login_signup():
