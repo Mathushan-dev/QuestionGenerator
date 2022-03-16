@@ -9,9 +9,9 @@ s2v = Sense2Vec().from_disk(os.path.abspath("../project/QuestionGenerator/s2v_ol
 
 def generate_misspellings(answer):
     """
-    todo
-    :param answer:
-    :return: List[str]
+    This method randomly picks a character and substitute it with a random letter
+    :param answer: the answer of a question
+    :return: the list with new 10 misspelling words
     """
     misspelt = []
     for _ in range(0, 10):
@@ -24,10 +24,12 @@ def generate_misspellings(answer):
 
 def generate_choices(word, total_choices_required):
     """
-    todo
-    :param word:
-    :param total_choices_required:
-    :return: list
+    This method generate the options of the question.
+    It takes the sense of the word and create most similar n(20) words,
+    append them to the choices.If no sense, create misspelling words instead.
+    :param word: the answer of the question
+    :param total_choices_required: number of options to generate
+    :return: function call get_random_choices , which returns a list of choices
     """
     answer = word
     global s2v
@@ -56,11 +58,11 @@ def generate_choices(word, total_choices_required):
 # Using random ensures multiple users will get different possible choices for mcq's
 def get_random_choices(choices, answer, total_choices_required):
     """
-    todo
-    :param choices:
-    :param answer:
-    :param total_choices_required:
-    :return: list
+    This method shuffle the distractors.
+    :param choices: choices of question
+    :param answer: answer of question
+    :param total_choices_required: total choices required
+    :return: list of the shuffled distractors
     """
     filtered_choices = []
     for choice in choices:

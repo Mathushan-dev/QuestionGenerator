@@ -5,8 +5,8 @@ nltk.download('averaged_perceptron_tagger')
 
 def find_random_keyword(text):
     """
-    todo
-    :param text:
+    This method finds a random noun word in the text
+    :param text: text to generate question
     :return: Any
     """
     is_noun = lambda pos: pos[:2] == 'NN'

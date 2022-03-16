@@ -19,11 +19,10 @@ class UserLoginSignup(db.Model):
 
     def __init__(self, user_id, f_name, l_name, hashed_password):
         """
-        todo
-        :param user_id:
-        :param f_name:
-        :param l_name:
-        :param hashed_password:
+        :param user_id: user id
+        :param f_name: first name
+        :param l_name: last name
+        :param hashed_password: password in hash
         """
         self.userId = user_id
         self.fName = f_name
@@ -38,8 +37,7 @@ class UserLoginSignup(db.Model):
     @property
     def serialize(self):
         """
-        todo
-        :return: Dict[str, str]
+        :return: return the data in dictionary
         """
         return {
             'userId': self.userId,
@@ -57,17 +55,15 @@ class UserLoginSignup(db.Model):
     @staticmethod
     def make_password_hash(password):
         """
-        todo
-        :param password:
-        :return: str
+        :param password: plain password
+        :return: hashed password
         """
         hash_password = bcrypt.hashpw(password=password.encode('utf-8'), salt=bcrypt.gensalt())
         return hash_password.decode('utf-8')
 
     def is_password_valid(self, password):
         """
-        todo
-        :param password:
+        :param password: password of user
         :return: bool
         """
         return bcrypt.checkpw(password.encode('utf-8'), self.hashedPassword.encode('utf-8'))

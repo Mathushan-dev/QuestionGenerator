@@ -14,14 +14,13 @@ class UserQuestionHandler(db.Model):
 
     def __init__(self, question_id, context, question, answer, options, question_number, question_set_code):
         """
-        todo
-        :param question_id:
-        :param context:
-        :param question:
-        :param answer:
-        :param options:
-        :param question_number:
-        :param question_set_code:
+        :param question_id: question id
+        :param context: context to generate questions
+        :param question: question text
+        :param answer: answer of the question
+        :param options: options to choose
+        :param question_number: number of the question
+        :param question_set_code: hash of the context
         """
         self.questionId = question_id
         self.context = context
@@ -34,8 +33,7 @@ class UserQuestionHandler(db.Model):
     @property
     def serialize(self):
         """
-        todo
-        :return: Dict[str, Any]
+        :return: data in dictionary
         """
         return {
             'questionId': self.questionId,
@@ -50,17 +48,15 @@ class UserQuestionHandler(db.Model):
     @staticmethod
     def make_question_id_hash(question_id):  # questionId = question
         """
-        todo
-        :param question_id:
-        :return: str
+        :param question_id: question id
+        :return: hashed question id
         """
         hash_password = bcrypt.hashpw(password=question_id.encode('utf-8'), salt=bcrypt.gensalt())
         return hash_password.decode('utf-8')
 
     def is_question_id_match(self, question_id):
         """
-        todo
-        :param question_id:
+        :param question_id: question id
         :return: bool
         """
         return bcrypt.checkpw(question_id.encode('utf-8'), self.questionId.encode('utf-8'))

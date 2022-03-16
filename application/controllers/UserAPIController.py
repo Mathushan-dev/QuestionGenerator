@@ -4,8 +4,8 @@ from flask import request
 
 def generate_mc_question_api():
     """
-    todo
-    :rtype: object
+    this method generate the multiple choice types of questions and store in json file
+    :rtype: question information stored in json file
     """
     context = request.args['context']
     number_options = request.args['numberOptions']
@@ -18,8 +18,8 @@ def generate_mc_question_api():
 
 def generate_tf_question_api():
     """
-    todo
-    :rtype: object
+    this method generate the true and false types of questions and store in json file
+    :rtype: question information stored in json file
     """
     context = request.args['context']
 

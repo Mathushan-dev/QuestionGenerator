@@ -5,9 +5,8 @@ from application.models.UserLoginSignupModel import db
 
 def get_total_right_wrong(question_scores):
     """
-    todo
-    :param question_scores:
-    :return: Tuple[int, int]
+    :param question_scores: score of the question
+    :return: number of right questions, number of wrong questions
     """
     question_scores_split = question_scores.split(",")
     total_right = 0
@@ -22,11 +21,11 @@ def get_total_right_wrong(question_scores):
 
 def get_individual_test_summary(attempted_question_ids, question_scores, number_of_attempts):
     """
-    todo
-    :param attempted_question_ids:
-    :param question_scores:
-    :param number_of_attempts:
-    :return: Tuple[list, list, list, Any, Any]
+    This method provides the individual summary of attempting questions
+    :param attempted_question_ids: attempted question ids
+    :param question_scores: score of the question
+    :param number_of_attempts: number of attempts
+    :return: questions, contexts, options , question scores and number of attempts
     """
     attempted_question_ids_split = attempted_question_ids.split(",")
     questions_split = []
@@ -49,9 +48,10 @@ def get_individual_test_summary(attempted_question_ids, question_scores, number_
 
 def get_profile_stats(user_id):
     """
-    todo
-    :param user_id:
-    :return: Tuple[Any, Any, int, int, list, list, list, Any, Any]
+    This method gets the statistics of the user
+    :param user_id: user id in database
+    :return: first and last name of user, total right and wrong number, questions, contexts,options,
+    scores and attempts
     """
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
     db.session.flush()

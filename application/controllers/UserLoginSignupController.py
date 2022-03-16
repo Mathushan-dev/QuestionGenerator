@@ -14,8 +14,10 @@ firstLaunch = True
 
 def index():
     """
-    todo
-    :rtype: object
+    This method directs to the index.html . if it is the first launch ,
+    clear the database and set the user as logged_on and direct to the lauchpage
+    :return: a python flask rendered template, which renders the html page and pass
+    parameter to it
     """
     if DEBUG:
         print("index called")
@@ -31,8 +33,8 @@ def index():
 
 def login_signup_form(message=""):
     """
-    todo
-    :rtype: object
+    :return: a python flask rendered template, which renders the html page and pass
+    parameter to it
     """
     if DEBUG:
         print("loginForm called", message)
@@ -41,8 +43,9 @@ def login_signup_form(message=""):
 
 def load_enter_text():
     """
-    todo
-    :rtype: object
+    This method directs to the question trial page
+    :return:  a python flask rendered template, which renders the html page and pass
+    parameter to it
     """
     if DEBUG:
         print("try-input-passage page called")
@@ -54,8 +57,12 @@ def load_enter_text():
 
 def sign_up(user_id="test_email", f_name="test_first_name", l_name="test_last_name", password="test_password"):
     """
-    todo
-    :rtype: object
+    This method handles the user sign up process.The passwords are hashed and stored in database,
+    if the users are already registered direct to login page.After sign up,direct to question trial page.
+    :return:
+    if user exist,a python flask rendered template.
+    If not , return a self-defined response object
+
     """
     if DEBUG:
         print("signUp called")
@@ -85,8 +92,8 @@ def sign_up(user_id="test_email", f_name="test_first_name", l_name="test_last_na
 
 def log_in(user_id="test_email", password="test_password"):
     """
-    todo
-    :return: Union[object, Response]
+    check whether a specific user is logged in
+    :return:  rendered template
     """
     if DEBUG:
         print("logIn called")
@@ -112,7 +119,6 @@ def log_in(user_id="test_email", password="test_password"):
 
 def log_out():
     """
-    todo
     :return: Response
     """
     if DEBUG:
@@ -124,8 +130,8 @@ def log_out():
 
 def load_home(user_id="test_email"):
     """
-    todo
-    :return: Union[object, str]
+    This method direct to the user's profile page with user's information
+    :return: rendered template
     """
     if DEBUG:
         print("logIn called")
@@ -152,7 +158,6 @@ def load_home(user_id="test_email"):
 
 def update_password():
     """
-    todo
     :return: None
     """
     pass
@@ -160,8 +165,10 @@ def update_password():
 
 def delete_account(user_id="test_email"):
     """
-    todo
-    :return: Union[object, Response]
+    This method removes the user from database
+    :return:
+    if the service is down(not likely happend),return the python flask rendered template.
+    If not , return a self-defined response object
     """
     if not TEST:
         user_id = request.cookies.get('LoggedOnUserId')
@@ -183,9 +190,10 @@ def delete_account(user_id="test_email"):
 
 def stringify_list(list_to_stringify):
     """
-    todo
-    :param list_to_stringify:
-    :return: str
+    This method concatenates every element in the string list ,add ',' at last
+    :param list_to_stringify: this is a string list which contains user's a record.For example,
+    number of attempts.
+    :return: the transformed string list into string for further operations
     """
     output = ""
     for i in range(0, len(list_to_stringify)):
@@ -201,12 +209,13 @@ def stringify_list(list_to_stringify):
 
 def update_records(user, question_id_hash, score, tries):
     """
-    todo
-    :param user:
-    :param question_id_hash:
-    :param score:
-    :param tries:
-    :return: Tuple[str, str, str, str, str]
+    This method fetch user's information of the specific question and update the string list.
+    if the question has not been attempted, create a new one in the string list.
+    :param user: user's id got from database
+    :param question_id_hash: the question's id stored in hash
+    :param score: the question's score
+    :param tries: number of attempts to this question
+    :return: return all the information of the question , to write back to the database
     """
     today = date.today()
     d1 = today.strftime("%d/%m/%Y")
@@ -241,8 +250,8 @@ def update_records(user, question_id_hash, score, tries):
 
 def save_question_attributes(question_id_hash="test_question_id_hash", score="test_score", tries="test_tries"):
     """
-    todo
-    :return: str
+    This method gets the records from update_records method and update in database
+    :return: function call of load_current_question , which is a rendered template
     """
     if DEBUG:
         print("saveQuestionAttributes called")
@@ -267,7 +276,7 @@ def save_question_attributes(question_id_hash="test_question_id_hash", score="te
 
 def clear_table():
     """
-    todo
+    in debug or test mode, clear the database
     :return: None
     """
     if DEBUG or TEST:

@@ -22,16 +22,18 @@ def add_question_to_database(question_id="test_question_id", context="test_conte
                              answer="test_answer", options=["test_options"], question_number="test_question_number",
                              question_set_code="test_question_set_code"):
     """
-    todo
-    :param question_id:
-    :param context:
-    :param question:
-    :param answer:
-    :param options:
-    :param question_number:
-    :param question_set_code:
+    This method adds the information of a question to database
+    :param question_id: question id in database
+    :param context: the original text to generate question
+    :param question: question created
+    :param answer: answer of the question
+    :param options: options to choose stored in list
+    :param question_number: number of the question
+    :param question_set_code: hash of the context
     :return: None
     """
+
+
     global firstLaunch
     if firstLaunch:
         clear_table()
@@ -57,12 +59,12 @@ def add_question_to_database(question_id="test_question_id", context="test_conte
 def save_current_questions(question_id_hashes="test_question_id_hashes", questions="test_questions",
                            options="test_options", answers="test_answers", context="test_context"):
     """
-    todo
-    :param question_id_hashes:
-    :param questions:
-    :param options:
-    :param answers:
-    :param context:
+    This method saves the question attributes to global variables
+    :param question_id_hashes: question id in hash
+    :param questions: questions created
+    :param options: options to choose
+    :param answers: correct answers
+    :param context: the original text to generate question
     :return: None
     """
     global currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers, currentContext
@@ -78,8 +80,8 @@ def save_current_questions(question_id_hashes="test_question_id_hashes", questio
 
 def load_current_questions(choice="mcq"):
     """
-    todo
-    :param choice:
+    This method loads the current question
+    :param choice: the question style, e.g. multiple choice
     :return: str
     """
     # Structured in this way to allow for different templates for different types of questions during project extension
@@ -94,7 +96,7 @@ def load_current_questions(choice="mcq"):
 
 def generate_tf_questions(context="Harry walked to the park"):
     """
-    todo
+    This method generate the true false question derived from the input context
     :return: str
     """
     if DEBUG:
@@ -115,9 +117,12 @@ def generate_tf_questions(context="Harry walked to the park"):
 
 def create_tf_questions(context):
     """
-    todo
-    :param context:
-    :return: Tuple[List[str], List[str], List[List[str]], List[str]]
+    This method creates and adds true or false question using the context, the answer would be
+    either true or false .if the answer is False, the statement would be be falsified by
+    calling the falsify_statement method.
+    :param context: the plain text to create question
+    :return: return the question id in hash, questions created , options(true,false)
+    and the answers of question
     """
     statements = context.split(".")
 
@@ -152,7 +157,7 @@ def create_tf_questions(context):
 
 def generate_mc_questions(context="Harry walked to the park", number_options="4"):
     """
-    todo
+    This method generates multiple choice questions derived from the input context
     :return: str
     """
     if DEBUG:
@@ -174,10 +179,13 @@ def generate_mc_questions(context="Harry walked to the park", number_options="4"
 
 def create_mc_questions(context, number_options):
     """
-    todo
-    :param context:
-    :param number_options:
-    :return: Tuple[List[str], list, List[list], list]
+    This method creates and adds the multiple choice questions.
+     It finds a random word from the statement as answer ,generate the question using
+     T5 model and create distractors as options.
+    :param context: text questions derived from
+    :param number_options: number of options of choose from
+    :return: return the question id in hash, questions created , options
+    and the answers of question
     """
     statements = context.split(".")
 
@@ -216,7 +224,7 @@ def create_mc_questions(context, number_options):
 
 def generate_exist_questions(question_set_code="test_question_set_code"):
     """
-    todo
+    This method generate existing question in database
     :return: str
     """
     if DEBUG:
@@ -257,7 +265,7 @@ def generate_exist_questions(question_set_code="test_question_set_code"):
 
 def clear_table():
     """
-    todo
+    This method remove all the questions in database
     :return: None
     """
     if DEBUG:
