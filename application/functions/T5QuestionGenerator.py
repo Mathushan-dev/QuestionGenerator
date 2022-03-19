@@ -10,11 +10,11 @@ model = AutoModelWithLMHead.from_pretrained("mrm8488/t5-base-finetuned-question-
 
 def apply_t5_model(context, answer, max_length=64):
     """
-    todo
-    :param context:
-    :param answer:
-    :param max_length:
-    :return: Any
+    This method generates question by applying T5 model as mentioned in the link above.
+    :param context: the plain text
+    :param answer: the answer of the question
+    :param max_length: optional, max length of statements
+    :return: the question generated
     """
     input_text = "answer: %s  context: %s </s>" % (answer, context)
     features = tokenizer([input_text], return_tensors='pt')
