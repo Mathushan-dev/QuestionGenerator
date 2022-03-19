@@ -8,8 +8,6 @@ from sentence_transformers import SentenceTransformer
 from tensorboard.errors import InvalidArgumentError
 from transformers import TFGPT2LMHeadModel, GPT2Tokenizer
 
-nltk.download('punkt')
-nlp = spacy.load("en_core_web_sm")
 # The model below an All-round model tuned for many use-cases. Trained on a large and diverse dataset of over 1
 # billion training pairs.
 BERTModel = SentenceTransformer('sentence-transformers/distilbert-base-nli-stsb-mean-tokens')
