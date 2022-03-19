@@ -10,18 +10,20 @@ Use the following link to help you - https://akrabat.com/creating-virtual-enviro
 
 Required Pip Packages:
 
-Use following command to force Python version in virtual environment is used to download the pip packages below - pyenv exec pip install --quiet package_name==version. The required pip packages can be found in requirements.txt.
+1. pyenv exec pip install -r requirements.txt
 
 Required External Packages:
 
 1. wget https://github.com/explosion/sense2vec/releases/download/v1.0.0/s2v_reddit_2015_md.tar.gz
-   1b. tar -xvf  s2v_reddit_2015_md.tar.gz
-2. python -m spacy download en_core_web_sm
+2. tar -xvf  s2v_reddit_2015_md.tar.gz
+3. pyenv exec python -m spacy download en_core_web_sm
 
 Final Execution:
 
-1. Execute Program with pyenv version of python
+1. pyenv exec python wsgi.py
 
 Test:
 
-1. coverage run --source=controllers,models,routes,functions --module pytest --verbose tests && coverage report --show-missing
+1. pyenv exec coverage run --source=controllers,models,routes,functions --module pytest --verbose tests && coverage report --show-missing
+2. pyenv exec mutmut run --paths-to-mutate application 
+3. pyenv exec mutmut html
