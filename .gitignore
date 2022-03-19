@@ -5,3 +5,13 @@ QuestionGeneratorVenv
 runtime.txt
 s2v_reddit_2015_md.tar.gz
 .coverage
+tests/.DS_Store
+application/routes/.DS_Store
+mutation-coverage/.DS_Store
+application/.DS_Store
+application/models/.DS_Store
+application/functions/.DS_Store
+application/controllers/.DS_Store
+.DS_Store
+.hammett-db
+.mutmut-cache
