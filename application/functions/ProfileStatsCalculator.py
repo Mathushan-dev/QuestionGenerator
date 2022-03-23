@@ -57,8 +57,11 @@ def get_profile_stats(user_id):
     db.session.flush()
 
     first_name, last_name = users[0].fName, users[0].lName
-    questions, contexts, options, scores, attempts = get_individual_test_summary(users[0].attemptedQuestionIds, users[0].questionScores,
+    try:
+        questions, contexts, options, scores, attempts = get_individual_test_summary(users[0].attemptedQuestionIds, users[0].questionScores,
                                                                                  users[0].numberOfAttempts)
-    total_right, total_wrong = get_total_right_wrong(users[0].questionScores)
+        total_right, total_wrong = get_total_right_wrong(users[0].questionScores)
+    except IndexError:
+        return first_name, last_name, 0, 0, [], [], [], [], []
 
     return first_name, last_name, total_right, total_wrong, questions, contexts, options, scores, attempts
