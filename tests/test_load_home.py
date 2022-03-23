@@ -13,4 +13,4 @@ def test_load_home():
         response = test_client.post('/loadHome')
         assert response.status_code == 200
         assert b'Welcome' in response.data
-        assert b'Your progress' in response.data
+        assert b'Your Progress' in response.data

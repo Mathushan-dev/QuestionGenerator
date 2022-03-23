@@ -10,7 +10,7 @@ def generate_mc_question_api():
     context = request.args['context']
     number_options = request.args['numberOptions']
 
-    question_id_hashes, questions, options, answers = create_mc_questions(context, number_options)
+    question_id_hashes, questions, options, answers, question_set_code = create_mc_questions(context, number_options)
 
     json_data = {'questions': questions, 'options': options, 'answers': answers}
     return json_data
@@ -23,7 +23,7 @@ def generate_tf_question_api():
     """
     context = request.args['context']
 
-    question_id_hashes, questions, options, answers = create_tf_questions(context)
+    question_id_hashes, questions, options, answers, question_set_code = create_tf_questions(context)
 
     json_data = {'questions': questions, 'options': options, 'answers': answers}
     return json_data

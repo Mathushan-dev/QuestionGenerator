@@ -12,4 +12,4 @@ def test_save_question_attributes():
         test_client.post('/signUp')
         response = test_client.post('/saveQuestionAttributes')
         assert response.status_code == 200
-        assert b'Show Text' in response.data
+        assert b'Show text' in response.data
