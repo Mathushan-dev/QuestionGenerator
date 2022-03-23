@@ -80,11 +80,14 @@ def sign_up(user_id="test_email", f_name="test_first_name", l_name="test_last_na
 
     try:
         db.session.add(user)
+        db.flush()
     except IntegrityError as e:
         print(e)
         db.session.rollback()
+        db.flush()
         return login_signup_form(message="Those records already exist on the server, please log in instead.")
     db.session.commit()
+    db.flush()
     resp = make_response(load_enter_text())
     resp.set_cookie('LoggedOnUserId', user_id)
     return resp
@@ -103,6 +106,7 @@ def log_in(user_id="test_email", password="test_password"):
         password = request.form.get("password")
 
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
+    db.flush()
 
     if len(users) == 0:
         return login_signup_form(message="Those records do not exist on the server, please sign up instead.")
@@ -143,6 +147,7 @@ def load_home(user_id="test_email"):
         return login_signup_form("Please login or sign up for an account before viewing question results.")
 
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
+    db.flush()
 
     if len(users) != 1:
         return login_signup_form(message="The server is currently down. Please try logging in later.")
@@ -173,6 +178,7 @@ def delete_account(user_id="test_email"):
     if not TEST:
         user_id = request.cookies.get('LoggedOnUserId')
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
+    db.flush()
     if len(users) == 0:
         return index()
     elif len(users) != 1:
@@ -183,6 +189,7 @@ def delete_account(user_id="test_email"):
         resp.set_cookie('LoggedOnUserId', 'None', expires=0)
         try:
             stack_trace = db.session.delete(users[0])
+            db.flush()
         except:
             print(stack_trace)
         return resp
@@ -265,11 +272,13 @@ def save_question_attributes(question_id_hash="test_question_id_hash", score="te
 
     user = db.session.query(UserLoginSignup).filter(
         UserLoginSignup.userId == request.cookies.get('LoggedOnUserId')).first()
+    db.flush()
 
     if user is not None:
         user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts, user.attemptedDates, user.attemptedTimes = update_records(
             user, question_id_hash, score, tries)
         db.session.commit()
+        db.flush()
 
     return load_current_questions("mcq")
 
@@ -281,9 +290,12 @@ def clear_table():
     """
     if DEBUG or TEST:
         users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId != "")
+        db.flush()
         for user in users:
             db.session.delete(user)
+            db.flush()
             db.session.commit()
+            db.flush()
         print("Table is cleared.")
     else:
         print("Table can only be cleared in debug mode.")
