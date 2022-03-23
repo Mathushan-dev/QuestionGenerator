@@ -17,7 +17,11 @@
             <a href="{{ url_for('UserLoginSignupBP.load_home') }}" class="login-link">Profile</a>
         </header>
         <div class="show-text-container">
-            <button id="show-text-button" class="show-text">Show Text</button>
+            <p>Code to share: {{questionSetCode}}</p>
+            <button id="show-text-button" class="show-text">Show text</button>
+            <form action="{{ url_for('UserLoginSignupBP.load_enter_text') }}">
+                <input type="submit" class="try-again" value="Try again" />
+            </form>
             <div id="text-modal" class="text-modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>

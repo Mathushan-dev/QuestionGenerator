@@ -16,6 +16,7 @@ currentQuestions = None
 currentOptions = None
 currentAnswers = None
 currentContext = None
+currentQuestionSetCode = None
 
 
 def add_question_to_database(question_id="test_question_id", context="test_context", question="test_question",
@@ -32,7 +33,6 @@ def add_question_to_database(question_id="test_question_id", context="test_conte
     :param question_set_code: hash of the context
     :return: None
     """
-
 
     global firstLaunch
     if firstLaunch:
@@ -57,7 +57,7 @@ def add_question_to_database(question_id="test_question_id", context="test_conte
 
 
 def save_current_questions(question_id_hashes="test_question_id_hashes", questions="test_questions",
-                           options="test_options", answers="test_answers", context="test_context"):
+                           options="test_options", answers="test_answers", context="test_context", question_set_code="test_question_set_code"):
     """
     This method saves the question attributes to global variables
     :param question_id_hashes: question id in hash
@@ -67,15 +67,16 @@ def save_current_questions(question_id_hashes="test_question_id_hashes", questio
     :param context: the original text to generate question
     :return: None
     """
-    global currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers, currentContext
+    global currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers, currentContext, currentQuestionSetCode
 
     currentQuestionIdHashes = question_id_hashes
     currentQuestions = questions
     currentOptions = options
     currentAnswers = answers
     currentContext = context
+    currentQuestionSetCode = question_set_code
 
-    return currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers, currentContext
+    return currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers, currentContext, currentQuestionSetCode
 
 
 def load_current_questions(choice="mcq"):
@@ -88,10 +89,10 @@ def load_current_questions(choice="mcq"):
     if choice == "mcq":
         return render_template('multiple-choice-template.html', questionIdHashes=currentQuestionIdHashes,
                                questions=currentQuestions, options=currentOptions, answers=currentAnswers,
-                               context=currentContext)
+                               context=currentContext, questionSetCode=currentQuestionSetCode)
     return render_template('multiple-choice-template.html', questionIdHashes=currentQuestionIdHashes,
                            questions=currentQuestions, options=currentOptions, answers=currentAnswers,
-                           context=currentContext)
+                           context=currentContext, questionSetCode=currentQuestionSetCode)
 
 
 def generate_tf_questions(context="Harry walked to the park"):
@@ -109,8 +110,8 @@ def generate_tf_questions(context="Harry walked to the park"):
             'try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
 
-    question_id_hashes, questions, options, answers = create_tf_questions(context)
-    save_current_questions(question_id_hashes, questions, options, answers, context)
+    question_id_hashes, questions, options, answers, question_set_code = create_tf_questions(context)
+    save_current_questions(question_id_hashes, questions, options, answers, context, question_set_code)
 
     return load_current_questions("tf")
 
@@ -152,7 +153,7 @@ def create_tf_questions(context):
                                      str(question_number),
                                      question_set_code)
 
-    return question_id_hashes, questions, options, answers
+    return question_id_hashes, questions, options, answers, question_set_code
 
 
 def generate_mc_questions(context="Harry walked to the park", number_options="4"):
@@ -171,8 +172,8 @@ def generate_mc_questions(context="Harry walked to the park", number_options="4"
             'try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
 
-    question_id_hashes, questions, options, answers = create_mc_questions(context, number_options)
-    save_current_questions(question_id_hashes, questions, options, answers, context)
+    question_id_hashes, questions, options, answers, question_set_code = create_mc_questions(context, number_options)
+    save_current_questions(question_id_hashes, questions, options, answers, context, question_set_code)
 
     return load_current_questions("mcq")
 
@@ -217,9 +218,9 @@ def create_mc_questions(context, number_options):
                     statement + questions[-1] + answers[-1] + ''.join(options[-1])))
             if not TEST:
                 add_question_to_database(question_id_hashes[-1], statement, questions[-1], answers[-1], options[-1],
-                                     str(question_number), question_set_code)
+                                         str(question_number), question_set_code)
 
-        return question_id_hashes, questions, options, answers
+        return question_id_hashes, questions, options, answers, question_set_code
 
 
 def generate_exist_questions(question_set_code="test_question_set_code"):
@@ -258,7 +259,7 @@ def generate_exist_questions(question_set_code="test_question_set_code"):
         options.append(question.options.split(","))
         answers.append(question.answer)
 
-    save_current_questions(question_id_hashes, questions, options, answers, context)
+    save_current_questions(question_id_hashes, questions, options, answers, context, question_set_code)
 
     return load_current_questions("tf")
 

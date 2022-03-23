@@ -7,6 +7,7 @@
         <title>X5Learn</title>
         <link href="../static/css/base.css" rel="stylesheet">
         <link href="../static/css/profile.css" rel="stylesheet">
+        <link rel="stylesheet" href="../static/css/input-passage.css">
         <link href="../static/css/header.css" rel="stylesheet">
     </head>
     <body>
@@ -20,53 +21,41 @@
                 <a href="{{ url_for('UserLoginSignupBP.login_signup_form') }}" class="login-link">Log in</a>
             {% endif %}
         </header>
-        <div class="container">
-            <div class="card-body">
-                <div class="user-info">
-                    <img src="../static/images/user-icon.png" alt="User Icon">
-                    <h2>{{fName}} {{lName}}</h2>
-                    <button class="change-info" id="change-info-button">Edit</button>
-                    <a href="{{ url_for('UserLoginSignupBP.load_enter_text') }}" class="try-link">Attempt Questions</a>
-                </div>
-                <div id="infoModal" class="info-modal">
-                    <div class="info-modal-content">
-                        <span class="close2">&times;</span>
-                        <input type="text" id="name" placeholder={{fName}} name="name" required/>
-                        <input type="text" id="surname" placeholder={{lName}} name="surname" required/>
-                        <input class="email" type="email" id="email" placeholder="Email" name="email" disabled/>
-                        <button class="save-info" id="save-info-button">Save Changes</button>
-                    </div>
-                </div>
-                <div class="test-info">
-                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-                    <div class="specific-info">
-                        <h1>Your Test Records</h1>
-                        <div class="test-wrapper">
-                            {% for i in range(0, questions|length) %}
-                                {% if (scores[i] == "1") %}
-                                    <div class="test-wrapper1">
-                                        <div class="test" id="test">
-                                            <h3 class="test-name">{{questions[i]}}</h3>
-                                            <p>Attempts - {{attempts[i]}}
-                                                Context - {{contexts[i]}}
-                                                Options - {{options[i]}}</p>
-                                            <p>Date Taken - 02/06/2022 </p>
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    <div class="test-wrapper2">
-                                        <div class="test" id="test">
-                                            <h3 class="test-name">{{questions[i]}}</h3>
-                                            <p>Attempts - {{attempts[i]}}
-                                                Context - {{contexts[i]}}
-                                                Options - {{options[i]}}</p>
-                                            <p>Date Taken - 02/06/2022 </p>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
+        <h2>Welcome {{fName}} {{lName}}</h2>
+        <form method="POST">
+            <textarea placeholder="Enter code" name="context" id="context" cols="20" rows="2" required></textarea>
+            <div class="button-div">
+                <button class="generate-button" formaction="/generateExistQuestions">Retrieve questions</button>
+            </div>
+        </form>
+        <div class="test-info">
+            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+            <div class="specific-info">
+                <h1>Your Test Records</h1>
+                <div class="test-wrapper">
+                    {% for i in range(0, questions|length) %}
+                        {% if (scores[i] == "1") %}
+                            <div class="test-wrapper1">
+                                <div class="test" id="test">
+                                    <h3 class="test-name">{{questions[i]}}</h3>
+                                    <p>Attempts - {{attempts[i]}}</p>
+                                    <p>Context - {{contexts[i]}}</p>
+                                    <p>Options - {{options[i]}}</p>
+                                    <p>Date Taken - {{dates[i]}}</p>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="test-wrapper2">
+                                <div class="test" id="test">
+                                    <h3 class="test-name">{{questions[i]}}</h3>
+                                    <p>Attempts - {{attempts[i]}}</p>
+                                    <p>Context - {{contexts[i]}}</p>
+                                    <p>Options - {{options[i]}}</p>
+                                    <p>Date Taken - {{dates[i]}}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -75,7 +64,7 @@
                 var chart = new CanvasJS.Chart("chartContainer",
                     {
                         title:{
-                            text: "Your progress"
+                            text: "Your Progress"
                         },
                         data: [
                             {
