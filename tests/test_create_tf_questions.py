@@ -9,14 +9,15 @@ def test_create_tf_questions():
     THEN check that the response is valid
     :return: None
     """
-    question_id_hashes, questions, options, answers = create_tf_questions("Harry walked to the park.")
+    question_id_hashes, questions, options, answers, question_set_code = create_tf_questions("Harry walked to the park.")
     assert len(question_id_hashes) == 1
     assert len(questions) == 1
     assert len(options) == 1
     assert len(options[0]) == 2
     assert len(answers) == 1
+    assert question_set_code is not None
 
-    question_id_hashes, questions, options, answers = create_tf_questions(
+    question_id_hashes, questions, options, answers, question_set_code = create_tf_questions(
         "Harry walked to the park. Jack walked to the shop with Mathushan.")
     assert len(question_id_hashes) == 2
     assert len(questions) == 2
@@ -24,3 +25,4 @@ def test_create_tf_questions():
     assert len(options[0]) == 2
     assert len(options[1]) == 2
     assert len(answers) == 2
+    assert question_set_code is not None

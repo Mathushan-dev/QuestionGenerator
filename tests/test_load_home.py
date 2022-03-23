@@ -12,5 +12,5 @@ def test_load_home():
         test_client.post('/signUp')
         response = test_client.post('/loadHome')
         assert response.status_code == 200
-        assert b'Edit' in response.data
+        assert b'Welcome' in response.data
         assert b'Your progress' in response.data

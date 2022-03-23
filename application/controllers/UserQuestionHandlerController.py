@@ -65,6 +65,7 @@ def save_current_questions(question_id_hashes="test_question_id_hashes", questio
     :param options: options to choose
     :param answers: correct answers
     :param context: the original text to generate question
+    :param question_set_code: code for set of questions
     :return: None
     """
     global currentQuestionIdHashes, currentQuestions, currentOptions, currentAnswers, currentContext, currentQuestionSetCode

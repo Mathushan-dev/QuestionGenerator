@@ -9,14 +9,15 @@ def test_create_mc_questions():
     THEN check that the response is valid
     :return: None
     """
-    question_id_hashes, questions, options, answers = create_mc_questions("Harry walked to the park.", "4")
+    question_id_hashes, questions, options, answers, question_set_code = create_mc_questions("Harry walked to the park.", "4")
     assert len(question_id_hashes) == 1
     assert len(questions) == 1
     assert len(options) == 1
     assert len(options[0]) == 4
     assert len(answers) == 1
+    assert question_set_code is not None
 
-    question_id_hashes, questions, options, answers = create_mc_questions(
+    question_id_hashes, questions, options, answers, question_set_code = create_mc_questions(
         "Harry walked to the park. Harry plays with Sanjay.", "3")
     assert len(question_id_hashes) == 2
     assert len(questions) == 2
@@ -24,3 +25,4 @@ def test_create_mc_questions():
     assert len(options[0]) == 3
     assert len(options[1]) == 3
     assert len(answers) == 2
+    assert question_set_code is not None
