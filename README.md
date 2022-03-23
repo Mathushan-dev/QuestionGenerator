@@ -27,3 +27,15 @@ Test:
 1. pyenv exec coverage run --source=paths-to-test-coverage --module pytest --verbose tests && coverage report --show-missing
 2. pyenv exec mutmut run --paths-to-mutate application 
 3. pyenv exec mutmut html
+
+Docker:
+
+1. docker build --tag python-docker .
+2. docker run -d -p 5000:5000 python-docker
+
+API POST:
+
+1. http://40.87.57.232:5000/generateMCQuestionAPI?context=[context]&numberOptions=[numberOfOptions]
+Example: http://40.87.57.232:5000/generateMCQuestionAPI?context=Harry%20walked%20to%20the%20park%20&numberOptions=4
+2. http://40.87.57.232:5000/generateTFQuestionAPI?context=[context]
+Example : http://40.87.57.232:5000/generateTFQuestionAPI?context=Harry%20walked%20to%20the%20park
