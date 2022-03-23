@@ -88,6 +88,7 @@ def sign_up(user_id="test_email", f_name="test_first_name", l_name="test_last_na
         return login_signup_form(message="Those records already exist on the server, please log in instead.")
     db.session.commit()
     db.session.flush()
+    db.session.close()
     resp = make_response(load_enter_text())
     resp.set_cookie('LoggedOnUserId', user_id)
     return resp
@@ -107,6 +108,7 @@ def log_in(user_id="test_email", password="test_password"):
 
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
     db.session.flush()
+    db.session.close()
 
     if len(users) == 0:
         return login_signup_form(message="Those records do not exist on the server, please sign up instead.")
@@ -148,6 +150,7 @@ def load_home(user_id="test_email"):
 
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
     db.session.flush()
+    db.session.close()
 
     if len(users) != 1:
         return login_signup_form(message="The server is currently down. Please try logging in later.")
@@ -179,6 +182,7 @@ def delete_account(user_id="test_email"):
         user_id = request.cookies.get('LoggedOnUserId')
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
     db.session.flush()
+
     if len(users) == 0:
         return index()
     elif len(users) != 1:
@@ -190,6 +194,7 @@ def delete_account(user_id="test_email"):
         try:
             stack_trace = db.session.delete(users[0])
             db.session.flush()
+            db.session.close()
         except:
             print(stack_trace)
         return resp
@@ -279,6 +284,7 @@ def save_question_attributes(question_id_hash="test_question_id_hash", score="te
             user, question_id_hash, score, tries)
         db.session.commit()
         db.session.flush()
+        db.session.close()
 
     return load_current_questions("mcq")
 
@@ -297,5 +303,6 @@ def clear_table():
             db.session.commit()
             db.session.flush()
         print("Table is cleared.")
+        db.session.close()
     else:
         print("Table can only be cleared in debug mode.")
