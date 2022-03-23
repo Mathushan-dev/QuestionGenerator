@@ -24,6 +24,6 @@ Final Execution:
 
 Test:
 
-1. pyenv exec coverage run --source=controllers,models,routes,functions --module pytest --verbose tests && coverage report --show-missing
+1. pyenv exec coverage run --source=paths-to-test-coverage --module pytest --verbose tests && coverage report --show-missing
 2. pyenv exec mutmut run --paths-to-mutate application 
 3. pyenv exec mutmut html
