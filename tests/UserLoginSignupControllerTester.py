@@ -1,4 +1,4 @@
-from app import app
+from wsgi import app
 
 
 class UserLoginSignupControllerTester:
