@@ -52,6 +52,7 @@ def add_question_to_database(question_id="test_question_id", context="test_conte
     if not TEST:
         db.session.add(question)
         db.session.flush()
+        db.session.close()
         db.session.commit()
         db.session.flush()
         db.session.close()
@@ -277,12 +278,14 @@ def clear_table():
     if DEBUG:
         questions = db.session.query(UserQuestionHandler).filter(UserQuestionHandler.questionId != "")
         db.session.flush()
+        db.session.close()
         for question in questions:
             db.session.delete(question)
             db.session.flush()
+            db.session.close()
             db.session.commit()
             db.session.flush()
+            db.session.close()
         print("Table is cleared.")
-        db.session.close()
     else:
         print("Table can only be cleared in debug mode.")

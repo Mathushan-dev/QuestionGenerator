@@ -81,10 +81,12 @@ def sign_up(user_id="test_email", f_name="test_first_name", l_name="test_last_na
     try:
         db.session.add(user)
         db.session.flush()
+        db.session.close()
     except IntegrityError as e:
         print(e)
         db.session.rollback()
         db.session.flush()
+        db.session.close()
         return login_signup_form(message="Those records already exist on the server, please log in instead.")
     db.session.commit()
     db.session.flush()
@@ -182,6 +184,7 @@ def delete_account(user_id="test_email"):
         user_id = request.cookies.get('LoggedOnUserId')
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
     db.session.flush()
+    db.session.close()
 
     if len(users) == 0:
         return index()
@@ -278,6 +281,7 @@ def save_question_attributes(question_id_hash="test_question_id_hash", score="te
     user = db.session.query(UserLoginSignup).filter(
         UserLoginSignup.userId == request.cookies.get('LoggedOnUserId')).first()
     db.session.flush()
+    db.session.close()
 
     if user is not None:
         user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts, user.attemptedDates, user.attemptedTimes = update_records(
@@ -297,12 +301,14 @@ def clear_table():
     if DEBUG or TEST:
         users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId != "")
         db.session.flush()
+        db.session.close()
         for user in users:
             db.session.delete(user)
             db.session.flush()
+            db.session.close()
             db.session.commit()
             db.session.flush()
+            db.session.close()
         print("Table is cleared.")
-        db.session.close()
     else:
         print("Table can only be cleared in debug mode.")
