@@ -1,7 +1,8 @@
 import bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy().session
+db = SQLAlchemy()
+dbSession = db.session
 
 
 class UserLoginSignup(db.Model):
