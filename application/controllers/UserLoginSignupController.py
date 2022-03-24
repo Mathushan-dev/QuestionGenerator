@@ -80,10 +80,9 @@ def sign_up(user_id="test_email", f_name="test_first_name", l_name="test_last_na
 
     try:
         db.session.add(user)
-        db.session.flush()
     except IntegrityError as e:
-        print(e)
         db.session.rollback()
+        db.session.commit()
         db.session.flush()
         db.session.close()
         return login_signup_form(message="Those records already exist on the server, please log in instead.")
