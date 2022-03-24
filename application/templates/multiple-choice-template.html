@@ -16,12 +16,19 @@
             </a>
             <a href="{{ url_for('UserLoginSignupBP.load_home') }}" class="login-link">Profile</a>
         </header>
-        <div class="show-text-container">
-            <p>Code to share: {{questionSetCode}}</p>
-            <button id="show-text-button" class="show-text">Show text</button>
-            <form action="{{ url_for('UserLoginSignupBP.load_enter_text') }}">
-                <input type="submit" class="try-again" value="Try again" />
-            </form>
+        <div class="grid-container">
+            <div class="grid-item1">
+                <form action="{{ url_for('UserLoginSignupBP.load_enter_text') }}">
+                    <input type="submit" class="try-again" value="Back" />
+                </form>
+            </div>
+            <div class="grid-item2">
+                <button id="show-text-button" class="show-text">Show text</button>
+            </div>
+            <div class="grid-item3">
+                <button id="share-button" class="share">Share</button>
+            </div>
+        </div>
             <div id="text-modal" class="text-modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
@@ -31,6 +38,17 @@
                 </div>
             </div>
         </div>
+        <div id="text-modal-1" class="text-modal-1">
+            <div class="modal-content">
+                <span class="close1">&times;</span>
+                <div class="text">
+                    <p>Code to share: {{questionSetCode}}</p>
+                </div>
+                <button id="copy" class="copy">Copy</button>
+            </div>
+        </div>
+    </div>
+    </div>
         <div class="quiz-container">
         {% if questions %}
             {% for i in range(0, questions|length) %}
@@ -56,5 +74,6 @@
         </div>
         <script src="../static/javascript/multiple-choice.js"></script>
         <script src="../static/javascript/show-text.js"></script>
+        <script src="../static/javascript/share.js"></script>
     </body>
 </html>
