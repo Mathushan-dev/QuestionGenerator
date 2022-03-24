@@ -241,6 +241,7 @@ def generate_exist_questions(question_set_code="test_question_set_code"):
 
     questions_all = db.session.query(UserQuestionHandler).filter(
         UserQuestionHandler.questionSetCode == question_set_code).all()
+    db.session.commit()
 
     if len(questions_all) == 0:
         return render_template('try-input-passage.html')
@@ -271,6 +272,7 @@ def clear_table():
     """
     if DEBUG:
         questions = db.session.query(UserQuestionHandler).filter(UserQuestionHandler.questionId != "")
+        db.session.commit()
         for question in questions:
             db.session.delete(question)
             db.session.commit()
