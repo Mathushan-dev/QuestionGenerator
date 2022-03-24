@@ -50,8 +50,8 @@ def add_question_to_database(question_id="test_question_id", context="test_conte
     question = UserQuestionHandler(question_id.strip(), context.strip(), question.strip(), str(answer).strip(),
                                    options_linear.strip(), str(question_number).strip(), question_set_code.strip())
     if not TEST:
-        db.session.add(question)
-        db.session.commit()
+        db.add(question)
+        db.commit()
 
     return question
 
@@ -239,7 +239,7 @@ def generate_exist_questions(question_set_code="test_question_set_code"):
             'try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
 
-    questions_all = db.session.query(UserQuestionHandler).filter(
+    questions_all = db.query(UserQuestionHandler).filter(
         UserQuestionHandler.questionSetCode == question_set_code).all()
 
     if len(questions_all) == 0:
@@ -270,10 +270,10 @@ def clear_table():
     :return: None
     """
     if DEBUG:
-        questions = db.session.query(UserQuestionHandler).filter(UserQuestionHandler.questionId != "")
+        questions = db.query(UserQuestionHandler).filter(UserQuestionHandler.questionId != "")
         for question in questions:
-            db.session.delete(question)
-            db.session.commit()
+            db.delete(question)
+            db.commit()
         print("Table is cleared.")
     else:
         print("Table can only be cleared in debug mode.")
