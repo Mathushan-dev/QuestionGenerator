@@ -51,10 +51,7 @@ def add_question_to_database(question_id="test_question_id", context="test_conte
                                    options_linear.strip(), str(question_number).strip(), question_set_code.strip())
     if not TEST:
         db.session.add(question)
-        db.session.flush()
         db.session.commit()
-        db.session.flush()
-        db.session.close()
 
     return question
 
@@ -244,8 +241,6 @@ def generate_exist_questions(question_set_code="test_question_set_code"):
 
     questions_all = db.session.query(UserQuestionHandler).filter(
         UserQuestionHandler.questionSetCode == question_set_code).all()
-    db.session.flush()
-    db.session.close()
 
     if len(questions_all) == 0:
         return render_template('try-input-passage.html')
@@ -276,13 +271,9 @@ def clear_table():
     """
     if DEBUG:
         questions = db.session.query(UserQuestionHandler).filter(UserQuestionHandler.questionId != "")
-        db.session.flush()
         for question in questions:
             db.session.delete(question)
-            db.session.flush()
             db.session.commit()
-            db.session.flush()
-        db.session.close()
         print("Table is cleared.")
     else:
         print("Table can only be cleared in debug mode.")
