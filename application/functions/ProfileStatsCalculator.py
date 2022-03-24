@@ -35,7 +35,7 @@ def get_individual_test_summary(attempted_question_ids, question_scores, number_
     for questionId in attempted_question_ids_split:
         if questionId.strip() != "":
             questions = db.session.query(UserQuestionHandler).filter(UserQuestionHandler.questionId == questionId).all()
-            db.session.flush()
+            db.session.commit()
             questions_split.append(questions[0].question)
             contexts_split.append(questions[0].context)
             options_split.append(questions[0].options)
@@ -55,7 +55,7 @@ def get_profile_stats(user_id):
     scores and attempts
     """
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
-    db.session.flush()
+    db.session.commit()
 
     first_name, last_name = users[0].fName, users[0].lName
     try:
