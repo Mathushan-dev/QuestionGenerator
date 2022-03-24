@@ -1,20 +1,19 @@
-var modal = document.getElementById("text-modal-1");
+var modal1 = document.getElementById("text-modal-1");
 
-var btn = document.getElementById("share-button");
+var btn1 = document.getElementById("share-button");
 
-var span = document.getElementsByClassName("close1")[0];
+var span1 = document.getElementsByClassName("close1")[0];
 
-btn.onclick = function() {
-    modal.style.display = "block";
-
+btn1.onclick = function() {
+    modal1.style.display = "block";
 }
 
-span.onclick = function() {
-    modal.style.display = "none";
+span1.onclick = function() {
+    modal1.style.display = "none";
 }
 
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == modal1) {
+        modal1.style.display = "none";
     }
 }
