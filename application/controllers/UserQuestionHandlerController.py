@@ -4,7 +4,7 @@ from application.functions.StatementFalsifier import falsify_statement
 from application.functions.KeywordFinder import find_random_keyword
 from application.functions.T5QuestionGenerator import apply_t5_model
 from application.models.UserQuestionHandlerModel import UserQuestionHandler
-from application.models.UserLoginSignupModel import dbSession
+from application.models.UserLoginSignupModel import db
 from flask import render_template, request
 
 DEBUG = __import__('config').Config.DEBUG
@@ -50,8 +50,8 @@ def add_question_to_database(question_id="test_question_id", context="test_conte
     question = UserQuestionHandler(question_id.strip(), context.strip(), question.strip(), str(answer).strip(),
                                    options_linear.strip(), str(question_number).strip(), question_set_code.strip())
     if not TEST:
-        dbSession.add(question)
-        dbSession.commit()
+        db.add(question)
+        db.commit()
 
     return question
 
@@ -239,7 +239,7 @@ def generate_exist_questions(question_set_code="test_question_set_code"):
             'try-input-passage.html')  # this should never occur as frontend validates input text is at
         # least 5 words
 
-    questions_all = dbSession.query(UserQuestionHandler).filter(
+    questions_all = db.query(UserQuestionHandler).filter(
         UserQuestionHandler.questionSetCode == question_set_code).all()
 
     if len(questions_all) == 0:
@@ -270,10 +270,10 @@ def clear_table():
     :return: None
     """
     if DEBUG:
-        questions = dbSession.query(UserQuestionHandler).filter(UserQuestionHandler.questionId != "")
+        questions = db.query(UserQuestionHandler).filter(UserQuestionHandler.questionId != "")
         for question in questions:
-            dbSession.delete(question)
-            dbSession.commit()
+            db.delete(question)
+            db.commit()
         print("Table is cleared.")
     else:
         print("Table can only be cleared in debug mode.")

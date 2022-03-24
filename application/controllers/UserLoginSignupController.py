@@ -1,6 +1,6 @@
 from flask import render_template, request, make_response
 from application.models.UserLoginSignupModel import UserLoginSignup
-from application.models.UserLoginSignupModel import dbSession
+from application.models.UserLoginSignupModel import db
 from application.controllers.UserQuestionHandlerController import load_current_questions
 from application.functions.ProfileStatsCalculator import get_profile_stats
 from sqlalchemy.exc import IntegrityError
@@ -79,11 +79,11 @@ def sign_up(user_id="test_email", f_name="test_first_name", l_name="test_last_na
     user = UserLoginSignup(user_id, f_name, l_name, password_hash)
 
     try:
-        dbSession.add(user)
+        db.add(user)
     except IntegrityError as e:
-        dbSession.rollback()
+        db.rollback()
         return login_signup_form(message="Those records already exist on the server, please log in instead.")
-    dbSession.commit()
+    db.commit()
     resp = make_response(load_enter_text())
     resp.set_cookie('LoggedOnUserId', user_id)
     return resp
@@ -101,7 +101,7 @@ def log_in(user_id="test_email", password="test_password"):
         user_id = request.form.get("email")
         password = request.form.get("password")
 
-    users = dbSession.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
+    users = db.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
 
     if len(users) == 0:
         return login_signup_form(message="Those records do not exist on the server, please sign up instead.")
@@ -141,7 +141,7 @@ def load_home(user_id="test_email"):
     if request.cookies.get('LoggedOnUserId') is None:
         return login_signup_form("Please login or sign up for an account before viewing question results.")
 
-    users = dbSession.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
+    users = db.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
 
     if len(users) != 1:
         return login_signup_form(message="The server is currently down. Please try logging in later.")
@@ -171,7 +171,7 @@ def delete_account(user_id="test_email"):
     """
     if not TEST:
         user_id = request.cookies.get('LoggedOnUserId')
-    users = dbSession.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
+    users = db.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
 
     if len(users) == 0:
         return index()
@@ -182,7 +182,7 @@ def delete_account(user_id="test_email"):
         resp = make_response(index())
         resp.set_cookie('LoggedOnUserId', 'None', expires=0)
         try:
-            stack_trace = dbSession.delete(users[0])
+            stack_trace = db.delete(users[0])
         except:
             print(stack_trace)
         return resp
@@ -263,13 +263,13 @@ def save_question_attributes(question_id_hash="test_question_id_hash", score="te
         score = attributes["score"]
         tries = attributes["tries"]
 
-    user = dbSession.query(UserLoginSignup).filter(
+    user = db.query(UserLoginSignup).filter(
         UserLoginSignup.userId == request.cookies.get('LoggedOnUserId')).first()
 
     if user is not None:
         user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts, user.attemptedDates, user.attemptedTimes = update_records(
             user, question_id_hash, score, tries)
-        dbSession.commit()
+        db.commit()
 
     return load_current_questions("mcq")
 
@@ -280,10 +280,10 @@ def clear_table():
     :return: None
     """
     if DEBUG or TEST:
-        users = dbSession.query(UserLoginSignup).filter(UserLoginSignup.userId != "")
+        users = db.query(UserLoginSignup).filter(UserLoginSignup.userId != "")
         for user in users:
-            dbSession.delete(user)
-            dbSession.commit()
+            db.delete(user)
+            db.commit()
         print("Table is cleared.")
     else:
         print("Table can only be cleared in debug mode.")
