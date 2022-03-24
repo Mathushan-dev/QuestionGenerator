@@ -81,7 +81,6 @@ def sign_up(user_id="test_email", f_name="test_first_name", l_name="test_last_na
     try:
         db.session.add(user)
         db.session.flush()
-        db.session.close()
     except IntegrityError as e:
         print(e)
         db.session.rollback()
@@ -184,11 +183,12 @@ def delete_account(user_id="test_email"):
         user_id = request.cookies.get('LoggedOnUserId')
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
     db.session.flush()
-    db.session.close()
 
     if len(users) == 0:
+        db.session.close()
         return index()
     elif len(users) != 1:
+        db.session.close()
         return login_signup_form(message="The server is currently down. Please try logging in later.")
         # This should never happen and something has gone terribly wrong if duplicate emails exist on database
     else:
@@ -281,15 +281,14 @@ def save_question_attributes(question_id_hash="test_question_id_hash", score="te
     user = db.session.query(UserLoginSignup).filter(
         UserLoginSignup.userId == request.cookies.get('LoggedOnUserId')).first()
     db.session.flush()
-    db.session.close()
 
     if user is not None:
         user.attemptedQuestionIds, user.questionScores, user.numberOfAttempts, user.attemptedDates, user.attemptedTimes = update_records(
             user, question_id_hash, score, tries)
         db.session.commit()
         db.session.flush()
-        db.session.close()
 
+    db.session.close()
     return load_current_questions("mcq")
 
 
@@ -301,14 +300,12 @@ def clear_table():
     if DEBUG or TEST:
         users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId != "")
         db.session.flush()
-        db.session.close()
         for user in users:
             db.session.delete(user)
             db.session.flush()
-            db.session.close()
             db.session.commit()
             db.session.flush()
-            db.session.close()
+        db.session.close()
         print("Table is cleared.")
     else:
         print("Table can only be cleared in debug mode.")
