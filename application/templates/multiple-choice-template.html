@@ -41,9 +41,9 @@
             <div class="modal-content">
                 <span class="close1">&times;</span>
                 <div class="text">
-                    <p>Code to share: {{questionSetCode}}</p>
+                    <p id="code">Code to share: {{questionSetCode}}</p>
                 </div>
-                <button id="copy" class="copy">Copy</button>
+                <button onclick="copyToClipboard('code')" id="copy" class="copy">Copy</button>
             </div>
         </div>
     </div>
@@ -74,5 +74,6 @@
         <script src="../static/javascript/multiple-choice.js"></script>
         <script src="../static/javascript/show-text.js"></script>
         <script src="../static/javascript/share.js"></script>
+        <script src="../static/javascript/copy-code.js"></script>
     </body>
 </html>
