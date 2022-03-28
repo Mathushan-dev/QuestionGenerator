@@ -9,6 +9,7 @@
         <link href="../static/css/profile.css" rel="stylesheet">
         <link rel="stylesheet" href="../static/css/input-passage.css">
         <link href="../static/css/header.css" rel="stylesheet">
+        <link href="../static/css/multiple-choice.css" rel="stylesheet">
     </head>
     <body>
         <header class="main-header">
@@ -28,7 +29,7 @@
                     <p>Why not try the 5 recent questions generated around the world?</p><br>
                     {% for i in range(0, random_question_sets|length) %}
                     <p id="{{i}}" hidden>{{random_question_sets[i]}}</p>
-                        <button onclick="copyToClipboard({{i}})" id={{i}} class="copy">Question {{i+1}}</button>
+                        <button onclick="copyToClipboard({{i}})" id={{i}} class="show-text">Copy Code {{i+1}}</button><br>
                         <!--<p>{{i+1}}. {{random_question_sets[i]}}</p>-->
                     {% endfor %}
                 </div>
@@ -95,6 +96,6 @@
                 }
             });
         </script>
-        <script src="../static/javascript/copy-code.js"></script>
+        <script src="../static/javascript/copy-code2.js"></script>
     </body>
 </html>
