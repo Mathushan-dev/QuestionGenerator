@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>X5Learn</title>
         <link href="../static/css/base.css" rel="stylesheet">
-        <link href="../static/css/profile2.css" rel="stylesheet">
+        <link href="../static/css/profile.css" rel="stylesheet">
         <link rel="stylesheet" href="../static/css/input-passage.css">
         <link href="../static/css/header.css" rel="stylesheet">
     </head>
@@ -43,8 +43,14 @@
                     <h1>Your Test Records</h1>
                     <div class="test-wrapper">
                         {% for i in range(0, questions|length) %}
+                        <script>
+                            var attempts = attempts[i];
+                            var context = contexts[i];
+                            var options = options[i];
+                            var date = dates[i];
+                        </script>
                         {% if (scores[i] == "1") %}
-                            <div id="test-wrapper1" class="test-wrapper1">
+                            <div onclick="writeInModal(attempts, context, options, date)" id="test-wrapper1" class="test-wrapper1">
                                 <div class="test" id="test">
                                     <h3 class="test-name">{{questions[i]}}</h3>
                                     <p hidden>Attempts - {{attempts[i]}}</p>
@@ -54,7 +60,7 @@
                                 </div>
                             </div>
                         {% else %}
-                            <div class="test-wrapper2">
+                            <div onclick="writeInModal(attempts, context, options, date)" id="test-wrapper2" class="test-wrapper2">
                                 <div class="test" id="test">
                                     <h3 class="test-name">{{questions[i]}}</h3>
                                     <p hidden>Attempts - {{attempts[i]}}</p>
@@ -67,8 +73,18 @@
                     {% endfor %}
                     </div>
                 </div>
+                <div id="myModal" class="myModal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p class="modalText">Attempts: </p>
+                        <p class="modalText">Context: </p>
+                        <p class="modalText">Options: </p>
+                        <p class="modalText">Date Taken: </p>
+                    </div>
+                </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="../static/javascript/pie-chart.js"></script>
+        <script src="../static/javascript/test-info-modal.js"></script>
     </body>
 </html>
