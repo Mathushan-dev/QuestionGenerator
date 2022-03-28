@@ -48,46 +48,31 @@
                     <h1>Your Test Records</h1>
                     <div class="test-wrapper">
                         {% for i in range(0, questions|length) %}
-                        <script>
-                            var attempts = attempts[i];
-                            var context = contexts[i];
-                            var options = options[i];
-                            var date = dates[i];
-                        </script>
-                        {% if (scores[i] == "1") %}
-                            <div onclick="writeInModal(attempts, context, options, date)" id="test-wrapper1" class="test-wrapper1">
-                                <div class="test" id="test">
-                                    <h3 class="test-name">{{questions[i]}}</h3>
-                                    <p>Attempts - {{attempts[i]}}</p>
-                                    <p>Context - {{contexts[i]}}</p>
-                                    <p>Options - {{options[i]}}</p>
-                                    <p>Date Taken - {{dates[i]}}</p>
+                            {% if (scores[i] == "1") %}
+                                <div id="test-wrapper1" class="test-wrapper1">
+                                    <div class="test" id="test">
+                                        <h3 class="test-name">{{questions[i]}}</h3>
+                                        <p>Attempts - {{attempts[i]}}</p>
+                                        <p>Context - {{contexts[i]}}</p>
+                                        <p>Options - {{options[i]}}</p>
+                                        <p>Date Taken - {{dates[i]}}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        {% else %}
-                            <div onclick="writeInModal(attempts, context, options, date)" id="test-wrapper2" class="test-wrapper2">
-                                <div class="test" id="test">
-                                    <h3 class="test-name">{{questions[i]}}</h3>
-                                    <p>Attempts - {{attempts[i]}}</p>
-                                    <p>Context - {{contexts[i]}}</p>
-                                    <p>Options - {{options[i]}}</p>
-                                    <p>Date Taken - {{dates[i]}}</p>
+                            {% else %}
+                                <div id="test-wrapper2" class="test-wrapper2">
+                                    <div class="test" id="test">
+                                        <h3 class="test-name">{{questions[i]}}</h3>
+                                        <p>Attempts - {{attempts[i]}}</p>
+                                        <p>Context - {{contexts[i]}}</p>
+                                        <p>Options - {{options[i]}}</p>
+                                        <p>Date Taken - {{dates[i]}}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
-                <div id="myModal" class="myModal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <p class="modalText">Attempts: </p>
-                        <p class="modalText">Context: </p>
-                        <p class="modalText">Options: </p>
-                        <p class="modalText">Date Taken: </p>
-                    </div>
-                </div>
-        </div>
+            </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="../static/javascript/test-info-modal.js"></script>

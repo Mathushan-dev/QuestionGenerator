@@ -13,4 +13,4 @@ def test_load_home():
         response = test_client.post('/loadHome')
         assert response.status_code == 200
         assert b'Welcome' in response.data
-        assert b'YWhy not try the 5 recent questions generated around the world?' in response.data
+        assert b'Why not try the 5 recent questions generated around the world?' in response.data
