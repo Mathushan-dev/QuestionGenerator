@@ -27,7 +27,8 @@
                     <h2>Welcome {{fName}} {{lName}}</h2>
                     <p>Why not try the 5 recent questions generated around the world?</p><br>
                     {% for i in range(0, random_question_sets|length) %}
-                        <button onclick="copyToClipboard({{i}})" id={{i}} class="copy">{{random_question_sets[i]}}</button>
+                    <p id="{{i}}" hidden>{{random_question_sets[i]}}</p>
+                        <button onclick="copyToClipboard({{i}})" id={{i}} class="copy">Question {{i+1}}</button>
                         <!--<p>{{i+1}}. {{random_question_sets[i]}}</p>-->
                     {% endfor %}
                 </div>
@@ -75,7 +76,6 @@
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="../static/javascript/test-info-modal.js"></script>
         <script>
             var ctx = document.getElementById("myChart").getContext('2d');
             var myChart = new Chart(ctx, {
@@ -95,5 +95,6 @@
                 }
             });
         </script>
+        <script src="../static/javascript/copy-code.js"></script>
     </body>
 </html>
