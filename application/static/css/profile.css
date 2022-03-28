@@ -29,14 +29,14 @@ body{
     background-color: #F0F8FF;
     border: 1px solid #4682B4;
     border-radius: 12px;
-    padding: 10px;
+    padding: 8px;
 }
 
 .RS{
     background-color: #F0F8FF;
     border: 1px solid #4682B4;
     border-radius: 12px;
-    padding: 10px;
+    padding: 8px;
 }
 
 .RS canvas:hover{
@@ -68,6 +68,16 @@ body{
 }
 
 .specific-info h1{
+    align-self: center;
+    font-size: 25px;
+}
+
+.specific-info p{
+    align-self: center;
+    font-size: 0px;
+}
+
+.specific-info p:hover{
     align-self: center;
     font-size: 25px;
 }
