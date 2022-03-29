@@ -56,13 +56,24 @@ def get_profile_stats(user_id):
     """
     users = db.session.query(UserLoginSignup).filter(UserLoginSignup.userId == user_id).all()
     db.session.commit()
+    questions = db.session.query(UserQuestionHandler).filter(UserQuestionHandler.questionId != "").all()
+    db.session.commit()
+
+    try:
+        random_question_sets = []
+        random_question = questions[:5]
+        for question in random_question:
+            random_question_sets.append(question.questionSetCode)
+    except:
+        print("Error in get_profile_stats()")
 
     first_name, last_name = users[0].fName, users[0].lName
     try:
-        questions, contexts, options, scores, attempts, dates = get_individual_test_summary(users[0].attemptedQuestionIds, users[0].questionScores,
-                                                                                 users[0].numberOfAttempts, users[0].attemptedDates)
+        questions, contexts, options, scores, attempts, dates = get_individual_test_summary(
+            users[0].attemptedQuestionIds, users[0].questionScores,
+            users[0].numberOfAttempts, users[0].attemptedDates)
         total_right, total_wrong = get_total_right_wrong(users[0].questionScores)
     except IndexError:
-        return first_name, last_name, 0, 0, [], [], [], [], [], []
+        return first_name, last_name, 0, 0, [], [], [], [], [], [], random_question_sets
 
-    return first_name, last_name, total_right, total_wrong, questions, contexts, options, scores, attempts, dates
+    return first_name, last_name, total_right, total_wrong, questions, contexts, options, scores, attempts, dates, random_question_sets

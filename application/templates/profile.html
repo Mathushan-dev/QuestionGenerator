@@ -9,6 +9,7 @@
         <link href="../static/css/profile.css" rel="stylesheet">
         <link rel="stylesheet" href="../static/css/input-passage.css">
         <link href="../static/css/header.css" rel="stylesheet">
+        <link href="../static/css/multiple-choice.css" rel="stylesheet">
     </head>
     <body>
         <header class="main-header">
@@ -21,67 +22,80 @@
                 <a href="{{ url_for('UserLoginSignupBP.login_signup_form') }}" class="login-link">Log in</a>
             {% endif %}
         </header>
-        <h2>Welcome {{fName}} {{lName}}</h2>
-        <form method="POST">
-            <textarea placeholder="Enter code" name="context" id="context" cols="20" rows="2" required></textarea>
-            <div class="button-div">
-                <button class="generate-button" formaction="/generateExistQuestions">Retrieve questions</button>
-            </div>
-        </form>
-        <div class="test-info">
-            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-            <div class="specific-info">
-                <h1>Your Test Records</h1>
-                <div class="test-wrapper">
-                    {% for i in range(0, questions|length) %}
-                        {% if (scores[i] == "1") %}
-                            <div class="test-wrapper1">
-                                <div class="test" id="test">
-                                    <h3 class="test-name">{{questions[i]}}</h3>
-                                    <p>Attempts - {{attempts[i]}}</p>
-                                    <p>Context - {{contexts[i]}}</p>
-                                    <p>Options - {{options[i]}}</p>
-                                    <p>Date Taken - {{dates[i]}}</p>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="test-wrapper2">
-                                <div class="test" id="test">
-                                    <h3 class="test-name">{{questions[i]}}</h3>
-                                    <p>Attempts - {{attempts[i]}}</p>
-                                    <p>Context - {{contexts[i]}}</p>
-                                    <p>Options - {{options[i]}}</p>
-                                    <p>Date Taken - {{dates[i]}}</p>
-                                </div>
-                            </div>
-                        {% endif %}
+        <div class="container">
+            <div class="TS">
+                <div class="LS">
+                    <h2>Welcome {{fName}} {{lName}}</h2>
+                    <p>Why not try the 5 recent questions generated around the world?</p><br>
+                    {% for i in range(0, random_question_sets|length) %}
+                    <p id="{{i}}" hidden>{{random_question_sets[i]}}</p>
+                        <button onclick="copyToClipboard({{i}})" id={{i}} class="show-text">Copy Code {{i+1}}</button><br>
+                        <!--<p>{{i+1}}. {{random_question_sets[i]}}</p>-->
                     {% endfor %}
+                </div>
+                <div class="RS">
+                    <canvas width="400" id="myChart"></canvas>
+                </div>
+            </div>
+            <div class="MS">
+                <form method="POST">
+                    <textarea placeholder="Enter code" name="context" id="context" cols="20" rows="2" required></textarea>
+                    <div class="button-div">
+                        <button class="generate-button" formaction="/generateExistQuestions">Retrieve questions</button>
+                    </div>
+                </form>
+            </div>
+            <div class="BS">
+                <div class="specific-info">
+                    <h1>Your Test Records</h1>
+                    <div class="test-wrapper">
+                        {% for i in range(0, questions|length) %}
+                            {% if (scores[i] == "1") %}
+                                <div id="test-wrapper1" class="test-wrapper1">
+                                    <div class="test" id="test">
+                                        <h3 class="test-name">{{questions[i]}}</h3>
+                                        <p>Attempts - {{attempts[i]}}</p>
+                                        <p>Context - {{contexts[i]}}</p>
+                                        <p>Options - {{options[i]}}</p>
+                                        <p>Date Taken - {{dates[i]}}</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div id="test-wrapper2" class="test-wrapper2">
+                                    <div class="test" id="test">
+                                        <h3 class="test-name">{{questions[i]}}</h3>
+                                        <p>Attempts - {{attempts[i]}}</p>
+                                        <p>Context - {{contexts[i]}}</p>
+                                        <p>Options - {{options[i]}}</p>
+                                        <p>Date Taken - {{dates[i]}}</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
-            window.onload = function () {
-                var chart = new CanvasJS.Chart("chartContainer",
-                    {
-                        title:{
-                            text: "Your Progress"
-                        },
-                        data: [
-                            {
-                                type: "doughnut",
-                                dataPoints: [
-                                    {  y: {{totalRight}}, indexLabel: "Right" },
-                                    {  y: {{totalWrong}}, indexLabel: "Wrong" }
-                                ]
-                            }
-                        ]
-                    });
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ["Right", "Wrong"],
+                    datasets: [{
+                        data: [{{totalRight}},{{totalWrong}}],
 
-                chart.render();
-            }
+                        borderColor: ['#006400', '#FF0000', '#006400', '#FF0000'], // Add custom color border
+                        backgroundColor: ['#228B22', '#FF6347', '#228B22', '#FF6347'], // Add custom color background (Points and Fill)
+                        borderWidth: 1 // Specify bar border width
+                    }]},
+                options: {
+                  responsive: true, // Instruct chart js to respond nicely.
+                  maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                }
+            });
         </script>
-        <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        <script src="../static/javascript/info-modal.js"></script>
+        <script src="../static/javascript/copy-code2.js"></script>
     </body>
 </html>
-    

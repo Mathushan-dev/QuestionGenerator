@@ -4,143 +4,82 @@ body{
 
 .container{
     margin-top: 40px;
-    align-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.card-body{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    gap: 100px;
-}
-
-/* Left Side */ 
-.user-info{
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    justify-content: center;
     align-items: center;
-    align-content: center;
-    gap: 10px;
-    background-color: #fff;
-    border-radius: 25px;
-    padding: 30px;
+    gap: 25px;
 }
 
-.user-info h2{
-    font-weight: bold;
+.TS{
+    width: 100%;
+    padding-left: 150px;
+    padding-right: 150px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
 }
 
-.change-info, .save-info{
-    text-decoration: none;
-    color: white;
-    background-color: #5c96a6;
-    padding: 10px 30px;
-    border: 1px solid #5c96a6;
-    border-radius: 24px;
-    text-transform: uppercase;
+.LS{
+    background-color: #F0F8FF;
+    border: 1px solid #4682B4;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.RS{
+    background-color: #F0F8FF;
+    border: 1px solid #4682B4;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.RS canvas:hover{
     cursor: pointer;
 }
 
-.change-info{
-    scale: 1.5;
+.MS textarea{
+    resize: none;
+    font-size: 16px;
 }
 
-.change-info:hover, .save-info:hover{
-    background-color: white;
-    color: #2596be;
-    text-decoration: underline;
+.BS{
+    width: 75%;
+    background-color: #F0F8FF;
+    border: 1px solid #4682B4;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
-
-.info-modal-content{
-    display: flex;
-    flex-direction: column;
-}
-
-.info-modal-content input{
-        background-color: #eee;
-        border: none;
-        padding: 12px 15px;
-        margin: 8px 0;
-        width: 100%;
-}
-
-.email{
-    cursor: not-allowed;
-}
-
-
-/* Right Side */ 
-.test-info{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    align-content: center;
-    gap: 20px;
-}
-
-/* Right Top Side */ 
-.general-stats{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    align-content: flex-start;
-    background-color: #fff;
-    border-radius: 25px;
-    padding: 30px;
-}
-
-.general-stats h2{
-    font-weight: normal;
-    color: blue;
-}
-
-.detailed-stats{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 300px;
-}
-
-.correct{
-    color: green;
-}
-
-.incorrect{
-    color: red;
-}
-
-.percentage h4{
-    color: orange;
-    font-size: 30px;
-}
-
-#my-pie-chart {
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-}
-
-/* Right Bottom Side */ 
 .specific-info{
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    justify-content: center;
     align-items: stretch;
     align-content: center;
-    background-color: #fff;
-    border-radius: 25px;
-    padding: 20px;
-    justify-content: center;
     gap: 5px;
+}
+
+.specific-info h1{
+    align-self: center;
+    font-size: 25px;
+}
+
+.specific-info p{
+    align-self: center;
+    font-size: 0px;
+}
+
+.specific-info p:hover{
+    align-self: center;
+    font-size: 25px;
 }
 
 .test-wrapper{
@@ -151,19 +90,12 @@ body{
     flex-wrap: nowrap;
     align-items: stretch;
     align-content: center;
-    background-color: #fff;
-    border-radius: 25px;
     padding: 20px;
     gap: 5px;
     overflow: auto;
 }
 
-.specific-info h1{
-    align-self: center;
-    font-size: 25px;
-}
-
-.test-wrapper1 div{
+.test-wrapper div{
     height: auto;
     max-height: 150px;
     display: flex;
@@ -172,21 +104,25 @@ body{
     justify-content: space-between;
     border-radius: 10px;
     padding: 5px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.test-wrapper1{
     background-color: #8BF7C5;
-    transition: 0.5s;
 }
 
-.test-wrapper2 div{
-    height: auto;
-    max-height: 150px;
+.test-wrapper2{
+    background-color: #e35c78;
+}
+
+.test{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
     justify-content: space-between;
-    border-radius: 10px;
-    padding: 5px;
-    background-color: #e35c78;
-    transition: 0.5s;
 }
 
 .test-wrapper div:hover{
@@ -195,7 +131,7 @@ body{
     transform: scale(1.05);
 }
 
-.test-modal, .info-modal{
+.myModal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -208,32 +144,25 @@ body{
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.test-modal-content, .info-modal-content {
+.modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
-    font-weight: bold;
-    animation-name: modal_animation;
-    animation-duration: 1.5s
-}
-
-.close, .close2 {
-    align-self: flex-end;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+/* The Close Button */
+.close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-}
+  }
   
-.close:hover, .close:focus, .close2:hover, .close:focus {
+  .close:hover,
+  .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-}
-
-@keyframes modal_animation {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
-}
+  }  

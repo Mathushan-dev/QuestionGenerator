@@ -150,19 +150,12 @@ def load_home(user_id="test_email"):
         return login_signup_form(message="The server is currently down. Please try logging in later.")
         # This should never happen and something has gone terribly wrong if duplicate emails exist on database
     else:
-        f_name, l_name, total_right, total_wrong, questions, contexts, options, scores, attempts, dates = get_profile_stats(
+        f_name, l_name, total_right, total_wrong, questions, contexts, options, scores, attempts, dates, random_question_sets = get_profile_stats(
             user_id)
         return render_template('profile.html', fName=f_name, lName=l_name, totalRight=total_right,
                                totalWrong=total_wrong,
                                questions=questions, contexts=contexts, options=options, scores=scores,
-                               attempts=attempts, dates=dates, loggedOn=1)
-
-
-def update_password():
-    """
-    :return: None
-    """
-    pass
+                               attempts=attempts, dates=dates, loggedOn=1, random_question_sets=random_question_sets)
 
 
 def delete_account(user_id="test_email"):
