@@ -15,3 +15,5 @@ application/controllers/.DS_Store
 .DS_Store
 .hammett-db
 .mutmut-cache
+htmlcov
+htmlmut
