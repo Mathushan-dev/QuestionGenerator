@@ -26,7 +26,7 @@ idna==3.3
 importlib-metadata==4.11.3
 itsdangerous==2.1.1
 Jinja2==3.0.3
-joblib==1.1.0
+joblib==1.2.0
 jupyter==1.0.0
 keras==2.7.0
 Keras-Preprocessing==1.1.2
