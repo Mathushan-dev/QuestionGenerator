@@ -41,7 +41,7 @@ oauthlib==3.2.0
 opt-einsum==3.3.0
 packaging==21.3
 pathy==0.6.1
-Pillow==9.0.1
+Pillow==9.3.0
 preshed==3.0.6
 protobuf==3.19.4
 psycopg2-binary==2.9.3
