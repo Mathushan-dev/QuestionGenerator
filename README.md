@@ -11,7 +11,67 @@ We achieved the generation of multiple MC and true or false questions out of gen
 
 Use the following link to help you - https://akrabat.com/creating-virtual-environments-with-pyenv/
 
-1. Install Pyenv
+1. Install Pyenv# QuestionGenerator
+
+QuestionGenerator is an open-source project by X5GON, designed to generate educational questions using Natural Language Processing (NLP) techniques from educational material. This tool caters to both students and teachers, enabling them to create questions for educational content, promoting self-assessment for students and aiding teachers in question generation.
+
+## Overview
+
+- **Purpose**: To help students and teachers by generating educational questions from learning material.
+- **Features**: Multiple-choice (MC) and true or false question generation, user performance tracking.
+- **Benefits**: Swiftly evaluate user understanding and track their performance, open-source system.
+
+## Installation and Deployment
+
+### Manual Deployment
+
+#### Requirements
+
+- Install Pyenv and create a Python 3.7.12 virtual environment.
+- Activate the virtual environment.
+- Install required Python dependencies.
+
+#### Download External Packages
+
+- Download the required external packages.
+- Extract and download the spaCy language model.
+
+#### Execute the Application
+
+- Run the main Python file (`wsgi.py`).
+
+### Docker Deployment
+
+- Build a Docker image and run the container.
+
+## Testing
+
+- Run test suites to validate the system.
+
+## API Endpoints
+
+### Generate MC Questions
+
+- Endpoint: `GET /generateMCQuestionAPI`
+- Example: `GET http://40.87.57.232:5000/generateMCQuestionAPI?context=Harry%20walked%20to%20the%20park%20&numberOptions=4`
+
+### Generate TF Questions
+
+- Endpoint: `GET /generateTFQuestionAPI`
+- Example: `GET http://40.87.57.232:5000/generateTFQuestionAPI?context=Harry%20walked%20to%20the%20park`
+
+## Usage
+
+1. For educational material:
+   - Run the QuestionGenerator to generate questions from provided contexts.
+2. Use the API endpoints:
+   - Make requests to generate MC or true/false questions.
+
+## Development and Contributions
+
+- Contributors: Add contributing guidelines, development setup, and code of conduct.
+- Future Work: Mention future enhancements or pending issues.
+
 2. Create python virtual environment (Python version must be 3.7.12)
 3. Activate python virtual environment with - pyenv activate nameofvirtualenvironment
 
